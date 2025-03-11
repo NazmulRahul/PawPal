@@ -1,25 +1,23 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { user } from '../Store/Auth'
+import React, { useEffect , useRef, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { isNavBgWhite, scrollY, setIsNavBgWhite, setScrollY } from '../Store/Utils'
 import AnimatedSection from '../Components/Utils/AnimatedSection'
 
 const Home = () => {
 
-    // test store
-    const currentUser = useSelector(user)
-    useEffect(()=>{
-        console.log(currentUser)
-    })
-    
+    const scrollRef =useRef(null)
+    const dispatch = useDispatch();
+    const currentScrollY = useSelector(scrollY);
+
+    const handleScroll = ()=>{
+      const scrollY = scrollRef.current.scrollTop;
+      if(scrollY>currentScrollY ) dispatch(setIsNavBgWhite(true))
+      else if(scrollY<currentScrollY) dispatch(setIsNavBgWhite(false))
+      dispatch(setScrollY(scrollY))
+    }
   return (
-    <div className='w-full h-full  bg-red-500 flex flex-col justify-center items-center'>
-      <p className=' text-5xl'>home</p>
-      <AnimatedSection>
-        <p className='text-3xl'> first section</p>
-      </AnimatedSection>
-      <AnimatedSection>
-        <p className='text-3xl'> second section</p>
-      </AnimatedSection>
+    <div ref={scrollRef} onScroll={handleScroll} className="h-full w-full bg-red-300 overflow-y-scroll pt-[120px] scrollbar-hidden">
+      
     </div>
   )
 }

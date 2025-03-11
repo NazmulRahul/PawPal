@@ -9,11 +9,11 @@ import SmoothScroll from './Components/Utils/SmoothScroll.jsx'
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
       <Router>
-        <SmoothScroll>
+        {/* <SmoothScroll> */}
           <Routes>
             <Route path='/*' element={<App/>}/>
           </Routes>
-        </SmoothScroll>
+        {/* </SmoothScroll> */}
       </Router>
   </Provider>
 )
