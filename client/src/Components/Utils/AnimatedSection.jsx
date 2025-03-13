@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const AnimatedSection = ({ children, h, w, index }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.5 });
+const AnimatedSection = ({ children, h, w, index, isRepeated }) => {
+  const triggerOnce = isRepeated?false:true
+  const { ref, inView } = useInView({ triggerOnce, threshold: 0.5 });
 
   return (
     <motion.div

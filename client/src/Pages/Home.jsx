@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isNavBgWhite, scrollY, setIsNavBgWhite, setScrollY } from '../Store/Utils'
 import AnimatedSection from '../Components/Utils/AnimatedSection'
 import VideoSegment from '../Components/Home/VideoSegment'
+import BlogCardSegment from '../Components/Home/BlogCardSegment'
 
 const Home = () => {
 
@@ -17,9 +18,9 @@ const Home = () => {
       dispatch(setScrollY(scrollY))
     }
   return (
-    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full bg-red-300 overflow-y-scroll scrollbar-hidden">
+    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden">
       <VideoSegment/>
-      <VideoSegment/>
+      <BlogCardSegment/>
     </div>
   )
 }

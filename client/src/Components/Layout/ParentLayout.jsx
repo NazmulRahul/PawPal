@@ -5,7 +5,7 @@ import Navbar from '../Navbar/Navbar'
 const ParentLayout = () => {
     
   return (
-    <div className='w-screen bg-amber-300 h-screen flex justify-center items-center'>
+    <div className='w-screen bg-neutral-900 h-screen flex justify-center items-center'>
       <Navbar/>
       <Outlet/>
     </div>

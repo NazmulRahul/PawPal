@@ -3,7 +3,7 @@ import AnimatedSection from '../Utils/AnimatedSection'
 
 const VideoSegment = () => {
   return (
-    <div className="w-full shrink-0 h-screen flex flex-col bg-blue-300">
+    <div className="w-full shrink-0 h-screen flex flex-col ">
      <div className="relative w-full flex-1"> {/* Adjust height as needed */}
       <video
         className=" absolute top-0 left-0 w-full h-full object-cover"
