@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { isNavBgWhite, setIsNavBgWhite } from '../../Store/Utils'
+import { isNavBgWhite, isOnHoverNavLink, setIsNavBgWhite, setIsOnHoverNavLink } from '../../Store/Utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import logo from '../../assets/logo.png'
+import HoverCard from './HoverCard'
 
 const Navbar = () => {
     const dispatch = useDispatch()
     const currentIsNavBgWhite = useSelector(isNavBgWhite)
+    const currentIsOnHoverNavLink = useSelector(isOnHoverNavLink)
     const handleSubmit = (e)=>{
       e.preventDefault()
       console.log('submitting..')
@@ -23,10 +25,34 @@ const Navbar = () => {
           </div>
           <div className="w-[60%] h-full flex justify-between items-center">
             <div className="w-[55%] h-full flex justify-between items-end pb-[20px]">
-              <button className='text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>Adopt</button>
-              <button className='text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>Transport</button>
-              <button className='text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>Blogs</button>
-              <button className='text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>AboutUs</button>
+              <button 
+              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(1))}
+              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
+              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+                <p>Adopt</p>
+                {currentIsOnHoverNavLink===1?<HoverCard/>:null}
+              </button>
+              <button 
+              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(2))}
+              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
+              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+                <p>Transport</p>
+                {currentIsOnHoverNavLink===2?<HoverCard/>:null}
+              </button>
+              <button 
+              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(3))}
+              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
+              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+                <p>Blogs</p>
+                {currentIsOnHoverNavLink===3?<HoverCard/>:null}
+              </button>
+              <button 
+              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(4))}
+              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
+              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+                <p>AboutUs</p>
+                {/* {currentIsOnHoverNavLink===4?<HoverCard/>:null} */}
+              </button>
             </div>
             <form onSubmit={handleSubmit} className="w-[40%] h-full  flex justify-end items-end pb-[20px]">
               <div className='w-[80%] h-[30px] flex items-center border-[1px] border-black rounded-lg px-[5px]'>
