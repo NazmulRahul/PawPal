@@ -4,6 +4,7 @@ import { isNavBgWhite, isOnHoverNavLink, setIsNavBgWhite, setIsOnHoverNavLink } 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import logo from '../../assets/logo.png'
 import HoverCard from './HoverCard'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
     const dispatch = useDispatch()
@@ -25,34 +26,34 @@ const Navbar = () => {
           </div>
           <div className="w-[60%] h-full flex justify-between items-center">
             <div className="w-[55%] h-full flex justify-between items-end pb-[20px]">
-              <button 
+              <Link 
               onMouseEnter={()=>dispatch(setIsOnHoverNavLink(1))}
               onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Adopt</p>
                 {currentIsOnHoverNavLink===1?<HoverCard/>:null}
-              </button>
-              <button 
+              </Link>
+              <Link 
               onMouseEnter={()=>dispatch(setIsOnHoverNavLink(2))}
               onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Transport</p>
                 {currentIsOnHoverNavLink===2?<HoverCard/>:null}
-              </button>
-              <button 
+              </Link>
+              <Link
               onMouseEnter={()=>dispatch(setIsOnHoverNavLink(3))}
               onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Blogs</p>
                 {currentIsOnHoverNavLink===3?<HoverCard/>:null}
-              </button>
-              <button 
+              </Link>
+              <Link 
               onMouseEnter={()=>dispatch(setIsOnHoverNavLink(4))}
               onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>AboutUs</p>
                 {/* {currentIsOnHoverNavLink===4?<HoverCard/>:null} */}
-              </button>
+              </Link>
             </div>
             <form onSubmit={handleSubmit} className="w-[40%] h-full  flex justify-end items-end pb-[20px]">
               <div className='w-[80%] h-[30px] flex items-center border-[1px] border-black rounded-lg px-[5px]'>
