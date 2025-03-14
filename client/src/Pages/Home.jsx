@@ -1,9 +1,9 @@
 import React, { useEffect , useRef, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isNavBgWhite, scrollY, setIsNavBgWhite, setScrollY } from '../Store/Utils'
-import AnimatedSection from '../Components/Utils/AnimatedSection'
 import VideoSegment from '../Components/Home/VideoSegment'
 import BlogCardSegment from '../Components/Home/BlogCardSegment'
+import AdoptCardSegment from '../Components/Home/AdoptCardSegment'
 
 const Home = () => {
 
@@ -18,9 +18,10 @@ const Home = () => {
       dispatch(setScrollY(scrollY))
     }
   return (
-    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden">
+    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#EBE8DB]">
       <VideoSegment/>
       <BlogCardSegment/>
+      <AdoptCardSegment/>
     </div>
   )
 }

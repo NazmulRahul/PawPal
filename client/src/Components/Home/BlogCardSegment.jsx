@@ -1,16 +1,35 @@
 import React from 'react'
 import BlogCard from './BlogCard'
 import BlogSide from '../../assets/blogSide.png'
+import AnimatedSection from '../Utils/AnimatedSection'
 
 const BlogCardSegment = () => {
   return (
-    <div className='w-full min-h-screen  flex justify-center bg-white'>
-        <div className="w-[40%] h-full p-10 overflow-hidden">
-            <img
-                className="float-left w-[70%] h-auto object-contain rounded-md mr-4 mb-2"
-                src={BlogSide}
-                alt="Blog Image"
-            />
+    <div className='w-full h-auto flex justify-center '>
+        <div className="w-[40%] h-full flex flex-col p-10 overflow-hidden">
+            <AnimatedSection index={3} fromLeft={true}>
+                <img
+                    className="float-left w-[70%] h-auto object-contain rounded-md mr-4 mb-2"
+                    src={BlogSide}
+                    alt="Blog Image"
+                />
+            </AnimatedSection>
+            <AnimatedSection index={3}>
+                <div class="w-full h-auto flex flex-col gap-[5px]">
+                    <h1 className='text-3xl font-bold'>A New Beginning with PawPal</h1>
+                    <p className='text-lg'>Lena had always wanted a dog. But with her busy job and a small apartment, she never felt ready—until she found <strong>PawPal</strong>.</p>
+                    <p className='text-lg'>One evening, while scrolling through pet adoption listings, she saw him—<strong>Benny</strong>, a golden retriever with warm, soulful eyes.
+                    His profile said he had been waiting months for a home. Without hesitation, Lena clicked <strong>“Adopt”</strong>.</p>
+                    <p className='text-lg'>The next morning, PawPal’s <strong>pet transportation</strong> 
+                        service brought Benny straight to her doorstep. As soon as he stepped out of the cozy travel crate, 
+                        his tail wagged furiously, and Lena knew she had made the right choice.</p>
+                    <p className='text-lg'>Days turned into weeks, and Benny became her best friend. They explored parks, shared lazy Sundays,
+                        and even celebrated small victories together—like when Benny finally learned to sit on command. But one evening,
+                        Benny seemed off. He was sluggish and refused his favorite treat. Worried, Lena used the <strong>PawPal pet medicine service</strong> 
+                        to get expert advice. Within minutes, a vet recommended the right care, and soon, Benny was back to his playful self.</p>
+                    <p className='text-lg'>Looking at him curled up beside her, Lena smiled. Thanks to PawPal, she didn’t just find a pet—she found family.</p>
+                </div>
+            </AnimatedSection>
         </div>
 
         <div className="w-[60%] h-full  flex justify-center items-center">
@@ -21,7 +40,11 @@ const BlogCardSegment = () => {
                     <BlogCard/>
                     <BlogCard/>
                 </div>
-                <div className="w-[30%] h-full bg-amber-800"></div>
+                <div className="w-[30%] h-full bg-amber-800">
+                    <video className='w-full h-full '>
+                        <source src=''/>
+                    </video>
+                </div>
             </div>
         </div>
         {/* <AnimatedSection index={1}>
