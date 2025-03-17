@@ -15,25 +15,26 @@ const BlogCardSegment = () => {
                 />
             </AnimatedSection>
             <AnimatedSection index={3}>
-                <div class="w-full h-auto flex flex-col gap-[5px]">
-                    <h1 className='text-3xl font-bold'>A New Beginning with PawPal</h1>
-                    <p className='text-lg'>Lena had always wanted a dog. But with her busy job and a small apartment, she never felt ready—until she found <strong>PawPal</strong>.</p>
-                    <p className='text-lg'>One evening, while scrolling through pet adoption listings, she saw him—<strong>Benny</strong>, a golden retriever with warm, soulful eyes.
+                <div class="w-full h-auto flex flex-col gap-[10px] gloria-hallelujah-regular monitor:text-6xl laptop:text-2xl">
+                    <h1 className='monitor:text-[60px] font-bold laptop:text-3xl '>A New Beginning with PawPal</h1>
+                    <p className=''>Lena had always wanted a dog. But with her busy job and a small apartment, she never felt ready—until she found <strong>PawPal</strong>.</p>
+                    <p className=''>One evening, while scrolling through pet adoption listings, she saw him—<strong>Benny</strong>, a golden retriever with warm, soulful eyes.
                     His profile said he had been waiting months for a home. Without hesitation, Lena clicked <strong>“Adopt”</strong>.</p>
-                    <p className='text-lg'>The next morning, PawPal’s <strong>pet transportation</strong> 
+                    <p className=''>The next morning, PawPal’s <strong>pet transportation</strong> 
                         service brought Benny straight to her doorstep. As soon as he stepped out of the cozy travel crate, 
                         his tail wagged furiously, and Lena knew she had made the right choice.</p>
-                    <p className='text-lg'>Days turned into weeks, and Benny became her best friend. They explored parks, shared lazy Sundays,
+                    <p className=''>Days turned into weeks, and Benny became her best friend. They explored parks, shared lazy Sundays,
                         and even celebrated small victories together—like when Benny finally learned to sit on command. But one evening,
                         Benny seemed off. He was sluggish and refused his favorite treat. Worried, Lena used the <strong>PawPal pet medicine service</strong> 
                         to get expert advice. Within minutes, a vet recommended the right care, and soon, Benny was back to his playful self.</p>
-                    <p className='text-lg'>Looking at him curled up beside her, Lena smiled. Thanks to PawPal, she didn’t just find a pet—she found family.</p>
+                    <p className=''>Looking at him curled up beside her, Lena smiled. Thanks to PawPal, she didn’t just find a pet—she found family.</p>
                 </div>
+                
             </AnimatedSection>
         </div>
 
-        <div className="w-[60%] h-full  flex justify-center items-center">
-            <div className="w-[90%] h-[60%]  flex ">
+        <div className="w-[60%]  h-full  flex justify-center items-center">
+            <div className="flex w-[90%] h-[40%] mid-laptop:h-[30%] monitor-h-[50%]">
                 <div className="w-[70%] h-full flex flex-wrap gap-[10px]">
                     <BlogCard/>
                     <BlogCard/>
