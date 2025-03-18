@@ -16,7 +16,7 @@ const BlogCardSegment = () => {
             </AnimatedSection>
             <AnimatedSection index={3}>
                 <div class="w-full h-auto flex flex-col gap-[10px] gloria-hallelujah-regular monitor:text-6xl laptop:text-2xl">
-                    <h1 className='monitor:text-[60px] font-bold laptop:text-3xl '>A New Beginning with PawPal</h1>
+                    <h1 className='text-xl font-bold '>A New Beginning with PawPal</h1>
                     <p className=''>Lena had always wanted a dog. But with her busy job and a small apartment, she never felt ready—until she found <strong>PawPal</strong>.</p>
                     <p className=''>One evening, while scrolling through pet adoption listings, she saw him—<strong>Benny</strong>, a golden retriever with warm, soulful eyes.
                     His profile said he had been waiting months for a home. Without hesitation, Lena clicked <strong>“Adopt”</strong>.</p>
