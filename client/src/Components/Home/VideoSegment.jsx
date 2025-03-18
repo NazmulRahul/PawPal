@@ -12,7 +12,7 @@ const VideoSegment = () => {
         muted
         playsInline
       >
-        <source src={'https://res.cloudinary.com/dz4jwmv4k/video/upload/v1733845602/samples/cld-sample-video.mp4'} type="video/mp4" />
+        <source src={'https://media.istockphoto.com/id/2161385438/video/rear-view-of-carefree-young-woman-with-arms-outstretched-running-with-golden-retriever-on.mp4?s=mp4-640x640-is&k=20&c=MH-yP_LQNq2i7CRhQdOizHL30dQeVopl5S2iZQog33I='} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className="  absolute top-0 left-0 right-0 w-full h-full bg-gray-950/30 flex items-center">
