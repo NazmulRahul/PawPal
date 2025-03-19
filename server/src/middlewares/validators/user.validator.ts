@@ -1,16 +1,17 @@
-import { NextFunction, Request,Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { userSchema } from '../../schema/user.schema'
 import log from '../../utils/logger'
 
-export const validateUser=(req:Request,res:Response,next:NextFunction)=>{
+export const validateUser = (req: Request, res: Response, next: NextFunction): any => {
     log.info('userSchema validating')
     const { error } = userSchema.validate(req.body, { abortEarly: false });
-    if(error){
+    if (error) {
         log.error('User Schema validation failed')
         return res.status(400).json({
             status: "error",
             message: "user schema validation failed",
-          });
+        });
+
     }
     next()
 }
