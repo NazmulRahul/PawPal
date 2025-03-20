@@ -4,6 +4,8 @@ import { isNavBgWhite, scrollY, setIsNavBgWhite, setScrollY } from '../Store/Uti
 import VideoSegment from '../Components/Home/VideoSegment'
 import BlogCardSegment from '../Components/Home/BlogCardSegment'
 import AdoptCardSegment from '../Components/Home/AdoptCardSegment'
+import TransportSegment from '../Components/Home/TransportSegment'
+import Footer from '../Components/Home/Footer'
 
 const Home = () => {
 
@@ -22,6 +24,8 @@ const Home = () => {
       <VideoSegment/>
       <BlogCardSegment/>
       <AdoptCardSegment/>
+      <TransportSegment/>
+      <Footer/>
     </div>
   )
 }
