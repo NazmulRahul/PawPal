@@ -9,6 +9,7 @@ module.exports = {
         monitor: '1920px',
         'wide-monitor': '2560px',
       },
+      
     },
   },
   plugins: [],
