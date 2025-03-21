@@ -41,10 +41,17 @@ const BlogCardSegment = () => {
                     <BlogCard/>
                     <BlogCard/>
                 </div>
-                <div className="w-[30%] h-full bg-amber-800">
-                    <video className='w-full h-full '>
-                        <source src=''/>
-                    </video>
+                <div className="w-[30%] h-full  relative">
+                    <div className="inset-0 absolute">
+                        <video 
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className='top-0 left-0 right-0 bottom-0 h-full w-full relative'>
+                            <source src='https://cdn.pixabay.com/video/2022/07/25/125485-733802512_large.mp4'/>
+                        </video>
+                    </div>
                 </div>
             </div>
         </div>
