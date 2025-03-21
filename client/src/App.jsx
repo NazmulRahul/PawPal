@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Adoption from "./Pages/Adoption";
 import PetList from "./Components/Adoption/PetList";
 import AdoptionReqeustForm from "./Components/Adoption/AdoptionReqeustForm";
+import PetAdoptionDetails from "./Pages/PetAdoptionDetails";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<PetList/>}/>
           <Route path="request" element={<AdoptionReqeustForm/>}/>
         </Route>
+        <Route path="adoption/:petId" element={<PetAdoptionDetails/>}/>
       </Route>
     </Routes>
   )
