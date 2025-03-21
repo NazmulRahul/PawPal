@@ -4,6 +4,8 @@ import log from "./src/utils/logger";
 import connectDB from "./src/utils/dbConnect";
 import cors from 'cors'
 import userRoutes from './src/routes/user.route'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
 const PORT=config.get<number>('PORT')
