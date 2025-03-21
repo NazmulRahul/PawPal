@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const Slideshow = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Change slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex(prevIndex => (prevIndex + 1) % slides.length);
