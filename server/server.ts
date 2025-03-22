@@ -17,7 +17,7 @@ const corsOption={
 }
 // Middleware
 app.use(express.json());
-app.use(cors(corsOption))
+app.use(cors())
 
 // Routes
 app.get("/", (req: Request, res: Response) => {
