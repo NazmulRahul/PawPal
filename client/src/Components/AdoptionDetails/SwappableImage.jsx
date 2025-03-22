@@ -6,10 +6,14 @@ import wholesome from "../../assets/wholesome-pic.jpg";
 import anotherKitten from "../../assets/another-kitten.jpg";
 import { Button } from "../ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { pets } from "../Adoption/pets";
 
 const SwappableImage = () => {
+  const petList = pets
+
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const slides = [dogChild, manCat, tabbyCat, wholesome, anotherKitten];
+  const slides = petList.map(pet => pet.imageUrl)
 
   const getImageIndexes = (len, index) => {
     if (len == 0) return null;
@@ -82,7 +86,7 @@ const SwappableImage = () => {
           </div>
           <div className="absolute z-10 inset-0 bg-black opacity-65 rounded-md"></div>
         </div>
-        <div className="absolute left-[15%] right-[15%] bottom-10 h-[550px] shadow-2xl z-20 rounded-md">
+        <div className="absolute left-[15%] right-[15%] bottom-8 h-[550px] shadow-2xl z-20 rounded-md">
           <div className="relative w-full h-full">
             {getJsxSlides(currentIndex)}
           </div>
