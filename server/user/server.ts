@@ -5,6 +5,8 @@ import connectDB from "./src/utils/dbConnect";
 import cors from 'cors'
 import userRoutes from './src/routes/user.route'
 import dotenv from 'dotenv'
+import cookieParser from "cookie-parser";
+
 dotenv.config()
 
 const app = express();
@@ -18,7 +20,7 @@ const corsOption={
 // Middleware
 app.use(express.json());
 app.use(cors())
-
+app.use(cookieParser())
 // Routes
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello");
