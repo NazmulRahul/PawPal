@@ -18,7 +18,7 @@ const PetAdoptionCard = ({
     breed.length > 9 ? breed.substring(0, 8).concat("..") : breed;
   return (
     <Link to={`${id}`}>
-      <main className="group bg-[#F2EED9] hover:bg-[#e4d1cd] rounded-tl-xl rounded-tr-xl shadow-md">
+      <main className="group bg-[#F2EED9] hover:bg-[#e4d1cd] rounded-tl-xl rounded-tr-xl shadow-xl">
         <div className="relative rounded-tl-xl rounded-tr-xl flex flex-col">
           <img
             src={imageUrl}

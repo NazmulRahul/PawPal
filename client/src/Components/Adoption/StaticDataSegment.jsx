@@ -4,10 +4,6 @@ import dogMan from '../../assets/wholesome-pic.jpg'
 import manCat from "../../assets/man-hugging-cat.jpg";
 import tabbyCat from "../../assets/Tabby-cat.jpg";
 import { Card, CardContent } from "../ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
-import { SelectValue } from "@radix-ui/react-select";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { adoptionFormControls } from "../config";
 import CommonForm from "../Utils/CommonForm";
@@ -36,9 +32,10 @@ const StaticDataSegment = () => {
   const slides = [dogChild, manCat, tabbyCat, dogMan]
 
   const styles = {
-    selectTrigger: "w-full bg-[#fffae6] hover:bg-[#e4d1cd]",
+    selectTrigger: "w-full bg-[#F2EED9] hover:bg-[#e4d1cd] border-[#8C7A3F]",
+    selectContent: 'bg-[#F2EED9] border-[#8C7A3F]',
     selectItem: "focus:bg-[#e4d1cd]",
-    input: "bg-[#fffae6] outline-[#fffae6]",
+    input: "bg-[#F2EED9] outline-[#fffae6] border-[#8C7A3F]",
     button: "mt-4",
   };
   const petType = ["Cats", "Dogs", "Others"].map((pet) => (

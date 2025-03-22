@@ -50,7 +50,7 @@ const CommonForm = ({formControls, formData, setFormData, onSubmit, buttonText, 
           <SelectTrigger className={`${styles.selectTrigger? styles.selectTrigger : 'w-full'}`}>
             <SelectValue placeholder={getControlItem.placeholder}/>
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={`${styles.selectContent? styles.selectContent: null}`}>
             {
               getControlItem.options && getControlItem.options.length>0 ? getControlItem.options.map(optionItem => <SelectItem key={optionItem.id} value={optionItem.id} className={`${styles.selectItem}`}>{optionItem.label}</SelectItem>): null
             }

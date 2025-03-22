@@ -1,12 +1,10 @@
 import React, { useEffect , useRef, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { isNavBgWhite, scrollY, setIsNavBgWhite, setScrollY } from '../Store/Utils'
-import myImage from '../assets/blogSide.png'
-import { Button } from '@/Components/ui/button'
-import StaticDataSegment from '@/Components/Adoption/StaticDataSegment'
-import AdoptionNavbar from '@/Components/Adoption/AdoptionNavbar'
-import AdoptionLayout from '@/Components/Layout/AdoptionLayout'
 import SwappableImage from '@/Components/AdoptionDetails/SwappableImage'
+import PetDetailsInfo from '@/Components/AdoptionDetails/PetDetailsInfo'
+import CommentSection from '@/Components/AdoptionDetails/CommentSection'
+import UserInfo from '@/Components/AdoptionDetails/UserInfo'
 
 const PetAdoptionDetails = () => {
   const scrollRef =useRef(null)
@@ -20,8 +18,15 @@ const PetAdoptionDetails = () => {
       dispatch(setScrollY(scrollY))
     }
   return (
-    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#EBE8DB] px-14">
+    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#fffae6] px-14">
       <SwappableImage/>
+      <section className='grid grid-cols-2 gap-3 mt-10'>
+        <div className='flex flex-col gap-4'>
+          <PetDetailsInfo/>
+          <UserInfo/>
+        </div>
+        <CommentSection/>
+      </section>
     </div>
   )
 }
