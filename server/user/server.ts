@@ -4,7 +4,7 @@ import log from "./src/utils/logger";
 import connectDB from "./src/utils/dbConnect";
 import cors from 'cors'
 import userRoutes from './src/routes/user.route'
-import dotenv from 'dotenv'
+import dotenv, { configDotenv } from 'dotenv'
 import cookieParser from "cookie-parser";
 import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from 'swagger-ui-express';
@@ -14,6 +14,7 @@ dotenv.config()
 const app = express();
 const PORT=config.get<number>('PORT')
 const dbUri=config.get<string>('dbUri')
+const ip=config.get<string>('ip')
 const corsOption={
   origin:"*",
   methods: ["GET", "POST"],    
@@ -31,7 +32,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', 
+        url: `http://${ip}:3000/api/user`, 
       },
     ],
   },

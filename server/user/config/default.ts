@@ -8,5 +8,6 @@ export default {
     saltValue: process.env.SALT_VALUE,
     expiresIn: process.env.SALT_VALUE,
     dbUri2: process.env.DB_URI2,
+    ip:process.env.IP
 
 }
