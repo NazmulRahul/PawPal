@@ -7,9 +7,105 @@ import { authenticate, authorize } from '../middlewares/authentication/user.auth
 
 const router = express.Router()
 
+/**
+ * @swagger
+ * /create:
+ *   post:
+ *     summary: Create a new user
+ *     description: This endpoint creates a new user in the system.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                  type: string
+ *               email:
+ *                  type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - name
+ *               - email
+ *               - password
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ *       400:
+ *         description: Invalid input
+ */
+
 router.route('/create').post(validateUser, createUser)
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Log in 
+ *     description: This endpoint creates a new user in the system.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                  type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - email
+ *               - password
+ *     responses:
+ *       201:
+ *         description: Log in successful
+ *       400:
+ *         description: Invalid input/ Password mismatched
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal Server Error
+ */
 router.route('/login').post(validateLogin, loginUser)
 router.route('/logout').post(logoutUser)
+
+/**
+ * @swagger
+ * /createTransporter:
+ *   post:
+ *     summary: Create Transporter  
+ *     description: This endpoint converts a regular user email to a transporter. Only admins user can access this.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                  type: string
+ *             required:
+ *               - email
+ *     responses:
+ *       200:
+ *         description: Transporter Successfully created 
+ *       400:
+ *         description: Invalid input
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal Server Error
+ */
 router.route('/createTransporter').post(authenticate, authorize, createTransporter)
 
 export default router

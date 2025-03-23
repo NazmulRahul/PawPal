@@ -6,6 +6,8 @@ import cors from 'cors'
 import userRoutes from './src/routes/user.route'
 import dotenv from 'dotenv'
 import cookieParser from "cookie-parser";
+import swaggerJsdoc from "swagger-jsdoc"
+import swaggerUi from 'swagger-ui-express';
 
 dotenv.config()
 
@@ -17,6 +19,28 @@ const corsOption={
   methods: ["GET", "POST"],    
   allowedHeaders: ["Content-Type", "Authorization"]
 }
+
+//swagger
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'User API',
+      version: '1.0.0',
+      description: 'API documentation for user apis'
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000', 
+      },
+    ],
+  },
+  apis: ['./src/routes/user.route.ts'], 
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 // Middleware
 app.use(express.json());
 app.use(cors())
