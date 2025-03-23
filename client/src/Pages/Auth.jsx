@@ -26,7 +26,7 @@ const Auth = () => {
         };
     }, [navigate]);
   return (
-    <div className='fixed top-0 bottom-0 left-0 right-0 z-[100] flex justify-center items-center bg-neutral-950 text-white'>
+    <div className='fixed top-0 bottom-0 left-0 right-0 z-[100] flex justify-center items-center bg-neutral-950/90 text-white'>
         <div ref={modalRef} className='w-[50%] h-[70%] flex justify-between relative '>
           <div style={flag?{transform:`translateX(100%)`}:undefined} className="w-[50%] h-full left-0  absolute duration-500 z-0">
             {isShowContent?<Outlet/>:null}
