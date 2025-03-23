@@ -11,7 +11,7 @@ const router = express.Router()
  * @swagger
  * /create:
  *   post:
- *     summary: Create a new user
+ *     summary: Creates a new user
  *     description: This endpoint creates a new user in the system.
  *     tags:
  *       - Users
@@ -45,7 +45,7 @@ router.route('/create').post(validateUser, createUser)
  * /login:
  *   post:
  *     summary: Log in 
- *     description: This endpoint creates a new user in the system.
+ *     description: This endpoint log users into the system.
  *     tags:
  *       - Users
  *     requestBody:
@@ -80,7 +80,7 @@ router.route('/logout').post(logoutUser)
  * /createTransporter:
  *   post:
  *     summary: Create Transporter  
- *     description: This endpoint converts a regular user email to a transporter. Only admins user can access this.
+ *     description: This endpoint converts a regular user email to a transporter. Only admin users can access this.
  *     tags:
  *       - Users
  *     requestBody:
