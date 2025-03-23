@@ -20,10 +20,10 @@ const Navbar = () => {
         onMouseEnter={()=>dispatch(setIsNavBgWhite(true))} 
         onMouseLeave={()=>dispatch(setIsNavBgWhite(false))} 
         className={` z-50 relative h-[100px] w-full ${currentIsNavBgWhite?'bg-[#F5F5F5]':'backdrop-blur-xl'} transition-colors duration-900 flex items-center justify-between px-[5%]`}>
-          <div className="w-[100px] h-full flex flex-col justify-center items-center">
+          <Link to={'/'} className="w-[100px] h-full flex flex-col justify-center items-center">
             <img className='w-[150px] h-[60%] object-contain' src={logo} alt="" />
             <p className='font-extrabold cherry-bomb-one-regular text-2xl text-orange-500'>Paw Pal</p>
-          </div>
+          </Link>
           <div className="w-[60%] h-full flex justify-between items-center">
             <div className="w-[55%] h-full flex justify-between items-end pb-[20px]">
               <Link 
@@ -33,7 +33,7 @@ const Navbar = () => {
                 <p>Adopt</p>
                 {currentIsOnHoverNavLink===1?<HoverCard/>:null}
               </Link>
-              <Link 
+              <Link to={'/transport'}
               onMouseEnter={()=>dispatch(setIsOnHoverNavLink(2))}
               onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>

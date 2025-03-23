@@ -20,7 +20,7 @@ const Home = () => {
       dispatch(setScrollY(scrollY))
     }
   return (
-    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#EBE8DB]">
+    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden ">
       <VideoSegment/>
       <BlogCardSegment/>
       <AdoptCardSegment/>

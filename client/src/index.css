@@ -31,6 +31,56 @@
     }
 }
 
+@layer components {
+    .gradient-shiny-button {
+        @apply relative overflow-hidden cursor-pointer rounded-full p-0.5 border-none outline-none;
+        background: linear-gradient(90deg, #007BFF, #FF0000);
+        background-size: 300% 100%;
+        animation: gradient-move 5s infinite linear;
+    }
+
+    .gradient-shiny-button span {
+        @apply bg-black text-white text-lg px-4 py-1.5 rounded-full uppercase tracking-[2px] text-center block relative z-20;
+    }
+
+    .gradient-shiny-button::before {
+        content: '';
+        @apply absolute top-0 w-[200%] h-full -left-[150%];
+        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+        animation: wave-move 8s infinite ease-in-out;
+        transform: skewX(-25deg);
+    }
+}
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes wave-move {
+    0% {
+        left: -150%;
+        transform: skewX(-25deg);
+    }
+
+    50% {
+        left: 150%;
+        transform: skewX(25deg);
+    }
+
+    100% {
+        left: -150%;
+        transform: skewX(-25deg);
+    }
+}
 .cherry-bomb-one-regular {
     font-family: "Cherry Bomb One", system-ui;
     font-weight: 400;
