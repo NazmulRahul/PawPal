@@ -6,6 +6,7 @@ import BlogCardSegment from '../Components/Home/BlogCardSegment'
 import AdoptCardSegment from '../Components/Home/AdoptCardSegment'
 import TransportSegment from '../Components/Home/TransportSegment'
 import Footer from '../Components/Home/Footer'
+import Test from '@/Components/Utils/test'
 
 const Home = () => {
 
@@ -14,11 +15,12 @@ const Home = () => {
     const currentScrollY = useSelector(scrollY);
 
     const handleScroll = ()=>{
-      const scrollY = scrollRef.current.scrollTop;
-      if(scrollY>currentScrollY ) dispatch(setIsNavBgWhite(true))
-      else if(scrollY<currentScrollY) dispatch(setIsNavBgWhite(false))
-      dispatch(setScrollY(scrollY))
+      // const scrollY = scrollRef.current.scrollTop;
+      // if(scrollY>currentScrollY ) dispatch(setIsNavBgWhite(true))
+      // else if(scrollY<currentScrollY) dispatch(setIsNavBgWhite(false))
+      // dispatch(setScrollY(scrollY))
     }
+    useEffect(()=>console.log('test'))
   return (
     <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden ">
       <VideoSegment/>
@@ -26,6 +28,7 @@ const Home = () => {
       <AdoptCardSegment/>
       <TransportSegment/>
       <Footer/>
+      {/* <Test/> */}
     </div>
   )
 }
