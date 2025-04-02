@@ -40,7 +40,7 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/user/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Middleware
 app.use(express.json());
