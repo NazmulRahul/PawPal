@@ -54,7 +54,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use('/api/user',userRoutes)
 
 // Start Server
-app.listen(PORT, async() => {
+app.listen(PORT,ip, async() => {
   log.info(`Server is running on port ${PORT}`);
   try{
     await connectDB(dbUri)

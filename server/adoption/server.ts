@@ -26,9 +26,9 @@ const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'User API',
+      title: 'Adoption API',
       version: '1.0.0',
-      description: 'API documentation for user apis'
+      description: 'API documentation for adoption apis'
     },
     servers: [
       {
@@ -54,7 +54,7 @@ app.get("/adoption", (req: Request, res: Response) => {
 app.use('/api/adoption',adoptionRoutes)
 
 // Start Server
-app.listen(PORT, async() => {
+app.listen(PORT,ip, async() => {
   log.info(`Server is running on port ${PORT}`);
   try{
     await connectDB(dbUri)
