@@ -8,17 +8,17 @@ import generateToken from "../utils/tokenGenerator";
 
 export const createUser = async (req: Request, res: Response): Promise<any> => {
     try {
-       
+
         const user = new User(req.body)
         const ChkUser = await User.findOne({ email: req.body.email })
         if (ChkUser) {
             return res.status(400).json('user already exists')
         }
-        
+
         user.password = await passwordHashing(user.password)
         log.info(req.body)
         user.isAdmin = false
-        
+
         const newUser = await user.save()
         const token = generateToken(user.email)
 
@@ -27,14 +27,14 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
             maxAge: 24 * 60 * 60 * 1000,
         });
         return res.status(201).json({
-            _id: newUser._id,
+            userId: newUser._id,
             username: newUser.name,
             email: newUser.email,
             isAdmin: newUser.isAdmin,
         });
     } catch (error) {
         log.error(error)
-        return res.status(500).json({ message: "internal server error!", error:error })
+        return res.status(500).json({ message: "internal server error!", error: error })
     }
 }
 
@@ -53,6 +53,7 @@ export const loginUser = async (req: Request, res: Response): Promise<any> => {
                 maxAge: 24 * 60 * 60 * 1000,
             });
             return res.status(201).json({
+                userId: userExist._id,
                 email: userExist.email,
                 username: userExist.name,
                 isAdmin: userExist.isAdmin,
