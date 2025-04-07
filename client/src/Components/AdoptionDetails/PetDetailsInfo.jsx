@@ -43,7 +43,7 @@ const PetDetailsInfo = () => {
   } = petList.find((pet) => pet.id === Number(petId));
   const location = 'Akhaliya,Sylhet'
   return (
-    <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F]">
+    <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex justify-between items-center">
         <h2 className="gloria-hallelujah-regular text-5xl">{name}</h2>
         <Pencil />
