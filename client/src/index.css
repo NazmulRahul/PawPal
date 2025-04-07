@@ -81,6 +81,28 @@
         transform: skewX(-25deg);
     }
 }
+
+/* Custom Scrollbar Styling */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* Prevent scroll chaining */
+  .custom-scrollbar {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+
 .cherry-bomb-one-regular {
     font-family: "Cherry Bomb One", system-ui;
     font-weight: 400;

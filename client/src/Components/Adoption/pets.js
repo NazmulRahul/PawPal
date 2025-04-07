@@ -22,7 +22,7 @@ export const pets = [
     id: 2,
     size: "Smol",
     name: "Mishti",
-    description: "A playful Scottish Fold kitten with adorable folded ears. Very curious and loves chasing toys around the house.",
+    description: "A playful Scottish Fold kitten with adorable folded ears. Very curious and loves chasing toys around the house. A vibrant blue-and-yellow Macaw with a playful and talkative nature. Loves mimicking sounds and interacting with people.A vibrant blue-and-yellow Macaw with a playful and talkative nature. Loves mimicking sounds and interacting with people.A vibrant blue-and-yellow Macaw with a playful and talkative nature. Loves mimicking sounds and interacting with people.",
     gender: "Male",
     sterilized: false,
     age: "4 months",
