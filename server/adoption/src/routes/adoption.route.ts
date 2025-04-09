@@ -130,7 +130,7 @@ router.route('/deletePost/:id').delete(authenticate,deletePost)
  * /uploadImage:
  *   post:
  *     summary: Upload images to cloudinary
- *     description: This endpoint uploads the image to cloudinary and returns the url to that image
+ *     description: This endpoint uploads the image to cloudinary and returns the url to that image. Send the image as form data and name it image.
  *     tags:
  *       - upload image
  *     requestBody:
@@ -141,10 +141,18 @@ router.route('/deletePost/:id').delete(authenticate,deletePost)
  *             type: object
  *             properties:
  *               image:
- *                  type: string
+ *                  type: form-data
  *     responses:
- *       200:
- *         description: returns image url
+ *       201:
+ *         description: Post created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 url:
+ *                   type: string
+ *                   example: "https://res.cloudinary.com/demo/image/upload/sample.jpg"
  */
 
 router.route('/uploadImage').post(authenticate,upload.single('image'),uploadImage)
