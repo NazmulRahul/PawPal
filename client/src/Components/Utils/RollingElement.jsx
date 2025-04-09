@@ -1,35 +1,25 @@
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
-const RollingElement = ({ children ,index=0}) => {
-  const [isUnrolled, setIsUnrolled] = useState(false);
-  const contentRef = useRef(null);
+const RollingElement = ({ children, duration = 2 }) => {
+  const [rolled, setRolled] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsUnrolled(true);
-    }, 1000); 
-
+    const timer = setTimeout(() => setRolled(false), 1000); // Delay before unrolling
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <motion.div
-      initial={{ height: 0, opacity: 0 }}
-      animate={{
-        height: isUnrolled ? contentRef.current?.scrollHeight : 0,
-        opacity: isUnrolled ? 1 : 0,
-      }}
-      transition={{ duration: 1, ease: "easeOut" ,delay: index * 0.3}}
-      style={{
-        overflow: "hidden",
-      }}
-      className=" flex-grow " 
-    >
-      <div className="h-full w-full" ref={contentRef}>
+    <div className="overflow-hidden w-full bg-gray-900 text-white py-2 flex justify-center items-center">
+      <motion.div
+        initial={{ y: rolled ? '-100%' : '0%' }}
+        animate={{ y: '0%' }}
+        transition={{ duration, ease: "easeOut" }}
+        className=""
+      >
         {children}
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 

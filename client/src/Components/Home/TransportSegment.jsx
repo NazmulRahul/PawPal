@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react'
 import TransportHero from './TransportHero'
 import TransportDetailsCard from './TransportDetailsCard'
 import CircularBanner from './TransportCompanyBanner'
@@ -8,6 +9,8 @@ import AnimatedSection from '../Utils/AnimatedSection';
 
 const TransportSegment = () => {
     const { ref, inView } = useInView({ triggerOnce:true, threshold: 0.5 });
+      useEffect(()=>console.log('transport'))
+    
   return (
     <div className="w-full h-auto flex flex-col">
         <div className='w-full h-auto flex pt-[5%] '>

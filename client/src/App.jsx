@@ -10,6 +10,8 @@ import Transport from "./Pages/Transport";
 import SignIn from "./Components/Auth/SignIn";
 import SignUp from "./Components/Auth/SignUp";
 import Auth from "./Pages/Auth";
+import SingleService from "./Components/Transport/SingleService";
+import TransportProcedure from "./Components/Transport/TransportProcedure";
 
 function App() {
   return (
@@ -26,9 +28,9 @@ function App() {
           <Route path="request" element={<AdoptionReqeustForm/>}/>
         </Route>
         <Route path="adoption/:petId" element={<PetAdoptionDetails/>}/>
-        <Route path="transport" element={<Transport/>}>
-          
-        </Route>
+        <Route path="transport" element={<Transport/>}/>
+        <Route path="transport/service/:serviceId" element={<SingleService/>}/>
+        <Route path="transport/booking" element={<TransportProcedure/>}/>
       </Route>
     </Routes>
   )

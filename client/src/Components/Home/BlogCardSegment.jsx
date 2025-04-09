@@ -1,9 +1,11 @@
 import React from 'react'
+import { useEffect } from 'react'
 import BlogCard from './BlogCard'
 import BlogSide from '../../assets/blogSide.png'
 import AnimatedSection from '../Utils/AnimatedSection'
 
 const BlogCardSegment = () => {
+      useEffect(()=>console.log('blog'))
   return (
     <div className='w-full h-auto flex justify-center '>
         <div className="w-[40%] h-full flex flex-col p-10 overflow-hidden">

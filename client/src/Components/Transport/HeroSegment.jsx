@@ -1,19 +1,35 @@
-import React from 'react'
-import RollingElement from '../Utils/RollingElement'
+import React, { useEffect, useState } from "react";
+import RollingElement from "../Utils/RollingElement";
+import bg from "../../assets/transportHero.jpg";
+import HeroSadStory from "./HeroSadStory";
+import HeroHappyStory from "./HeroHappyStory";
+
 
 const HeroSegment = () => {
-  return (
-    <div className='w-full h-full flex px-[10%] gap-[5%] '>
-      
-        <RollingElement>
-          <div className="w-full h-screen bg-blue-800 rounded-b-2xl"></div>
-        </RollingElement>
-        <RollingElement index={2}>
-          <div className="w-full h-[90vh] bg-red-800 rounded-b-[10%]"></div>
-        </RollingElement>
-      
-    </div>
-  )
-}
+  const [translate, setTranslate]=useState(0)
+  useEffect(()=>{
+    const time = setInterval(() => {
+      setTranslate((prev) => (prev === 0 ? -100 : 0));
+    }, 300000);
 
-export default HeroSegment
+    return () => clearInterval(time);
+  },[])
+  useEffect(()=>console.log('hero segment test'))
+  return (
+    <div className="w-full h-full flex">
+      <RollingElement>
+        <div
+          style={{ backgroundImage: `url(${bg})` }}
+          className="pt-[110px] flex justify-center items-start w-full h-[100vh] bg-no-repeat bg-cover bg-center"
+        >
+          <div className=" relative overflow-hidden border-[1px] flex border-white h-[90%] w-[60%]">
+            <HeroSadStory translate={translate} setTranslate={setTranslate}/>
+            <HeroHappyStory translate={translate} setTranslate={setTranslate}/>
+          </div>
+        </div>
+      </RollingElement>
+    </div>
+  );
+};
+
+export default HeroSegment;

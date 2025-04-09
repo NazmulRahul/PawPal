@@ -1,10 +1,13 @@
 import React from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import logo from '../../assets/footer.png'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Footer = () => {
+      useEffect(()=>console.log('footer'))
+    
   return (
     <div className='w-full min-h-[420px]  bg-gray-900 relative mt-[20%]'>
       <div className="inset-0 absolute w-full h-full ">
