@@ -9,10 +9,143 @@ import log from '../utils/logger'
 
 const router = express.Router()
 
+/**
+ * @swagger
+ * /createPost:
+ *   post:
+ *     tags:
+ *       - Posts
+ *     summary: Create a new adoption post
+ *     description: Authenticated users can create a pet adoption post. After uploading each image add the image url to the schema
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - animalType
+ *               - description
+ *               - image
+ *               - address
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 format: objectId
+ *                 example: "661512355834293dc02a5abc"
+ *               animalType:
+ *                 type: string
+ *                 example: "Dog"
+ *               breed:
+ *                 type: string
+ *                 default: "Unknown"
+ *               name:
+ *                 type: string
+ *                 default: "Pet"
+ *               description:
+ *                 type: string
+ *                 example: "Friendly and playful dog, looking for a home"
+ *               age:
+ *                 type: number
+ *                 nullable: true
+ *                 example: 3
+ *               sex:
+ *                 type: string
+ *                 default: "Unknown"
+ *               vaccine:
+ *                 oneOf:
+ *                   - type: string
+ *                     default: "Unknown"
+ *                   - type: array
+ *                     items:
+ *                       type: string
+ *                     example: ["Rabies", "Parvo"]
+ *               image:
+ *                 oneOf:
+ *                   - type: string
+ *                     example: "https://res.cloudinary.com/demo/image/upload/sample.jpg"
+ *                   - type: array
+ *                     items:
+ *                       type: string
+ *                       example: ["https://res.cloudinary.com/demo/image/upload/sample.jpg","https://test.faklsdjfia.jpg"]
+ *               address:
+ *                 type: object
+ *                 required:
+ *                   - name
+ *                   - city
+ *                   - phone
+ *                   - email
+ *                   - location
+ *                 properties:
+ *                   name:
+ *                     type: string
+ *                     example: "John Doe"
+ *                   city:
+ *                     type: string
+ *                     example: "New York"
+ *                   phone:
+ *                     type: string
+ *                     example: "+123456789"
+ *                   email:
+ *                     type: string
+ *                     format: email
+ *                     example: "john@example.com"
+ *                   location:
+ *                     type: string
+ *                     example: "123 4th Street, NY"
+ *               isAdopted:
+ *                 type: boolean
+ *                 default: false
+ *               adoptedBy:
+ *                 type: string
+ *                 default: "Unknown"
+ *     responses:
+ *       201:
+ *         description: Post created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 postId:
+ *                   type: string
+ *                   example: "67f661b11a83c05adc924881"
+ *       400:
+ *         description: Validation error
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal server error
+ */
+
 router.route('/createPost').post(authenticate, validatePost, createPost)
 router.route('/getAllPosts').get(authenticate,getAllPost)
 router.route('/getPostWithId/:id').get(authenticate,getPostWithId)
 router.route('/deletePost/:id').delete(authenticate,deletePost)
+
+
+/**
+ * @swagger
+ * /uploadImage:
+ *   post:
+ *     summary: Upload images to cloudinary
+ *     description: This endpoint uploads the image to cloudinary and returns the url to that image
+ *     tags:
+ *       - upload image
+ *     requestBody:
+ *       required: true
+ *       content:
+ *          multipart/form-data::
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                  type: string
+ *     responses:
+ *       200:
+ *         description: returns image url
+ */
 
 router.route('/uploadImage').post(authenticate,upload.single('image'),uploadImage)
 router.route('/deleteImage/:publicId').delete(authenticate,async (req: Request, res: Response): Promise<any> => {
