@@ -8,7 +8,6 @@ import log from '../../utils/logger'
 const jwtSecret = config.get<string>('jwtSecret')
 
 const authenticate = async (req: any, res: any, next: any) => {
-    log.info(req.cookies);
     const token = req.cookies.jwt;
     if (token) {
         try {

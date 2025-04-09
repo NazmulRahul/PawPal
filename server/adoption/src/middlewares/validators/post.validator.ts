@@ -9,7 +9,7 @@ export const validatePost = (req: Request, res: Response, next: NextFunction): a
         log.error('post Schema validation failed')
         return res.status(400).json({
             status: "error",
-            message: "user schema validation failed",
+            message: "post schema validation failed",
         });
 
     }
