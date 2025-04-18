@@ -22,7 +22,7 @@ const ServiceCard = ({ isRepeated,fromLeft, item}) => {
       <img className='w-full h-full object-cover rounded-xl group-hover:scale-125 transition-transform duration-500' src={item.url} alt="" />
       <div className="absolute bg-gray-950/30 inset-0 top-0 left-0 right-0 bottom-0 gap-2 flex flex-col text-white justify-center items-center ">
         <p className='text-2xl font-bold'>{item.title}</p>
-        <button onClick={handleService} className='gradient-shiny-button py-1 px-[4px] hidden group-hover:flex '>
+        <button onClick={handleService} className='gradient-shiny-button py-[2px] px-[3px] hidden group-hover:flex '>
             <p className='bg-black rounded-full w-full h-full px-4 pb-1'>view more</p>
         </button>
       </div>

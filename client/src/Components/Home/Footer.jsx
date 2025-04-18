@@ -4,12 +4,15 @@ import { motion } from 'framer-motion'
 import logo from '../../assets/footer.png'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useDispatch } from 'react-redux'
+import { setIsShowGetStarted } from '@/Store/Utils'
 
-const Footer = () => {
+const Footer = ({isTransport=false}) => {
+    const dispatch = useDispatch()
       useEffect(()=>console.log('footer'))
     
   return (
-    <div className='w-full min-h-[420px]  bg-gray-900 relative mt-[20%]'>
+    <div className={`w-full ${isTransport?'h-full':'min-h-[420px]'}  bg-gray-900 relative mt-[20%]`}>
       <div className="inset-0 absolute w-full h-full ">
         <div className="w-[70%] text-white flex justify-between h-[300px] bg-gradient-to-tr from-purple-900 via-black to-purple-900 relative top-[-33%] left-[15%] rounded-xl">
             <div className="h-full w-[60%] flex flex-col gap-[20px] pl-[10px]">
@@ -20,6 +23,7 @@ const Footer = () => {
                 Connecting pets with loving homes & ensuring smooth, hassle-free travel experiences. Because every paw matters! 🐾
                 </p>
                 <button
+                onClick={()=>dispatch(setIsShowGetStarted(true))}
                 className="mt-6 self-start px-6 py-1 text-lg cursor-pointer hover:text-white font-semibold text-black bg-purple-400 hover:bg-purple-600 rounded-full shadow-lg transition"
                 >
                 Get Started

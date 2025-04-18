@@ -6,7 +6,7 @@ const Pet = ({translate}) => {
         <div className="w-[40%] h-full rounded-3xl">
         <img src={'https://i.pinimg.com/736x/ad/e6/0f/ade60f7acf4880af7bcb2e8452a188bf.jpg'} className='w-full h-full rounded-3xl object-cover' alt="" />
         </div>
-        <div className="w-[50%] h-full flex flex-col justify-start items-center  gap-[15px] text-white ">
+        <div className="w-[50%] h-full flex flex-col justify-start items-center pt-[40px]  gap-[15px] text-white ">
             <select  className=' shrink-0 w-[80%] h-[40px] rounded-lg border-[1px] outline-blue-600 border-neutral-300 px-4 text-white placeholder:text-neutral-200' placeholder='email' type="text">
                 <option disabled selected hidden value="">Number of Pets</option>
                 <option className='text-black' value="1">1</option>
@@ -25,7 +25,7 @@ const Pet = ({translate}) => {
                 <option className='text-black' value="Male">Male</option>
                 <option className='text-black'  value="Female">Female</option>
             </select>
-            <input className='shrink-0 w-[80%] h-[40px] rounded-lg border-[1px] border-neutral-300 pl-4 text-white placeholder:text-neutral-200' placeholder='Pet Breed' type="text" />
+            <input className='shrink-0 w-[80%] h-[40px] rounded-lg border-[1px] outline-blue-600 border-neutral-300 pl-4 text-white placeholder:text-neutral-200' placeholder='Pet Breed' type="text" />
             <select  className='shrink-0 w-[80%] h-[40px] rounded-lg border-[1px] outline-blue-600 border-neutral-300 px-4 text-white placeholder:text-neutral-200' placeholder='email' type="text">
                 <option disabled selected hidden value="">Pet's Length</option>
                 {

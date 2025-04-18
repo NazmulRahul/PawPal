@@ -12,6 +12,7 @@ import SignUp from "./Components/Auth/SignUp";
 import Auth from "./Pages/Auth";
 import SingleService from "./Components/Transport/SingleService";
 import TransportProcedure from "./Components/Transport/TransportProcedure";
+import AgencyDetailed from "./Components/Transport/AgencyDetailed";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="adoption/:petId" element={<PetAdoptionDetails/>}/>
         <Route path="transport" element={<Transport/>}/>
         <Route path="transport/service/:serviceId" element={<SingleService/>}/>
+        <Route path="transport/agency/:agencyId" element={<AgencyDetailed/>}/>
         <Route path="transport/booking" element={<TransportProcedure/>}/>
       </Route>
     </Routes>

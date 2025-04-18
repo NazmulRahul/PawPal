@@ -30,7 +30,7 @@ const VideoSegment = () => {
         </div>
       </div>
     </div>
-    <div className="w-full h-[120px] flex justify-start items-center gap-[30px] px-[40px] bg-gray-900">
+    <div className="w-full h-[120px] flex justify-start items-center gap-[30px] px-[40px] bg-gradient-to-tr from-gray-800 via-gray-900 to-gray-800">
       {/* {
         Array.from({length:14},()=><img className='h-full w-auto' src={gif} alt="" />)
       } */}

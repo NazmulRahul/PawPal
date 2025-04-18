@@ -8,19 +8,19 @@ const SingleService = () => {
     const navigate = useNavigate();
     const {serviceId}=useParams();
     const item = petTransportServices[Number(serviceId)-1]
-useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
-                navigate('/transport'); 
-            }
-        };
+  useEffect(() => {
+          const handleClickOutside = (event) => {
+              if (modalRef.current && !modalRef.current.contains(event.target)) {
+                  navigate('/transport#services'); 
+              }
+          };
 
-        document.addEventListener("mousedown", handleClickOutside);
+          document.addEventListener("mousedown", handleClickOutside);
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, [navigate]);
+          return () => {
+              document.removeEventListener("mousedown", handleClickOutside);
+          };
+      }, [navigate]);
   return (
     <div className='fixed  z-50 top-0 left-0 right-0 bottom-0 bg-gray-950/90 flex justify-center items-center'>
       <div ref={modalRef} style={{ backgroundImage: `url(${gif})` }} className=" w-[60%] h-[70%] rounded-4xl">

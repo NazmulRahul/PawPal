@@ -27,7 +27,7 @@ const Documents = ({translate}) => {
                 <button
                     type="button"
                     onClick={handleClick}
-                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-500 text-white rounded-r-lg"
+                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700 hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Vaccination Book (Front)
                 </button>
@@ -43,7 +43,7 @@ const Documents = ({translate}) => {
                 <button
                     type="button"
                     onClick={handleClick}
-                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-500 text-white rounded-r-lg"
+                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700 hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Vaccination Book (Back)
                 </button>
@@ -59,7 +59,7 @@ const Documents = ({translate}) => {
                 <button
                     type="button"
                     onClick={handleClick}
-                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-500 text-white rounded-r-lg"
+                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700  hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Pet Photo (Standing)
                 </button>
@@ -75,7 +75,7 @@ const Documents = ({translate}) => {
                 <button
                     type="button"
                     onClick={handleClick}
-                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-500 text-white rounded-r-lg"
+                    className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700 hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Pet Photo (Sitting)
                 </button>
