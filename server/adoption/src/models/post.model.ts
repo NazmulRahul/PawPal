@@ -24,6 +24,13 @@ const addressSchema = new mongoose.Schema({
     }
 })
 
+const VaccineSchema = new mongoose.Schema({
+    sterilized: { type: Boolean, default: false },
+    fluVaccine: { type: Boolean, default: false },
+    rabiesVaccine: { type: Boolean, default: false },
+    dewormed: { type: Boolean, default: false }
+}, { _id: false });
+
 const postSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -59,16 +66,22 @@ const postSchema = new mongoose.Schema({
         default: "Unknown"
     },
     vaccine: {
-        type: [String],
+        type: VaccineSchema,
         required: false,
-        default: "Unknown"
+        default: {
+            sterilized: false,
+            fluVaccine: false,
+            rabiesVaccine: false,
+            dewormed: false
+        }
     },
     image: {
-        type:[String],
-        required:true
+        type: [String],
+        required: true
     },
     address: {
-        addressSchema
+        type: addressSchema,
+        required: true
     },
     isAdopted: {
         type: Boolean,

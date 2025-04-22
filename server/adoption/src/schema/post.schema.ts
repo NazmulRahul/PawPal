@@ -8,7 +8,12 @@ interface IAddress {
     email: string;
     location: string;
 }
-
+interface IVaccine {
+    sterilized?: boolean,
+    fluVaccine?: boolean,
+    rabiesVaccine?: boolean,
+    dewormed?: boolean
+}
 interface IPost extends Document {
     userId: mongoose.Types.ObjectId;
     animalType: string;
@@ -17,7 +22,7 @@ interface IPost extends Document {
     description: string;
     age?: number | null;
     sex?: string;
-    vaccine?: string[] | string;
+    vaccine: IVaccine,
     image: string[] | string;
     address: IAddress;
     isAdopted?: boolean;
@@ -31,6 +36,12 @@ const addressSchema = Joi.object<IAddress>({
     email: Joi.string().email().required(),
     location: Joi.string().required(),
 });
+const vaccineSchema = Joi.object<IVaccine>({
+    sterilized: Joi.boolean().optional(),
+    fluVaccine: Joi.boolean().optional(),
+    rabiesVaccine: Joi.boolean().optional(),
+    dewormed: Joi.boolean().optional()
+})
 
 export const postSchema = Joi.object<IPost>({
     userId: Joi.string().hex().length(24).required(), // MongoDB ObjectId validation
@@ -40,7 +51,7 @@ export const postSchema = Joi.object<IPost>({
     description: Joi.string().required(),
     age: Joi.number().allow(null).optional(), // Allow null
     sex: Joi.string().default("Unknown").optional(),
-    vaccine: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string().default("Unknown")).optional(),
+    vaccine: vaccineSchema.optional(),
     image: Joi.alternatives().try(Joi.array().items(Joi.string()), Joi.string().default("Unknown")).required(),
     address: addressSchema.required(),
     isAdopted: Joi.boolean().default(false).optional(),
