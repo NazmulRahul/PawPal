@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react';
 import AdoptCard from './AdoptCard';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
@@ -7,14 +8,13 @@ import ScrollAnimatedCurve from '../Utils/ScrollAnimatedCurve';
 const AdoptCardSegment = () => {
   const triggerOnce = true
   const { ref, inView } = useInView({ triggerOnce, threshold: 0.5 });
+    useEffect(()=>console.log('adopt'))
   return (
     <div className='w-full min-h-screen flex flex-col justify-start items-center pt-[5%] gap-[50px]'>
       <div className="w-[65%] h-[35%] flex gap-[10px] justify-center">
-        <AdoptCard index={1}/>
-        <AdoptCard index={2}/>
-        <AdoptCard index={3}/>
-        <AdoptCard index={4}/>
-        <AdoptCard index={5}/>
+        {
+          Array.from({length:5}).map((_,index)=><AdoptCard index={index}/>)
+        }
         <motion.div 
               ref={ref}
               initial={{ opacity: 0, y: 50 }}

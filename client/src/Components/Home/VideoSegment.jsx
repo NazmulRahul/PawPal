@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AnimatedSection from '../Utils/AnimatedSection'
 import gif from '../../assets/gif01.gif'
+import { useNavigate } from 'react-router-dom'
 
 const VideoSegment = () => {
+  useEffect(()=>console.log('video'))
+  const navigate  = useNavigate()
   return (
     <div className="w-full shrink-0 h-screen flex flex-col ">
      <div className="relative w-full flex-1"> {/* Adjust height as needed */}
@@ -27,11 +30,16 @@ const VideoSegment = () => {
         </div>
       </div>
     </div>
-    <div className="w-full h-[120px] flex bg-gray-900">
-      {
+    <div className="w-full h-[120px] flex justify-start items-center gap-[30px] px-[40px] bg-gradient-to-tr from-gray-800 via-gray-900 to-gray-800">
+      {/* {
         Array.from({length:14},()=><img className='h-full w-auto' src={gif} alt="" />)
-      }
-      
+      } */}
+      <button onClick={()=>navigate('/adoption')} className='gradient-shiny-button'>
+        <span>Adopt a paw</span>
+      </button>
+      <button onClick={()=>navigate('/transport/booking')} className='gradient-shiny-button'>
+        <span>Book a ride</span>
+      </button>
     </div>
     </div>
   )

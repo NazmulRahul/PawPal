@@ -4,6 +4,7 @@ const initialState = {
   isNavBgWhite: false,
   scrollY: 0,
   isOnHoverNavLink: false,
+  isShowGetStarted: false,
 };
 
 const utilSlice = createSlice({
@@ -19,12 +20,16 @@ const utilSlice = createSlice({
     setIsOnHoverNavLink(state, action) {
       state.isOnHoverNavLink = action.payload;
     },
+    setIsShowGetStarted(state, action){
+      state.isShowGetStarted=action.payload;
+    }
   },
 });
 
 export default utilSlice.reducer;
-export const { setScrollY, setIsNavBgWhite, setIsOnHoverNavLink } =
+export const { setScrollY, setIsNavBgWhite, setIsOnHoverNavLink , setIsShowGetStarted} =
   utilSlice.actions;
 export const isNavBgWhite = (state) => state.util.isNavBgWhite;
 export const scrollY = (state) => state.util.scrollY;
 export const isOnHoverNavLink = (state) => state.util.isOnHoverNavLink;
+export const isShowGetStarted = (state) =>state.util.isShowGetStarted;
