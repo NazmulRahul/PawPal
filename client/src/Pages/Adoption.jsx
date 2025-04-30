@@ -19,7 +19,7 @@ const Adoption = () => {
       dispatch(setScrollY(scrollY))
     }
   return (
-    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#EBE8DB] px-14">
+    <div ref={scrollRef} onScroll={handleScroll} className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#EBE8DB] px-14 min-2xl:px-60">
       <AdoptionLayout/>
     </div>
   )
