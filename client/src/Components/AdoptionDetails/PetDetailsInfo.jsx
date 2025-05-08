@@ -1,6 +1,6 @@
 import React from "react";
 import { pets } from "../Adoption/pets";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ClipboardCheck, MapPin, Pencil, ShieldCheck, ShieldX } from "lucide-react";
 import { Separator } from "../ui/separator";
 
@@ -46,7 +46,9 @@ const PetDetailsInfo = () => {
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex justify-between items-center">
         <h2 className="gloria-hallelujah-regular text-5xl">{name}</h2>
-        <Pencil />
+        <Link to={`../adoption/request?petId=${petId}`}>
+          <Pencil />
+        </Link>
       </div>
       <div className="flex justify-start gap-7 items-center text-2xl font-semibold mt-8">
         <h3>{breed}</h3>
