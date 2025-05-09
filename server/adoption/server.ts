@@ -8,10 +8,20 @@ import dotenv, { configDotenv } from 'dotenv'
 import cookieParser from "cookie-parser";
 import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from 'swagger-ui-express';
+import { Server } from 'socket.io';
+import http from 'http'
+
+import { authenticate } from "./src/middlewares/authentication/user.authentication";
 
 dotenv.config()
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+});
 const PORT = config.get<number>('PORT')
 const dbUri = config.get<string>('dbUri')
 const ip = config.get<string>('ip')
@@ -55,8 +65,15 @@ app.use('/api', adoptionRoutes)
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
+
+
+//socket
+
+io.on('connection', (socket) => {
+  // socket.join(socket.room)
+});
 // Start Server
-app.listen(PORT, ip, async () => {
+server.listen(PORT, ip, async () => {
   log.info(`Server is running on port ${PORT}`);
   try {
     await connectDB(dbUri)
