@@ -35,8 +35,8 @@ export const deleteComment=async (req: Request, res: Response): Promise<any> => 
     try{
         const {commentId}=req.params
         const deletedComment = await Comment.findByIdAndDelete(commentId);
-        if(!deleteComment){
-            res.status(404).json({error:'commnet not found'})
+        if(!deletedComment){
+            res.status(404).json({error:'comment not found'})
         }
         res.status(200).json({msg:'comment deleted'})
     }catch(error){

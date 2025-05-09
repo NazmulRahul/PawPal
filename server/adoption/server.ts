@@ -11,10 +11,11 @@ import swaggerUi from 'swagger-ui-express';
 import { Server } from 'socket.io';
 import http from 'http'
 
-import { authenticate } from "./src/middlewares/authentication/user.authentication";
 
 dotenv.config()
 
+
+//configuration
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -70,8 +71,31 @@ app.use((req, res) => {
 //socket
 
 io.on('connection', (socket) => {
-  // socket.join(socket.room)
+  console.log('New client connected:', socket.id);
+
+  // Handle joining a post room
+  socket.on('joinPost', (postId) => {
+    socket.join(postId); // Join the room associated with the post
+    console.log(`Client ${socket.id} joined post room: ${postId}`);
+  });
+
+  // Handle leaving a post room
+  socket.on('leavePost', (postId) => {
+    socket.leave(postId); // Leave the room associated with the post
+    console.log(`Client ${socket.id} left post room: ${postId}`);
+  });
+
+  // Handle new comment
+  socket.on('newComment', (commentData) => {
+    // Broadcast the new comment only to the specific post room
+    io.to(commentData.postId).emit('commentAdded', commentData);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
 });
+
 // Start Server
 server.listen(PORT, ip, async () => {
   log.info(`Server is running on port ${PORT}`);
