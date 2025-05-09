@@ -8,3 +8,5 @@ const router = express.Router()
 router.route('/saveComment').post(authenticate,saveComment)
 router.route('/loadComments/:id').get(authenticate,loadComments)
 router.route('/deleteComment/:id').delete(authenticate,deleteComment)
+
+export default router

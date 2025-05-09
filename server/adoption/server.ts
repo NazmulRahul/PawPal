@@ -10,7 +10,7 @@ import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from 'swagger-ui-express';
 import { Server } from 'socket.io';
 import http from 'http'
-
+import commentRoutes from './src/routes/comment.route'
 
 dotenv.config()
 
@@ -63,6 +63,7 @@ app.get("/adoption", (req: Request, res: Response) => {
 });
 
 app.use('/api', adoptionRoutes)
+app.use('/api/comment/',commentRoutes)
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
