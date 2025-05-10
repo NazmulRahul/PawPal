@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-
+import User from './user.model';
 const addressSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -33,7 +33,7 @@ const VaccineSchema = new mongoose.Schema({
 const postSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: User,
         required: true
     },
     animalType: {

@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
-
+import User from './user.model';
+import Post from './post.model'
 const commentSchema = new mongoose.Schema({
     postId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post',
+        ref: Post,
         required: true
     },
     parentId: {
@@ -14,7 +15,7 @@ const commentSchema = new mongoose.Schema({
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: User,
         required: true
     },
     text: {

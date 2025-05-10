@@ -2,13 +2,13 @@ import Comment from '../models/comment.model'
 import { Request, Response } from "express";
 import log from "../utils/logger";
 import mongoose from "mongoose";
-
+import User from '../models/user.model'
 
 export const loadComments = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { postId } = req.params;
+        const { id } = req.params;
 
-        const comments = await Comment.find({ postId })
+        const comments = await Comment.find({ postId:id })
             .populate('userId', 'name')  // populate commenter info
             .sort({ createdAt: 1 });
 
