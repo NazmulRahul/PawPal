@@ -18,7 +18,7 @@ const ip = config.get<string>('ip')
 const corsOption = {
   origin: "*",
   methods: ["GET", "POST"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ['*']
 }
 
 //swagger
