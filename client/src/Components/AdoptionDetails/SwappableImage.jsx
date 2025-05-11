@@ -1,19 +1,10 @@
 import React, { useState } from "react";
-import dogChild from "../../assets/dog-child.webp";
-import manCat from "../../assets/man-hugging-cat.jpg";
-import tabbyCat from "../../assets/Tabby-Cat.jpg";
-import wholesome from "../../assets/wholesome-pic.jpg";
-import anotherKitten from "../../assets/another-kitten.jpg";
 import { Button } from "../ui/button";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import { pets } from "../Adoption/pets";
-
-const SwappableImage = () => {
-  const petList = pets
 
 
+const SwappableImage = ({slides}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const slides = petList.map(pet => pet.imageUrl)
 
   const getImageIndexes = (len, index) => {
     if (len == 0) return null;

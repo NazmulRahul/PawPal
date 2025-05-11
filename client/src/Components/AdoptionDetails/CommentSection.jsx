@@ -8,8 +8,8 @@ import { createComment as createCommentApi, updateComment as updateCommentApi, d
 
 const CommentSection = () => {
   const petList = pets;
-  const { petId } = useParams();
-  const { name } = petList.find((pet) => pet.id === Number(petId));
+  const { postId } = useParams();
+  // const { name } = petList.find((pet) => pet.id === Number(postId));
 
   const [backendComments, setBackendComments] = useState(()=>[]);
   const [activeComment, setActiveComment] = useState(()=>null);
@@ -37,7 +37,7 @@ const CommentSection = () => {
       <div className="flex justify-center items-center">
         <h2 className="text-3xl font-semibold">
           Discussions On {" "}
-          <span className="gloria-hallelujah-regular">{name}</span>
+          <span className="gloria-hallelujah-regular">{'Lalu'}</span>
         </h2>
       </div>
       <Separator className={"bg-[#8C7A3F] my-4"} />
