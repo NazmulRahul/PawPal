@@ -1,5 +1,4 @@
 import React from "react";
-import { pets } from "../Adoption/pets";
 import { Link, useParams } from "react-router-dom";
 import { ClipboardCheck, MapPin, Pencil, ShieldCheck, ShieldX } from "lucide-react";
 import { Separator } from "../ui/separator";
@@ -24,12 +23,12 @@ import { Separator } from "../ui/separator";
 //   type: "Cat",
 // }
 
-const PetDetailsInfo = ({name, description, postId, sex, animalType, age, breed, createdAt, updatedAt, userId, vaccine, address }) => {   
+const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId, vaccine, address }) => {   
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex justify-between items-center">
         <h2 className="gloria-hallelujah-regular text-5xl">{name}</h2>
-        <Link to={`../adoption/request?petId=${postId}`}>
+        <Link to={`../adoption/request?postId=${_id}`}>
           <Pencil />
         </Link>
       </div>

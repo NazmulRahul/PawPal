@@ -4,7 +4,6 @@ import React from "react";
 
 const UserInfo = ({user}) => {
   const {name, email, phone, location } = user;
-  console.log(name, email, phone, location)
   const isActive = true
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F]">

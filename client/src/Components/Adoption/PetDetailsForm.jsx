@@ -13,20 +13,49 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import { useSearchParams } from "react-router-dom";
-import { pets } from "./pets";
 import { ChevronDown, Trash2, UploadCloudIcon, XIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
 import { addPost, imageUploadHandler } from "./imageUploadHandler";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { getPetDetailsWithId } from "@/Store/AdoptionPostSlice";
+
+
+const initialData = {
+      userId: null,
+      animalType : null,
+      breed : null,
+      name: '',
+      description: '',
+      age: '',
+      sex: null,
+      image: null,
+      isAdopted: false,
+      adoptedBy: null,
+      address: {
+        name: '',
+        city: '',
+        location: '',
+        phone: '',
+        email: '',
+      },
+      vaccine: {
+        sterilized: false,
+        fluVaccine: false,
+        rabiesVaccine: false,
+        dewormed: false      
+      },
+}
 
 const PetDetailsForm = () => {
   const [formPetType, setFormPetType] = useState("");
   const [formPetBreed, setFormPetBreed] = useState("");
   const [formPetGender, setFormPetGender] = useState("");
-  const [initialized, setInitialized] = useState(false);
   const [imageFile, setImageFile] = useState([]);
   const inputRef = useRef(null);
+  const dispatch = useDispatch()
+  const [defaultValues, setDefaultValues] = useState(initialData)
 
   const petDetails = petTypeBreeds;
 
@@ -34,40 +63,28 @@ const PetDetailsForm = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const petId = searchParams.get("petId");
-  // console.log(petId, "petId");
+  const postId = searchParams.get("postId");
 
-  const petList = pets;
-  // console.log(petList);
-
-  const {
-    name,
-    id,
-    size,
-    description,
-    gender,
-    sterilized,
-    age,
-    breed,
-    medical_history,
-    further_medical_history,
-    weight,
-    type,
-  } = petId ? petList.find((pet) => pet.id === Number(petId)) : {};
 
   const onPetTypeChange = (value) => {
     setFormPetType(value);
     setFormPetBreed("");
   };
 
-  //console.log(name, id, size, description, gender, sterilized, age, breed, medical_history, further_medical_history, weight, type)
 
-  useEffect(() => {
-    if (type != null) setFormPetType(type);
-    if (breed != null) setFormPetBreed(breed);
-    if (gender != null) setFormPetGender(gender);
-    setInitialized(true);
-  }, [gender, type, breed]);
+useEffect(() => {
+  if (!defaultValues.animalType) return;
+  setFormPetType(defaultValues.animalType);
+  setFormPetGender(defaultValues.sex);
+}, [defaultValues.animalType, defaultValues.sex]);
+
+
+useEffect(() => {
+  if (!formPetType || !defaultValues.breed) return;
+  setFormPetBreed(defaultValues.breed);
+}, [formPetType, defaultValues.breed]);
+
+
 
   // console.log(formPetType, formPetBreed, formPetGender);
   const styles = {
@@ -187,7 +204,9 @@ const PetDetailsForm = () => {
         dewormed: Boolean(dewormed),
       },
     };
-    //allPhotos.forEach((photo) => console.log(photo.name));
+
+    console.log(formBody)
+    
     try {
       const data = await addPost(formBody);
       if (data?.postId) {
@@ -197,7 +216,6 @@ const PetDetailsForm = () => {
         setFormPetType('')
         setFormPetBreed('')
         setFormPetGender('')
-        setInitialized('false')
       } else {
         // Error case - the server returned an error or the request failed
         toast.error("Failed to create post", { duration: 2000 });
@@ -213,6 +231,30 @@ const PetDetailsForm = () => {
       console.error("Unexpected error when creating post:", error);
     }
   };
+
+  useEffect(() => {
+  const fetchPostDetails = async (postId) => {
+    if (postId) {
+      try {
+        const data = await dispatch(getPetDetailsWithId(postId));
+        console.log(data);
+        if (data?.payload?.post) {
+          setDefaultValues(data.payload.post);
+        } else {
+          toast.error('Failed to load the values to edit.', {
+            description: 'Please Try Again Later',
+            duration: 3000,
+          });
+        }
+      } catch (err) {
+        toast.error('Unexpected Error!', { duration: 3000 });
+      }
+    }
+  };
+
+  fetchPostDetails(postId);
+}, [dispatch, postId]);
+
 
   return (
     <form action={onAction} className="grid w-full mt-7 gap-4">
@@ -287,7 +329,7 @@ const PetDetailsForm = () => {
             name="animalType"
             value={formPetType ?? ""}
             onValueChange={
-              initialized ? (value) => onPetTypeChange(value) : undefined
+              (value) => onPetTypeChange(value)
             }
           >
             <SelectTrigger className={styles.selectTrigger}>
@@ -315,7 +357,7 @@ const PetDetailsForm = () => {
             name="breed"
             value={formPetBreed ?? ""}
             onValueChange={
-              initialized ? (value) => setFormPetBreed(value) : null
+              (value) => setFormPetBreed(value)
             }
           >
             <SelectTrigger className={styles.selectTrigger}>
@@ -348,7 +390,7 @@ const PetDetailsForm = () => {
             name="name"
             placeholder="Minty, Kaju etc..."
             required
-            defaultValue={name}
+            defaultValue={defaultValues?.name}
             className={styles.input}
           />
         </div>
@@ -361,7 +403,7 @@ const PetDetailsForm = () => {
             name="age"
             placeholder="Enter age in years. Example:0.25yr is equivalent to 3months"
             required
-            defaultValue={age}
+            defaultValue={defaultValues?.age}
             className={styles.input}
           />
         </div>
@@ -374,7 +416,7 @@ const PetDetailsForm = () => {
             name="sex"
             value={formPetGender ?? ""}
             onValueChange={
-              initialized ? (value) => setFormPetGender(value) : undefined
+              (value) => setFormPetGender(value) 
             }
           >
             <SelectTrigger className={styles.selectTrigger}>
@@ -399,7 +441,7 @@ const PetDetailsForm = () => {
           <input
             type="checkbox"
             id="sterilized"
-            defaultChecked={sterilized}
+            defaultChecked={defaultValues?.vaccine?.sterilized}
             name="sterilized"
           />
           <Label className={styles.label}>Sterilized</Label>
@@ -409,7 +451,7 @@ const PetDetailsForm = () => {
           <input
             type="checkbox"
             id="flu"
-            defaultChecked={medical_history?.flu}
+            defaultChecked={defaultValues?.vaccine?.fluVaccine}
             name="fluVaccine"
           />
           <Label className={styles.label}>Flu Vaccine</Label>
@@ -419,7 +461,7 @@ const PetDetailsForm = () => {
           <input
             type="checkbox"
             id="rabies"
-            defaultChecked={medical_history?.rabies}
+            defaultChecked={defaultValues?.vaccine?.rabiesVaccine}
             name="rabiesVaccine"
           />
           <Label className={styles.label}>Rabies Vaccine</Label>
@@ -429,7 +471,7 @@ const PetDetailsForm = () => {
           <input
             type="checkbox"
             id="dewormed"
-            defaultChecked={medical_history?.dewormed}
+            defaultChecked={defaultValues?.vaccine?.dewormed}
             name="dewormed"
           />
           <Label className={styles.label}>Dewormed</Label>
@@ -443,7 +485,7 @@ const PetDetailsForm = () => {
         <Textarea
           id="description"
           name="description"
-          defaultValue={description}
+          defaultValue={defaultValues?.description}
           required
           className={"bg-[#F2EED9] border-[#8C7A3F]"}
         />
@@ -459,6 +501,7 @@ const PetDetailsForm = () => {
             <Input
               id="ownername"
               name="ownername"
+              defaultValue={defaultValues?.address?.name}
               placeholder="John Doe"
               className={styles.input}
             />
@@ -470,6 +513,7 @@ const PetDetailsForm = () => {
             <Input
               id="city"
               name="city"
+              defaultValue={defaultValues?.address?.city}
               placeholder="Dhaka,Chittagong, Sylhet etc..."
               className={styles.input}
             />
@@ -482,6 +526,7 @@ const PetDetailsForm = () => {
               id="phone"
               name="phone"
               type={"tel"}
+              defaultValue={defaultValues?.address?.phone}
               inputMode="numeric"
               pattern="^\+?[0-9]{11}$"
               placeholder="+880172***10"
@@ -497,6 +542,7 @@ const PetDetailsForm = () => {
               name="email"
               placeholder="johndoe@gmail.com"
               type={"email"}
+              defaultValue={defaultValues?.address?.email}
               className={styles.input}
             />
           </div>
@@ -507,6 +553,7 @@ const PetDetailsForm = () => {
         <Input
           id="location"
           name="location"
+          defaultValue={defaultValues?.address?.location}
           required
           placeholder="Topobon R/A, Akhaliya, Sylhet"
           className={styles.input}

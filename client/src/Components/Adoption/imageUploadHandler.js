@@ -19,6 +19,7 @@ export const imageUploadHandler = async (file) => {
 
 export const addPost = async (formBody) => {
   try {
+    console.log(formBody)
     const response = await axios.post(POST_URL, formBody);
     return response.data;
   } catch (error) {

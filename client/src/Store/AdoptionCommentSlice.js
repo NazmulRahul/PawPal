@@ -1,31 +1,94 @@
-const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const initialState = [
-  {
-    id: "1",
-    body: "I absolutely loved this article! It provided a lot of insights I hadn't considered before.",
-    userName: "Jack",
-    userId: "1",
-    parentId: null,
-    createdAt: "2021-08-16T23:00:33.010+02:00",
-  },
-  {
-    id: "2",
-    body: "Great post! I think the author made some compelling arguments regarding the current trends.",
-    userName: "John",
-    userId: "2",
-    parentId: null,
-    createdAt: "2021-08-16T23:15:45.010+02:00",
-  },
-];
 
-const addComment = createAsyncThunk("comments/addComment", )
+
+
+const BASE_URL = 'http://15.235.163.93:5000/adoption/api/comment/'
+
+
+const initialState = {
+  comments: [],
+  isLoading: false,
+  state: 'idle'
+}
+
+export const createNewComment = createAsyncThunk("comments/createNewComment", async (comment) => {
+  try{
+    console.log(comment, "comment")
+    const response = await axios.post(BASE_URL+'saveComment', comment);
+    return response.data;
+  } catch(err) {
+    return err
+  }
+})
+
+export const getAllComments = createAsyncThunk("comments/getAllComments", async(id) => {
+  try {
+    const response = await axios.get(BASE_URL+`loadComments/${id}`);
+    return response.data
+  } catch (error) {
+    return error;
+  }
+})
+
+export const eraseComment = createAsyncThunk("comments/eraseComment", async(id) => {
+  try {
+    const response = await axios.delete(BASE_URL+`deleteComment/${id}`);
+    return response.data
+  } catch (error) {
+    return error;
+  }
+})
 
 const adoptionCommentSlice = createSlice({
   name: "comments",
   initialState,
   reducers: {},
   extraReducers: builder => {
-
+    builder
+    .addCase(createNewComment.pending,(state,action) => {
+      state.isLoading = true
+      state.status = 'pending'
+    })
+    .addCase(createNewComment.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.status = 'fulfilled'
+    })
+    .addCase(createNewComment.rejected,(state,action) => {
+      state.isLoading=false,
+      state.status = 'rejected'
+    })
+    .addCase(getAllComments.pending,(state,action) => {
+      state.isLoading = true
+      state.status = 'pending'
+    })
+    .addCase(getAllComments.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.status = 'fulfilled'
+      // state.comments = action?.payload
+      //console.log(action.payload, 'action payload');
+      state.comments = action?.payload
+    })
+    .addCase(getAllComments.rejected,(state,action) => {
+      state.isLoading=false,
+      state.status = 'rejected'
+    })
+    .addCase(eraseComment.pending,(state,action) => {
+      state.isLoading = true
+      state.status = 'pending'
+    })
+    .addCase(eraseComment.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.status = 'fulfilled'
+    })
+    .addCase(eraseComment.rejected,(state,action) => {
+      state.isLoading=false,
+      state.status = 'rejected'
+    })
   }
 });
+
+export const selectAllComments = (state) => state.adoptionComment.comments
+
+export default adoptionCommentSlice.reducer;

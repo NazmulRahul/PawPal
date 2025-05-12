@@ -11,10 +11,11 @@ import PetDetailsInfo from "@/Components/AdoptionDetails/PetDetailsInfo";
 import CommentSection from "@/Components/AdoptionDetails/CommentSection";
 import UserInfo from "@/Components/AdoptionDetails/UserInfo";
 import { useParams } from "react-router-dom";
-import { getPetDetailsWithId } from "@/Components/AdoptionDetails/utils";
+import { getPetDetailsWithId, getSinglePost } from "@/Store/AdoptionPostSlice";
+import { toast } from "sonner";
 
 const PetAdoptionDetails = () => {
-  const [petDetails, setPetDetails] = useState(() => null);
+  const petDetails = useSelector(getSinglePost);
   const { postId } = useParams();
   const scrollRef = useRef(null);
   const dispatch = useDispatch();
@@ -30,14 +31,15 @@ const PetAdoptionDetails = () => {
   useEffect(() => {
     const fetchPetDetails = async (id) => {
       try {
-        const detailedData = await getPetDetailsWithId(id);
-        setPetDetails(detailedData.post)
+        const detailedData = await dispatch(getPetDetailsWithId(postId))
+        !detailedData?.payload?.post ? toast.error('Some error occured', {duration:2000}) : null;
       } catch (error) {
         console.log(error);
       }
     };
     fetchPetDetails(postId)
-  }, [postId]);
+  }, [dispatch, postId]);
+
   return (
     <div
       ref={scrollRef}
