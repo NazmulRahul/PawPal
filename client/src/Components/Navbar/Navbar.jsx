@@ -10,7 +10,6 @@ import AuthSwitch from './AuthSwitch'
 
 const Navbar = () => {
     const dispatch = useDispatch()
-    const currentIsNavBgWhite = useSelector(isNavBgWhite)
     const currentIsOnHoverNavLink = useSelector(isOnHoverNavLink)
     
     const currentUser = useSelector(user);
@@ -21,11 +20,9 @@ const Navbar = () => {
     }
     useEffect(()=>console.log(currentUser))
   return (
-    <div className={`z-40 fixed flex top-0 left-0 right-0 h-[50px] ${currentIsNavBgWhite?'bg-transparent':'bg-white'}`}>
+    <div className={`z-40 fixed flex top-0 left-0 right-0 h-[50px] bg-[#F5F5F5] hover:bg-transparent`}>
       <div 
-        onMouseEnter={()=>dispatch(setIsNavBgWhite(true))} 
-        onMouseLeave={()=>dispatch(setIsNavBgWhite(false))} 
-        className={` z-50 relative h-[100px] w-full ${currentIsNavBgWhite?'bg-[#F5F5F5]':'backdrop-blur-xl'} transition-colors duration-900 flex items-center justify-between px-[5%]`}>
+        className={` z-50 relative h-[100px] w-full hover:bg-[#F5F5F5] backdrop-blur-xl transition-colors duration-900 flex items-center justify-between px-[5%]`}>
           <Link to={'/'} className="w-[100px] h-full flex flex-col justify-center items-center">
             <img className='w-[150px] h-[60%] object-contain' src={logo} alt="" />
             <p className='font-extrabold cherry-bomb-one-regular text-2xl text-orange-500'>Paw Pal</p>
