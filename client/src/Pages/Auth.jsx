@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { authStatus, setAuthStatus } from '@/Store/Auth';
+import { useState, useEffect, useRef, use } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 const Auth = () => {
@@ -6,6 +8,8 @@ const Auth = () => {
     const [isShowContent, setIShowContent]=useState(true);
     const modalRef = useRef(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const currentAuthStatus = useSelector(authStatus)
     useEffect(()=>{
       const timeoutID = setTimeout(()=>{
         setIShowContent(true);
@@ -25,6 +29,13 @@ const Auth = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [navigate]);
+    useEffect(()=>{
+      console.log(currentAuthStatus, 'currentStatus')
+      if(currentAuthStatus) {
+        dispatch(setAuthStatus(false));
+        navigate('/');
+      }
+    })
   return (
     <div className='fixed top-0 bottom-0 left-0 right-0 z-[100] flex justify-center items-center bg-neutral-950/90 text-white'>
         <div ref={modalRef} className='w-[50%] h-[70%] flex justify-between relative '>

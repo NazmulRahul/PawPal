@@ -2,8 +2,11 @@ import React, { useEffect } from 'react'
 import AnimatedSection from '../Utils/AnimatedSection'
 import gif from '../../assets/gif01.gif'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { user } from '@/Store/Auth'
 
 const VideoSegment = () => {
+  const currentUser = useSelector(user)
   useEffect(()=>console.log('video'))
   const navigate  = useNavigate()
   return (
@@ -40,6 +43,13 @@ const VideoSegment = () => {
       <button onClick={()=>navigate('/transport/booking')} className='gradient-shiny-button'>
         <span>Book a ride</span>
       </button>
+      {
+        currentUser?
+        <button onClick={()=>navigate('/blog/create')} className='gradient-shiny-button'>
+          <span>Create a Blog</span>
+        </button>
+        :null
+      }
     </div>
     </div>
   )

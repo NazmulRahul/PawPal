@@ -9,7 +9,7 @@ import TransportSubLinks from './TransportSubLinks'
 const HoverCard = () => {
     const currentIsOnHoverNavLink = useSelector(isOnHoverNavLink)
   return (
-    <div className={`cursor-default w-[500px] h-[300px] bg-amber-400 absolute ${currentIsOnHoverNavLink?'flex':'hidden'}`}>
+    <div className={`cursor-default w-[500px] h-[300px] bg-gray-900 absolute ${currentIsOnHoverNavLink?'flex':'hidden'}`}>
       {currentIsOnHoverNavLink===1?<AdoptSubLinks/>:null}
       {currentIsOnHoverNavLink===2?<TransportSubLinks/>:null}
       {currentIsOnHoverNavLink===3?<BlogSubLinks/>:null}

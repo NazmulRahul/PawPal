@@ -13,6 +13,9 @@ import Auth from "./Pages/Auth";
 import SingleService from "./Components/Transport/SingleService";
 import TransportProcedure from "./Components/Transport/TransportProcedure";
 import AgencyDetailed from "./Components/Transport/AgencyDetailed";
+import BlogLayout from "./Components/Layout/BlogLayout";
+import Blog from "./Pages/Blog";
+import CreateBlog from "./Components/Blog/CreateBlog";
 
 function App() {
   return (
@@ -33,6 +36,10 @@ function App() {
         <Route path="transport/service/:serviceId" element={<SingleService/>}/>
         <Route path="transport/agency/:agencyId" element={<AgencyDetailed/>}/>
         <Route path="transport/booking" element={<TransportProcedure/>}/>
+        <Route path="blog" element={<BlogLayout/>}>
+          <Route index element={<Blog/>}/>
+          <Route path="create" element={<CreateBlog/>}/>
+        </Route>
       </Route>
     </Routes>
   )
