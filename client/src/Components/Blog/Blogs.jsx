@@ -1,7 +1,7 @@
 import React from 'react'
 import AnimatedSection from '../Utils/AnimatedSection'
 import { useDispatch, useSelector } from 'react-redux'
-import { blogs } from '@/Store/Blog'
+import { blogs, setBlog } from '@/Store/Blog'
 
 
 const extractHeadings=(node) => {
@@ -50,7 +50,7 @@ const Blogs = () => {
                 </div>
                 <div className="w-[40%] h-full group-hover:hidden"></div>
                 <div className="w-[50%] h-full flex flex-col justify-end items-end p-5 gap-2">
-                  <button className="group/button border-2 rounded-md text-lg font-bold hover:border-blue-500 px-4 py-1 cursor-pointer border-blue-400">
+                  <button onClick={()=>dispatch(setBlog(item))} className="group/button border-2 rounded-md text-lg font-bold hover:border-blue-500 px-4 py-1 cursor-pointer border-blue-400">
                     <span className="text-blue-400 group-hover/button:text-white">V</span>
                     <span className="text-white group-hover/button:text-blue-400">ie</span>
                     <span className="text-blue-400 group-hover/button:text-white">w</span>
