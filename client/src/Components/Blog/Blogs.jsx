@@ -1,6 +1,6 @@
 import React from 'react'
 import AnimatedSection from '../Utils/AnimatedSection'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { blogs } from '@/Store/Blog'
 
 
@@ -21,6 +21,7 @@ const extractHeadings=(node) => {
 
 const Blogs = () => {
   const currentBlogs = useSelector(blogs)
+  const dispatch  = useDispatch()
 
   return (
     <div className="fixed top-0 left-0 bottom-0 w-[28%] flex flex-col pt-[130px] pb-[30px] items-center gap-[20px] overflow-y-scroll scrollbar-hidden">
