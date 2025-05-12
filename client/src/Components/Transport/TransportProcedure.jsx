@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 const TransportProcedure = () => {
     const [translate, setTranslate] = useState(0);
     const [title, setTitle] =useState('OWNER DETAILS')
-    const titles =['OWNER DETAILS', 'PET DETAILS', 'TRAVEL DETAILS', 'DOCUMENTS']
+    const titles =['OWNER DETAILS', 'PET DETAILS', 'TRAVEL DETAILS', 'DOCUMENTS', 'Pick An Agency']
     const navigate = useNavigate();
     const fixTitle =(temp)=>{
         // console.log(temp, 'temp')
@@ -20,6 +20,7 @@ const TransportProcedure = () => {
         else if(temp===-208)setTitle(titles[2])
         else if(temp===-312)setTitle(titles[3])
         else if(temp===-416)setTitle(titles[4])
+        else if(temp===-520)setTitle(titles[5])
         else if (temp===0)(setTitle(titles[0]))
     }
     const handleGoLeft = ()=>{
@@ -27,7 +28,7 @@ const TransportProcedure = () => {
                         fixTitle(translate+104);}
     }
     const handleGoRight =()=>{
-        if(translate>-300) {
+        if(translate>-400) {
             setTranslate(translate-104);
             fixTitle(translate-104);}
     }
@@ -63,6 +64,7 @@ const TransportProcedure = () => {
             <FontAwesomeIcon onClick={()=>{setTranslate(-104);fixTitle(-104)}} icon="far fa-dot-circle" className={`mx-[2px] ${translate<0 && translate>-200?' text-blue-500':''}`}/>
             <FontAwesomeIcon onClick={()=>{setTranslate(-208);fixTitle(-208)}} icon="far fa-dot-circle" className={`mx-[2px] ${translate<-200 && translate>-300?' text-blue-500':''}`}/>
             <FontAwesomeIcon onClick={()=>{setTranslate(-312);fixTitle(-312)}} icon="far fa-dot-circle" className={`mx-[2px] ${translate<-300 && translate>-400?' text-blue-500':''}`} />
+            <FontAwesomeIcon onClick={()=>{setTranslate(-416);fixTitle(-416)}} icon="far fa-dot-circle" className={`mx-[2px] ${translate<-400 && translate>-500?' text-blue-500':''}`} />
         </div>
         <button onClick={handleGoRight}  className=' cursor-pointer text-blue-500 font-semibold text-2xl'>
             <FontAwesomeIcon icon="fas fa-chevron-right" />

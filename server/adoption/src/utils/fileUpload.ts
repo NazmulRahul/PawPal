@@ -24,6 +24,7 @@ const uploadToCloudinary=async(filePath:string)=>{
         return response.url
     }catch(error){
         fs.unlinkSync(filePath) //removes locally saved file 
+        log.error('error2!')
         return 
     }
 }

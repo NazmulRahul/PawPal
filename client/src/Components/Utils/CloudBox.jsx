@@ -13,6 +13,7 @@ const CloudBox = ({id}) => {
     const handleNavigate = ()=>{
         dispatch(setIsShowGetStarted(false))
         if(id==='Make Transport') navigate('/transport/booking')
+        else if(id==='Create Blog') navigate('/blog/create')
     }
     useEffect(()=>{
         if(id==='Adopt') setUrl(apt)
@@ -20,9 +21,9 @@ const CloudBox = ({id}) => {
         else setUrl(blog)
     },[])
   return (
-    <button onClick={handleNavigate} className="h-[180px] rounded-xl border-2 border-neutral-200 hover:border-blue-700 w-[280px] group cursor-pointer relative flex bg-gray-800 justify-start items-center p-[20px] gap-[30px]">
+    <button onClick={handleNavigate} className="h-[180px] rounded-xl border-2 group border-neutral-200 hover:border-blue-700 w-[280px] group cursor-pointer relative flex bg-gray-800 justify-start items-center p-[20px] gap-[30px]">
         
-        <div className="w-[100px] h-[100px] p-[10px] border-2 border-neutral-200 rounded-full">
+        <div className="w-[100px] h-[100px] p-[10px] border-2 group-hover:border-blue-700 border-neutral-200 rounded-full">
             <img className='w-full h-full rounded-full object-cover' src={url} alt="" />
         </div>
         <div className="w-[40%] h-full flex justify-center items-center">

@@ -3,6 +3,7 @@ import auth from './Auth';
 import util from './Utils';
 import adoptionPostReducer from './AdoptionPostSlice'
 import adoptionCommentReducer from './AdoptionCommentSlice'
+import blog from './Blog';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     util,
     adoptionPost: adoptionPostReducer,
     adoptionComment: adoptionCommentReducer,
+    blog,
   },
 });
 
