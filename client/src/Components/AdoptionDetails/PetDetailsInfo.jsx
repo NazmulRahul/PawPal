@@ -3,34 +3,20 @@ import { Link, useParams } from "react-router-dom";
 import { ClipboardCheck, MapPin, Pencil, ShieldCheck, ShieldX } from "lucide-react";
 import { Separator } from "../ui/separator";
 
-// {
-//   id: 3,
-//   size: "Chonky",
-//   name: "Lalu",
-//   Description: "A tiny Persian kitten with a fluffy golden coat. Loves cuddling and sleeping in warm spots.",
-//   gender: "Male",
-//   sterilized: false,
-//   age: "5 months",
-//   breed: "Orange",
-//   medical_history: {
-//     rabies: false,
-//     flu: false,
-//     dewormed: true,
-//   },
-//   further_medical_history: "Had mild digestive issues but recovered after diet adjustment.",
-//   weight: 1.8,
-//   imageUrl: "https://res.cloudinary.com/dr6pjobzl/image/upload/v1742402843/breed-spotlight-scottish-fold-min_cvquwn.webp",
-//   type: "Cat",
-// }
 
-const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId, vaccine, address }) => {   
+const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId: postUserId, vaccine, address, activeUserId }) => {   
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex justify-between items-center">
         <h2 className="gloria-hallelujah-regular text-5xl">{name}</h2>
-        <Link to={`../adoption/request?postId=${_id}`}>
-          <Pencil />
-        </Link>
+        {
+          postUserId === activeUserId ? (
+            <Link to={`../adoption/request?postId=${_id}`}>
+              <Pencil />
+            </Link>
+          ) : null
+        }
+        
       </div>
       <div className="flex justify-start gap-7 items-center text-2xl font-semibold mt-8">
         <h3>{breed}</h3>

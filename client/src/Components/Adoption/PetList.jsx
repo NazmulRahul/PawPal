@@ -6,10 +6,13 @@ import { getAllPosts, getStatus, selectAllPosts } from '@/Store/AdoptionPostSlic
 const PetList = () => {
   const dispatch = useDispatch()
   const allPets = useSelector(selectAllPosts)
+  console.log(allPets)
   const status = useSelector(getStatus)
   
-  const filteredPets = allPets.filter(pet => pet.userId === "681f94001e6d69bdafe33676")
-  console.log(filteredPets, "filtered")
+  // const filteredPets = allPets.filter(pet => pet.userId === "681f94001e6d69bdafe33676")
+  // console.log(filteredPets, "filtered")
+
+  const filteredPets = allPets.filter(pet => pet.address)
 
   useEffect(() => {
     dispatch(getAllPosts());

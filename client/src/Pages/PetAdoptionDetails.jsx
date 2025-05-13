@@ -13,6 +13,7 @@ import UserInfo from "@/Components/AdoptionDetails/UserInfo";
 import { useParams } from "react-router-dom";
 import { getPetDetailsWithId, getSinglePost } from "@/Store/AdoptionPostSlice";
 import { toast } from "sonner";
+import { user } from "@/Store/Auth";
 
 const PetAdoptionDetails = () => {
   const petDetails = useSelector(getSinglePost);
@@ -20,6 +21,7 @@ const PetAdoptionDetails = () => {
   const scrollRef = useRef(null);
   const dispatch = useDispatch();
   const currentScrollY = useSelector(scrollY);
+  const userData = useSelector(user)
 
   const handleScroll = () => {
     const scrollY = scrollRef.current.scrollTop;
@@ -51,7 +53,7 @@ const PetAdoptionDetails = () => {
           <SwappableImage slides={petDetails.image}/>
           <section className="grid grid-cols-2 gap-3 mt-10">
             <div className="flex flex-col gap-4">
-              <PetDetailsInfo {...petDetails} />
+              <PetDetailsInfo activeUserId={userData?.userId} {...petDetails} />
               <UserInfo user={petDetails.address} />
             </div>
             <CommentSection />

@@ -18,7 +18,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
 import { addPost, imageUploadHandler } from "./imageUploadHandler";
 import { toast } from "sonner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deletePost, getPetDetailsWithId } from "@/Store/AdoptionPostSlice";
 import {
   AlertDialog,
@@ -31,6 +31,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
+import { user } from "@/Store/Auth";
 
 const initialData = {
   userId: null,
@@ -67,6 +68,8 @@ const PetDetailsForm = () => {
   const dispatch = useDispatch();
   const [defaultValues, setDefaultValues] = useState(initialData);
   const [vaccineState, setVaccineState] = useState(initialData.vaccine);
+  const userData = useSelector(user)
+  console.log(userData)
 
   const navigate = useNavigate();
 
@@ -188,7 +191,7 @@ const PetDetailsForm = () => {
     );
     console.log(allPhotos);
     const formBody = {
-      userId: "681f94001e6d69bdafe33676",
+      userId: userData?.userId, 
       animalType,
       breed,
       name,
