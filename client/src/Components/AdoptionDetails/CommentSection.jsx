@@ -7,18 +7,22 @@ import { createComment as createCommentApi, updateComment as updateCommentApi, d
 import { useDispatch, useSelector } from "react-redux";
 import { createNewComment, eraseComment, getAllComments, selectAllComments } from "@/Store/AdoptionCommentSlice";
 import { toast } from "sonner";
+import { user } from "@/Store/Auth";
+import { getSinglePost } from "@/Store/AdoptionPostSlice";
 
 const CommentSection = () => {
   const dispatch = useDispatch()
   const allComments = useSelector(selectAllComments);
   const { postId } = useParams();
+  const userData = useSelector(user)
+  const currentPost = useSelector(getSinglePost)
 
   const [backendComments, setBackendComments] = useState(()=>[]);
   console.log(backendComments, 'backendComments');
   const [activeComment, setActiveComment] = useState(()=>null);
 
   const addComment = async (comment, parentId=null) => {
-    const data = await dispatch(createNewComment({text: comment, parentId: parentId, postId, userId: "681f94001e6d69bdafe33676" }))
+    const data = await dispatch(createNewComment({text: comment, parentId: parentId, postId, userId: userData?.userId }))
     console.log(data)
     if(data?.payload?.msg) {
       toast.success('Comment Posted Successfully', {duration:2000})
@@ -52,7 +56,7 @@ const CommentSection = () => {
       <div className="flex justify-center items-center">
         <h2 className="text-3xl font-semibold">
           Discussions On {" "}
-          <span className="gloria-hallelujah-regular">{'Lalu'}</span>
+          <span className="gloria-hallelujah-regular">{currentPost?.name}</span>
         </h2>
       </div>
       <Separator className={"bg-[#8C7A3F] my-4"} />
