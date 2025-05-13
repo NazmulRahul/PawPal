@@ -12,41 +12,51 @@ import {
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronDown, Trash2, UploadCloudIcon, XIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
 import { addPost, imageUploadHandler } from "./imageUploadHandler";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-import { getPetDetailsWithId } from "@/Store/AdoptionPostSlice";
-
+import { deletePost, getPetDetailsWithId } from "@/Store/AdoptionPostSlice";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 const initialData = {
-      userId: null,
-      animalType : null,
-      breed : null,
-      name: '',
-      description: '',
-      age: '',
-      sex: null,
-      image: null,
-      isAdopted: false,
-      adoptedBy: null,
-      address: {
-        name: '',
-        city: '',
-        location: '',
-        phone: '',
-        email: '',
-      },
-      vaccine: {
-        sterilized: false,
-        fluVaccine: false,
-        rabiesVaccine: false,
-        dewormed: false      
-      },
-}
+  userId: null,
+  animalType: null,
+  breed: null,
+  name: "",
+  description: "",
+  age: "",
+  sex: null,
+  image: null,
+  isAdopted: false,
+  adoptedBy: null,
+  address: {
+    name: "",
+    city: "",
+    location: "",
+    phone: "",
+    email: "",
+  },
+  vaccine: {
+    sterilized: false,
+    fluVaccine: false,
+    rabiesVaccine: false,
+    dewormed: false,
+  },
+};
 
 const PetDetailsForm = () => {
   const [formPetType, setFormPetType] = useState("");
@@ -54,8 +64,11 @@ const PetDetailsForm = () => {
   const [formPetGender, setFormPetGender] = useState("");
   const [imageFile, setImageFile] = useState([]);
   const inputRef = useRef(null);
-  const dispatch = useDispatch()
-  const [defaultValues, setDefaultValues] = useState(initialData)
+  const dispatch = useDispatch();
+  const [defaultValues, setDefaultValues] = useState(initialData);
+  const [vaccineState, setVaccineState] = useState(initialData.vaccine);
+
+  const navigate = useNavigate();
 
   const petDetails = petTypeBreeds;
 
@@ -65,26 +78,21 @@ const PetDetailsForm = () => {
 
   const postId = searchParams.get("postId");
 
-
   const onPetTypeChange = (value) => {
     setFormPetType(value);
     setFormPetBreed("");
   };
 
+  useEffect(() => {
+    if (!defaultValues.animalType) return;
+    setFormPetType(defaultValues.animalType);
+    setFormPetGender(defaultValues.sex);
+  }, [defaultValues.animalType, defaultValues.sex]);
 
-useEffect(() => {
-  if (!defaultValues.animalType) return;
-  setFormPetType(defaultValues.animalType);
-  setFormPetGender(defaultValues.sex);
-}, [defaultValues.animalType, defaultValues.sex]);
-
-
-useEffect(() => {
-  if (!formPetType || !defaultValues.breed) return;
-  setFormPetBreed(defaultValues.breed);
-}, [formPetType, defaultValues.breed]);
-
-
+  useEffect(() => {
+    if (!formPetType || !defaultValues.breed) return;
+    setFormPetBreed(defaultValues.breed);
+  }, [formPetType, defaultValues.breed]);
 
   // console.log(formPetType, formPetBreed, formPetGender);
   const styles = {
@@ -205,17 +213,18 @@ useEffect(() => {
       },
     };
 
-    console.log(formBody)
-    
+    console.log(formBody);
+
     try {
       const data = await addPost(formBody);
       if (data?.postId) {
         toast.success("Post created successfully", { duration: 2000 });
         console.log("Post created successfully:", data);
-        handleRemoveImage()
-        setFormPetType('')
-        setFormPetBreed('')
-        setFormPetGender('')
+        handleRemoveImage();
+        setFormPetType("");
+        setFormPetBreed("");
+        setFormPetGender("");
+        navigate('..', {replace: true})
       } else {
         // Error case - the server returned an error or the request failed
         toast.error("Failed to create post", { duration: 2000 });
@@ -232,29 +241,53 @@ useEffect(() => {
     }
   };
 
-  useEffect(() => {
-  const fetchPostDetails = async (postId) => {
-    if (postId) {
-      try {
-        const data = await dispatch(getPetDetailsWithId(postId));
-        console.log(data);
-        if (data?.payload?.post) {
-          setDefaultValues(data.payload.post);
-        } else {
-          toast.error('Failed to load the values to edit.', {
-            description: 'Please Try Again Later',
-            duration: 3000,
-          });
-        }
-      } catch (err) {
-        toast.error('Unexpected Error!', { duration: 3000 });
+  const onDeletePost = async (id) => {
+    try {
+      const data = await dispatch(deletePost(id));
+      console.log(deletePost);
+      if (data?.payload?.msg) {
+        toast.success("Post has been deleted successfully.", {
+          duration: 3000,
+        });
+        navigate("..", { replace: true });
+      } else {
+        toast.error("The post could not be deleted", {
+          description: "Please try again later",
+          duration: 3000,
+        });
       }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.", {
+        description: "Please try again later",
+        duration: 3000,
+      });
     }
   };
 
-  fetchPostDetails(postId);
-}, [dispatch, postId]);
+  useEffect(() => {
+    const fetchPostDetails = async (postId) => {
+      if (postId) {
+        try {
+          const data = await dispatch(getPetDetailsWithId(postId));
+          console.log(data);
+          if (data?.payload?.post) {
+            setDefaultValues(data.payload.post);
+            setVaccineState(data.payload.post.vaccine || initialData.vaccine);
+          } else {
+            toast.error("Failed to load the values to edit.", {
+              description: "Please Try Again Later",
+              duration: 3000,
+            });
+          }
+        } catch (err) {
+          toast.error("Unexpected Error!", { duration: 3000 });
+        }
+      }
+    };
 
+    fetchPostDetails(postId);
+  }, [dispatch, postId]);
 
   return (
     <form action={onAction} className="grid w-full mt-7 gap-4">
@@ -328,9 +361,7 @@ useEffect(() => {
             id="animalType"
             name="animalType"
             value={formPetType ?? ""}
-            onValueChange={
-              (value) => onPetTypeChange(value)
-            }
+            onValueChange={(value) => onPetTypeChange(value)}
           >
             <SelectTrigger className={styles.selectTrigger}>
               <SelectValue placeholder="Cat, Dog etc..." />
@@ -356,9 +387,7 @@ useEffect(() => {
             id="breed"
             name="breed"
             value={formPetBreed ?? ""}
-            onValueChange={
-              (value) => setFormPetBreed(value)
-            }
+            onValueChange={(value) => setFormPetBreed(value)}
           >
             <SelectTrigger className={styles.selectTrigger}>
               <SelectValue placeholder="Persian, Serbian Huskey etc..." />
@@ -415,9 +444,7 @@ useEffect(() => {
             id="sex"
             name="sex"
             value={formPetGender ?? ""}
-            onValueChange={
-              (value) => setFormPetGender(value) 
-            }
+            onValueChange={(value) => setFormPetGender(value)}
           >
             <SelectTrigger className={styles.selectTrigger}>
               <SelectValue placeholder={"Male/Female"} />
@@ -437,41 +464,61 @@ useEffect(() => {
       <Label className={"font-semibold text-md"}>Medical Info:</Label>
       <section className="grid grid-cols-5 bg-[#F2EED9] p-2 rounded-md shadow-xs border-[#8C7A3F] border-[0.5px]">
         <div className="flex items-center gap-1">
-          {/* <Checkbox id="sterilized" name="sterilized" className={'border-2 border-[#8C7A3F] data-[state=checked]:bg-[#3b361f] data-[state=unchecked]:bg-[#ebe8db]'}/> */}
           <input
             type="checkbox"
             id="sterilized"
-            defaultChecked={defaultValues?.vaccine?.sterilized}
+            checked={vaccineState?.sterilized}
+            onChange={(e) =>
+              setVaccineState({
+                ...vaccineState,
+                sterilized: e.target.checked,
+              })
+            }
             name="sterilized"
           />
           <Label className={styles.label}>Sterilized</Label>
         </div>
         <div className="flex items-center gap-1">
-          {/* <Checkbox id="flu" name="fluVaccine" className={'border-2 border-[#8C7A3F] data-[state=checked]:bg-[#3b361f] data-[state=unchecked]:bg-[#ebe8db]'}/> */}
           <input
             type="checkbox"
             id="flu"
-            defaultChecked={defaultValues?.vaccine?.fluVaccine}
+            checked={vaccineState?.fluVaccine}
+            onChange={(e) =>
+              setVaccineState({
+                ...vaccineState,
+                fluVaccine: e.target.checked,
+              })
+            }
             name="fluVaccine"
           />
           <Label className={styles.label}>Flu Vaccine</Label>
         </div>
         <div className="flex items-center gap-1">
-          {/* <Checkbox id="rabies" name="rabiesVaccine" className={'border-2 border-[#8C7A3F] data-[state=checked]:bg-[#3b361f] data-[state=unchecked]:bg-[#ebe8db]'}/> */}
           <input
             type="checkbox"
             id="rabies"
-            defaultChecked={defaultValues?.vaccine?.rabiesVaccine}
+            checked={vaccineState?.rabiesVaccine}
+            onChange={(e) =>
+              setVaccineState({
+                ...vaccineState,
+                rabiesVaccine: e.target.checked,
+              })
+            }
             name="rabiesVaccine"
           />
           <Label className={styles.label}>Rabies Vaccine</Label>
         </div>
         <div className="flex items-center gap-1">
-          {/* <Checkbox id="dewormed" name="dewormed" className={'border-2 border-[#8C7A3F] data-[state=checked]:bg-[#3b361f] data-[state=unchecked]:bg-[#ebe8db]'}/> */}
           <input
             type="checkbox"
             id="dewormed"
-            defaultChecked={defaultValues?.vaccine?.dewormed}
+            checked={vaccineState?.dewormed}
+            onChange={(e) =>
+              setVaccineState({
+                ...vaccineState,
+                dewormed: e.target.checked,
+              })
+            }
             name="dewormed"
           />
           <Label className={styles.label}>Dewormed</Label>
@@ -560,7 +607,33 @@ useEffect(() => {
         />
       </section>
 
-      <Button>Submit</Button>
+      {!postId ? (
+        <Button>Submit</Button>
+      ) : (
+        <div className="w-full grid grid-cols-2 gap-2 mt-4">
+          <Button>Update</Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className={"bg-red-600 hover:bg-red-700"}>Delete</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className={"bg-[#fffae6]"}>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  this post and remove it from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => onDeletePost(postId)}>
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+      )}
     </form>
   );
 };

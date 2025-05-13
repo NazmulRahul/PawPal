@@ -48,6 +48,20 @@ export const getPetDetailsWithId = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  "adoptionPostSlice/deletePost", 
+  async (id) => {
+    try {
+      const response = await axios.delete(
+        BASE_URL+`/deletePost/${id}`
+      )
+      return response.data
+    } catch (error) {
+      return error
+    }
+  }
+)
+
 const adoptionPostSlice = createSlice({
   name: "post",
   initialState,
@@ -89,6 +103,19 @@ const adoptionPostSlice = createSlice({
         state.singlePost = action.payload.post
       })
       .addCase(getPetDetailsWithId.rejected, (state, action) => {
+        state.isLoading = false;
+        state.status = "rejected";
+      })
+      .addCase(deletePost.pending, (state, action) => {
+        state.isLoading = true;
+        state.status = "pending";
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.status = "fulfilled";
+        state.singlePost = action.payload.post
+      })
+      .addCase(deletePost.rejected, (state, action) => {
         state.isLoading = false;
         state.status = "rejected";
       });

@@ -58,7 +58,7 @@ const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, cr
           {vaccine.sterilized? <ClipboardCheck color="#48bb78"/> : <ShieldX color="#EF5350"/>}<h4>Sterilized</h4>
         </div>
         <div className="flex items-center justify-start ">
-          {vaccine.fluVanccine? <ShieldCheck color="#48bb78"/> : <ShieldX color="#EF5350"/>} <h4>Flu Vaccine</h4>
+          {vaccine.fluVaccine? <ShieldCheck color="#48bb78"/> : <ShieldX color="#EF5350"/>} <h4>Flu Vaccine</h4>
         </div>
         <div className="flex items-center justify-start">
           {vaccine.rabiesVaccine? <ShieldCheck color="#48bb78"/> : <ShieldX color="#EF5350"/>}<h4>Rabies Vaccine</h4>
