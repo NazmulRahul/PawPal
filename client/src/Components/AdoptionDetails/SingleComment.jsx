@@ -28,30 +28,30 @@ const SingleComment = ({
   const timePassed = new Date() - new Date(rootComment.createdAt) > fiveMinutes;
   const createdAt = new Date(rootComment.createdAt).toLocaleDateString();
   const canReply = Boolean(currentUserId);
-  const canEdit = currentUserId === rootComment.userId && !timePassed;
-  const canDelete = currentUserId === rootComment.userId && !timePassed;
+  const canEdit = Boolean(currentUserId) ||currentUserId === rootComment.userId && !timePassed;
+  const canDelete = Boolean(currentUserId) || currentUserId === rootComment.userId && !timePassed;
   const isReplying =
-    activeComment?.type === "replying" && activeComment?.id === rootComment.id;
-  const isEditing =
-    activeComment?.type === "editing" && activeComment?.id === rootComment.id;
-  const replyId = parentId ? parentId : rootComment.id;
+    activeComment?.type === "replying" && activeComment?.id === rootComment._id;
+  const isEditing = 
+    activeComment?.type === "editing" && activeComment?.id === rootComment._id;
+  const replyId = parentId ? parentId : rootComment._id;
   return (
     <section className="mt-0.5">
       <div className="grid grid-cols-[1fr_20fr] gap-1">
         <CircleUserRound size={28} />
         <div className="flex flex-col justify-start">
           <div className="flex justify-start items-center gap-4">
-            <h3 className="font-bold text-lg">{rootComment.userName}</h3>
-            <p className="text-xs text-[#565656]">{createdAt}</p>
+            <h3 className="font-bold text-lg">{rootComment?.userId?.name}</h3>
+            {/* <p className="text-xs text-[#565656]">{createdAt}</p> */}
           </div>
           {!isEditing ? (
-            <p>{rootComment.body}</p>
+            <p>{rootComment?.text}</p>
           ) : (
             <CommentForm
               submitLabel={"Update"}
               hasCancelButton
               initialText={rootComment.body}
-              handleSubmit={text=> updateComment(text,rootComment.id)}
+              handleSubmit={text=> updateComment(text,rootComment._id)}
               handleCancel={() => setActiveComment(null)}
             />
           )}
@@ -60,7 +60,7 @@ const SingleComment = ({
               <button
                 className="hover:font-bold active:font-extrabold"
                 onClick={() =>
-                  setActiveComment({ id: rootComment.id, type: "replying" })
+                  setActiveComment({ id: rootComment._id, type: "replying" })
                 }
               >
                 Reply
@@ -70,7 +70,7 @@ const SingleComment = ({
               <button
                 className="hover:font-bold active:font-extrabold"
                 onClick={() =>
-                  setActiveComment({ id: rootComment.id, type: "editing" })
+                  setActiveComment({ id: rootComment._id, type: "editing" })
                 }
               >
                 Edit
@@ -93,7 +93,7 @@ const SingleComment = ({
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={()=>deleteComment(rootComment.id)}>Continue</AlertDialogAction>
+                    <AlertDialogAction onClick={()=>deleteComment(rootComment._id)}>Continue</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -105,21 +105,24 @@ const SingleComment = ({
         <div className={!parentId? 'ml-8 mt-2 mr-2': 'mt-2 mr-2'}>
         <CommentForm
           submitLabel={"Reply"}
-          handleSubmit={(text) => addComment(text, replyId)}
+          handleSubmit={(text) => {
+            addComment(text, replyId)
+            setActiveComment(null)
+          }}
         /></div>
       ) : null}
       {replies.length > 0 ? (
         <div className="ml-8 mt-2">
           {replies.map((reply) => (
             <SingleComment
-              key={reply.id}
+              key={reply._id}
               rootComment={reply}
               replies={[]}
               currentUserId={currentUserId}
               activeComment={activeComment}
               setActiveComment={setActiveComment}
               addComment={addComment}
-              parentId={rootComment.id}
+              parentId={rootComment._id}
               updateComment={updateComment}
               deleteComment={deleteComment}
             />

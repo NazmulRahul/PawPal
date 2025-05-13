@@ -1,17 +1,10 @@
 import { House, Mail, MessageCircle, Phone } from "lucide-react";
-import React, { use } from "react";
+import React from "react";
 
-const userInfo = {
-  id: 1,
-  name: "John Doe",
-  email: "johndoe@gmail.com",
-  phone: "+8801712345678",
-  isActive: true,
-  location: "Topobon, Akhaliya, Sylhet",
-};
 
-const UserInfo = () => {
-  const { id, name, email, phone, isActive, location } = userInfo;
+const UserInfo = ({user}) => {
+  const {name, email, phone, location } = user;
+  const isActive = true
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F]">
       <h2 className="text-4xl font-bold">Owner/Rescuer Info:</h2>

@@ -5,23 +5,24 @@ import { Link } from "react-router-dom";
 
 const PetAdoptionCard = ({
   name,
-  imageUrl,
-  type,
-  gender,
+  image,
+  animalType,
+  sex,
   breed,
   size,
   age,
   weight,
-  id
+  _id,
+  address,
 }) => {
   const petBreed =
     breed.length > 9 ? breed.substring(0, 8).concat("..") : breed;
   return (
-    <Link to={`${id}`}>
+    <Link to={`${_id}`}>
       <main className="group bg-[#F2EED9] hover:bg-[#e4d1cd] rounded-tl-xl rounded-tr-xl shadow-xl">
         <div className="relative rounded-tl-xl rounded-tr-xl flex flex-col">
           <img
-            src={imageUrl}
+            src={image[0]}
             alt=""
             className="h-66 w-100 rounded-tl-xl rounded-tr-xl object-cover"
           />
@@ -30,13 +31,13 @@ const PetAdoptionCard = ({
           </div>
         </div>
         <div className="flex justify-between items-center gap-8 text-lg font-normal px-8 mt-4">
-          <h3>{gender}</h3>
+          <h3>{sex.charAt(0).toUpperCase()+ sex.slice(1)}</h3>
           <h3>{petBreed}</h3>
-          <h3>{size}</h3>
+          <h3>{'Orange'}</h3>
         </div>
         <div className="flex mt-4 font-3xl font-semibold gap-1 px-8 items-center justify-start pb-4">
           <MapPin />
-          <h3>Akhaliya, Sylhet</h3>
+          <h3>{address.location}</h3>
         </div>
       </main>
     </Link>

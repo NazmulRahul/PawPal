@@ -31,7 +31,7 @@ function App() {
           <Route index element={<PetList/>}/>
           <Route path="request" element={<AdoptionReqeustForm/>}/>
         </Route>
-        <Route path="adoption/:petId" element={<PetAdoptionDetails/>}/>
+        <Route path="adoption/:postId" element={<PetAdoptionDetails/>}/>
         <Route path="transport" element={<Transport/>}/>
         <Route path="transport/service/:serviceId" element={<SingleService/>}/>
         <Route path="transport/agency/:agencyId" element={<AgencyDetailed/>}/>

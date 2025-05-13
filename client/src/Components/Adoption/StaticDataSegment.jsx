@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import dogChild from "../../assets/dog-child.webp";
 import dogMan from '../../assets/wholesome-pic.jpg'
 import manCat from "../../assets/man-hugging-cat.jpg";

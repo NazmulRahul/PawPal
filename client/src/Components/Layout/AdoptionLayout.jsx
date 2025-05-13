@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import StaticDataSegment from '../Adoption/StaticDataSegment'
 import AdoptionNavbar from '../Adoption/AdoptionNavbar'
 
+
 const AdoptionLayout = () => {
   return (
     <main>
