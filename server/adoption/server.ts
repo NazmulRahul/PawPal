@@ -72,7 +72,40 @@ app.use((req, res) => {
 //socket
 
 io.on('connection', (socket) => {
+  console.log('New client connected:', socket.id);
 
+  // Handle joining a post room
+  socket.on('joinPost', (postId) => {
+    socket.join(postId); // Join the room associated with the post
+    console.log(`Client ${socket.id} joined post room: ${postId}`);
+  });
+
+  // Handle leaving a post room
+  socket.on('leavePost', (postId) => {
+    socket.leave(postId); // Leave the room associated with the post
+    console.log(`Client ${socket.id} left post room: ${postId}`);
+  });
+
+  // Handle new comment
+  socket.on('newComment', (commentData) => {
+    // Broadcast the new comment only to the specific post room
+    console.log('new comment')
+    socket.to(commentData.postId).emit('commentAdded', commentData);
+  });
+  socket.on('typing', ({ postId, name }) => {
+    console.log(`${name} is typing`)
+    socket.to(postId).emit('userTyping', {
+      name:name
+    });
+  });
+ 
+  socket.on('deleteComment',({postId})=>{
+    console.log('delete')
+    socket.to(postId).emit('deleteComment')
+  })
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
 });
 
 // Start Server
