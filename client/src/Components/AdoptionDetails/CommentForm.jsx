@@ -10,16 +10,18 @@ const CommentForm = ({
   hasCancelButton = false,
   initialText = "",
   handleCancel,
+  handleKeyPress
 }) => {
+
   const textAreaRef = useRef(null)
-  const showLabel = !hasCancelButton && submitLabel !== 'Reply' 
+  const showLabel = !hasCancelButton && submitLabel !== 'Reply'
   const onAction = (formData) => {
     const { newComment } = Object.fromEntries(formData);
     console.log(newComment);
-    if(!newComment) {
-      toast.error("Failed to submit comment",{
+    if (!newComment) {
+      toast.error("Failed to submit comment", {
         description: 'The comment box was empty',
-        duration: 3000      
+        duration: 3000
       })
       return
     }
@@ -30,10 +32,12 @@ const CommentForm = ({
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       const comment = textAreaRef.current.value.trim();;
-      if(comment) {
+      if (comment) {
         handleSubmit(comment);
-        textAreaRef.current.value=""
+        textAreaRef.current.value = ""
       }
+    } else {
+      handleKeyPress()
     }
   };
 
