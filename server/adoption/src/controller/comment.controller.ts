@@ -8,7 +8,7 @@ export const loadComments = async (req: Request, res: Response): Promise<any> =>
     try {
         const { id } = req.params;
 
-        const comments = await Comment.find({ postId:id })
+        const comments = await Comment.find({ postId: id })
             .populate('userId', 'name')  // populate commenter info
             .sort({ createdAt: 1 });
 
@@ -31,15 +31,19 @@ export const saveComment = async (req: Request, res: Response): Promise<any> => 
     }
 }
 
-export const deleteComment=async (req: Request, res: Response): Promise<any> => {
-    try{
-        const {commentId}=req.params
-        const deletedComment = await Comment.findByIdAndDelete(commentId);
-        if(!deletedComment){
-            res.status(404).json({error:'comment not found'})
+export const deleteComment = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { commentId } = req.params
+        const childComments = await Comment.find({ parentId: commentId });
+        for (const child of childComments) {
+            await Comment.findByIdAndDelete(child._id);
         }
-        res.status(200).json({msg:'comment deleted'})
-    }catch(error){
-        res.status(500).json({errro:'server error'})
+        const deletedComment = await Comment.findByIdAndDelete(commentId);
+        if (!deletedComment) {
+            res.status(404).json({ error: 'comment not found' })
+        }
+        res.status(200).json({ msg: 'comment deleted' })
+    } catch (error) {
+        res.status(500).json({ errro: 'server error' })
     }
 }

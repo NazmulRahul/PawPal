@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
     socket.to(commentData.postId).emit('commentAdded', commentData);
   });
   socket.on('typing', ({ postId, name }) => {
-    console.log(`${name} is typing`)
+    // console.log(`${name} is typing`)
     socket.to(postId).emit('userTyping', {
       name:name
     });
