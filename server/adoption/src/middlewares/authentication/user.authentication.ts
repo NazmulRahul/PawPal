@@ -8,7 +8,7 @@ import log from '../../utils/logger'
 const jwtSecret = config.get<string>('jwtSecret')
 
 const authenticate = async (req: any, res: any, next: any) => {
-    next()
+   
     const token = req.cookies.jwt;
     if (token) {
         try {
@@ -27,7 +27,6 @@ const authenticate = async (req: any, res: any, next: any) => {
 };
 
 const authorize = async (req: any, res: any, next: any) => {
-    next()
     if (req.user && req.user.isAdmin) {
         next();
     } else {
