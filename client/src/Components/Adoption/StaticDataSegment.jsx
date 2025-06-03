@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dogChild from "../../assets/dog-child.webp";
 import dogMan from '../../assets/wholesome-pic.jpg'
 import manCat from "../../assets/man-hugging-cat.jpg";
-import tabbyCat from "../../assets/Tabby-cat.jpg";
+import tabbyCat from "../../assets/Tabby-Cat.jpg";
 import { Card, CardContent } from "../ui/card";
 import { ArrowRight } from "lucide-react";
 import { adoptionFormControls } from "../config";

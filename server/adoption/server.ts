@@ -63,7 +63,7 @@ app.get("/adoption", (req: Request, res: Response) => {
 });
 
 app.use('/api', adoptionRoutes)
-app.use('/api/comment/',commentRoutes)
+app.use('/api/comment/', commentRoutes)
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
@@ -89,9 +89,20 @@ io.on('connection', (socket) => {
   // Handle new comment
   socket.on('newComment', (commentData) => {
     // Broadcast the new comment only to the specific post room
-    io.to(commentData.postId).emit('commentAdded', commentData);
+    console.log('new comment')
+    socket.to(commentData.postId).emit('commentAdded', commentData);
   });
-
+  socket.on('typing', ({ postId, name }) => {
+    // console.log(`${name} is typing`)
+    socket.to(postId).emit('userTyping', {
+      name:name
+    });
+  });
+ 
+  socket.on('deleteComment',({postId})=>{
+    console.log('delete')
+    socket.to(postId).emit('deleteComment')
+  })
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
