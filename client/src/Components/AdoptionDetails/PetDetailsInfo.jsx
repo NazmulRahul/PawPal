@@ -4,7 +4,8 @@ import { ClipboardCheck, MapPin, Pencil, ShieldCheck, ShieldX } from "lucide-rea
 import { Separator } from "../ui/separator";
 
 
-const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId: postUserId, vaccine, address, activeUserId }) => {   
+const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId: postUserId, vaccine, address, activeUserId }) => {
+  console.log('rerendered')   
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex justify-between items-center">
@@ -27,7 +28,7 @@ const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, cr
       </div>
       <div>
         <ul className="flex justify-start gap-16 text-xl text-[#565656] mt-4 ml-5 list-disc">
-          <li>{animalType}</li>
+          <li>{animalType.charAt(0).toUpperCase()+sex.slice(1)}</li>
           <li>{'Chonky'}</li>
           <li>{sex.charAt(0).toUpperCase()+sex.slice(1)}</li>
           <li>{age<1? `${(age*10*12)/10} Months`: `${age} Years`}</li>
