@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
   try {
     const response = await axios.post(
-      'http://15.235.163.93:5000/user/api/login',
+      'https://www.pawpalbd.com/api/user/api/login',
       data
     );
     console.log(response);

@@ -4,7 +4,7 @@ import axios from "axios";
 
 
 
-const BASE_URL = 'http://15.235.163.93:5000/adoption/api/comment/'
+const BASE_URL = 'https://www.pawpalbd.com/api/adoption/api/comment/'
 
 
 const initialState = {
