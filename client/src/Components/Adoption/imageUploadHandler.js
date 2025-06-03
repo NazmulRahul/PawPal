@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const IMAGE_URL = "http://15.235.163.93:5000/adoption/api/uploadImage";
-const POST_URL = "http://15.235.163.93:5000/adoption/api/createPost";
+const IMAGE_URL = "https://www.pawpalbd.com/api/adoption/api/uploadImage";
+const POST_URL = "https://www.pawpalbd.com/api/adoption/api/createPost";
 
 export const imageUploadHandler = async (file) => {
   try {

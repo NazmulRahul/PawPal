@@ -28,7 +28,7 @@ const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, cr
       </div>
       <div>
         <ul className="flex justify-start gap-16 text-xl text-[#565656] mt-4 ml-5 list-disc">
-          <li>{animalType.charAt(0).toUpperCase()+sex.slice(1)}</li>
+          <li>{animalType.charAt(0).toUpperCase()+animalType.slice(1)}</li>
           <li>{'Chonky'}</li>
           <li>{sex.charAt(0).toUpperCase()+sex.slice(1)}</li>
           <li>{age<1? `${(age*10*12)/10} Months`: `${age} Years`}</li>
