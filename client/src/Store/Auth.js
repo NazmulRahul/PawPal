@@ -22,7 +22,7 @@ export const register = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await axios.post(
-        'http://15.235.163.93:5000/user/api/create',
+        'https://www.pawpalbd.com/api/user/api/create',
         data
       );
       return response.data;
