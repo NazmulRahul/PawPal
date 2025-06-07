@@ -37,6 +37,7 @@ export const register = createAsyncThunk(
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
   authStatus: false,
+  isLoading: false,
 };
 
 const authSlice = createSlice({
@@ -52,6 +53,9 @@ const authSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(register.pending, (state, action) => {
+        state.isLoading = true;
+      })
       .addCase(register.fulfilled, (state, action) => {
         console.log(action.payload);
         state.user = action.payload;
@@ -59,14 +63,20 @@ const authSlice = createSlice({
 
         localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify(action.payload));
+        state.isLoading = false;
       })
       .addCase(register.rejected, (state, action) => {
         console.log(action.payload);
         const { error, message } = action.payload;
+        state.isLoading = false;
         alert(error || message || action.payload);
+      })
+      .addCase(login.pending, (state, action) => {
+        state.isLoading = true;
       })
       .addCase(login.rejected, (state, action) => {
         console.log(action.payload);
+        state.isLoading = false;
         alert(action.payload.error || action.payload);
       })
       .addCase(login.fulfilled, (state, action) => {
@@ -76,6 +86,7 @@ const authSlice = createSlice({
 
         localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify(action.payload));
+        state.isLoading = false;
       });
   },
 });
@@ -84,3 +95,4 @@ export default authSlice.reducer;
 export const { setToken, setUser, setAuthStatus } = authSlice.actions;
 export const user = (state) => state.auth.user;
 export const authStatus = (state) => state.auth.authStatus;
+export const authIsLoading = (state) => state.auth.isLoading;

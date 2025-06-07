@@ -1,0 +1,18 @@
+import { authIsLoading } from '@/Store/Auth';
+import { blogIsLoading } from '@/Store/Blog';
+import React from 'react'
+import { useSelector } from 'react-redux';
+import { DotLoader } from 'react-spinners';
+
+const Loader = () => {
+    const currentAuthIsLoading = useSelector(authIsLoading)
+    const currentBlogIsLoading = useSelector(blogIsLoading)
+    const isLoader = currentAuthIsLoading || currentBlogIsLoading;
+  return (
+    <div className={`fixed top-0 bottom-0 left-0 right-0 z-[100] bg-black/50 ${isLoader?'flex':'hidden'} items-center justify-center`}>
+      <DotLoader size={40} thickness={4} speed={20} color="white" />
+    </div>
+  )
+}
+
+export default Loader 

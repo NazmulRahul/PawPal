@@ -1,15 +1,56 @@
-import React, { useRef , useState} from 'react'
+import { setTransportFrom } from '@/Store/Transport'
+import React, { useEffect, useRef , useState} from 'react'
+import { useDispatch } from 'react-redux'
 
 const Documents = ({translate}) => {
-    const fileInputRef = useRef(null)
-    const [fileName, setFileName] = useState('Upload file');
-    const handleClick = ()=>{
-        fileInputRef.current?.click();
+    const fileInputRef1 = useRef(null)
+    const fileInputRef2 = useRef(null)
+    const fileInputRef3 = useRef(null)
+    const fileInputRef4 = useRef(null)
+
+    const [vacBookFront, setVacBookFront]=useState(null)
+    const [vacBookBack, setVacBookBack]=useState(null)
+    const [petPhotoStanding, setPetPhotoStanding]=useState(null)
+    const [petPhotoSitting, setPetPhotoSitting]=useState(null)
+
+    const handleVacBookFrontChange = (e)=>{
+        const file = e.target?.files[0]
+        if(file){
+            setVacBookFront(file)
+        }
     }
-    const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) setFileName(file.name);
-  };
+    const handleVacBookBackChange = (e)=>{
+        const file = e.target?.files[0]
+        if(file){
+            setVacBookBack(file)
+        }
+    }
+    const handleStanding = (e)=>{
+        const file = e.target?.files[0]
+        if(file){
+            setPetPhotoStanding(file)
+        }
+    }
+    const handleSitting = (e)=>{
+        const file = e.target?.files[0]
+        if(file){
+            setPetPhotoSitting(file)
+        }
+    }
+    const dispatch = useDispatch()
+  useEffect(()=>{
+    if(vacBookFront && vacBookBack && petPhotoStanding && petPhotoSitting){
+        
+        const data ={
+            vacFront:vacBookFront,
+            vacBack:vacBookBack,
+            standing:petPhotoStanding,
+            sitting:petPhotoSitting
+        }
+
+        dispatch(setTransportFrom({data, section:'document'}))
+    }
+  },[vacBookFront, vacBookBack, petPhotoStanding, petPhotoSitting])
   return (
     <section style={{transform:`translateX(${translate}%)`}} className=' transition-transform duration-500 shrink-0 w-full h-full rounded-4xl flex justify-between'>
         <div className="w-[40%] h-full rounded-3xl">
@@ -19,14 +60,14 @@ const Documents = ({translate}) => {
             <div className="flex items-center border border-neutral-300 rounded-lg w-[80%] h-[40px] pl-4 bg-white text-black">
                 <input
                     type="file"
-                    ref={fileInputRef}
+                    ref={fileInputRef1}
                     className="hidden"
-                    onChange={handleFileChange}
+                    onChange={handleVacBookFrontChange}
                 />
-                <span className="flex-1 text-neutral-500 truncate">{fileName}</span>
+                <span className="flex-1 text-neutral-500 truncate">{vacBookFront?vacBookFront.name:'upload file'}</span>
                 <button
                     type="button"
-                    onClick={handleClick}
+                    onClick={()=>fileInputRef1.current?.click()}
                     className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700 hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Vaccination Book (Front)
@@ -35,14 +76,14 @@ const Documents = ({translate}) => {
             <div className="flex items-center border border-neutral-300 rounded-lg w-[80%] h-[40px] pl-4 bg-white text-black">
                 <input
                     type="file"
-                    ref={fileInputRef}
+                    ref={fileInputRef2}
                     className="hidden"
-                    onChange={handleFileChange}
+                    onChange={handleVacBookBackChange}
                 />
-                <span className="flex-1 text-neutral-500 truncate">{fileName}</span>
+                <span className="flex-1 text-neutral-500 truncate">{vacBookBack?vacBookBack.name:'upload file'}</span>
                 <button
                     type="button"
-                    onClick={handleClick}
+                    onClick={()=>fileInputRef2.current?.click()}
                     className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700 hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Vaccination Book (Back)
@@ -51,14 +92,14 @@ const Documents = ({translate}) => {
             <div className="flex items-center border border-neutral-300 rounded-lg w-[80%] h-[40px] pl-4 bg-white text-black">
                 <input
                     type="file"
-                    ref={fileInputRef}
+                    ref={fileInputRef3}
                     className="hidden"
-                    onChange={handleFileChange}
+                    onChange={handleStanding}
                 />
-                <span className="flex-1 text-neutral-500 truncate">{fileName}</span>
+                <span className="flex-1 text-neutral-500 truncate">{petPhotoStanding?petPhotoStanding.name:'upload file'}</span>
                 <button
                     type="button"
-                    onClick={handleClick}
+                    onClick={()=>fileInputRef3.current?.click()}
                     className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700  hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Pet Photo (Standing)
@@ -67,14 +108,14 @@ const Documents = ({translate}) => {
             <div className="flex items-center border border-neutral-300 rounded-lg w-[80%] h-[40px] pl-4 bg-white text-black">
                 <input
                     type="file"
-                    ref={fileInputRef}
+                    ref={fileInputRef4}
                     className="hidden"
-                    onChange={handleFileChange}
+                    onChange={handleSitting}
                 />
-                <span className="flex-1 text-neutral-500 truncate">{fileName}</span>
+                <span className="flex-1 text-neutral-500 truncate">{petPhotoSitting?petPhotoSitting.name:'upload file'}</span>
                 <button
                     type="button"
-                    onClick={handleClick}
+                    onClick={()=>fileInputRef4.current?.click()}
                     className="flex flex-1 items-center justify-center px-4 h-full bg-blue-700 hover:bg-blue-500 cursor-pointer text-white rounded-r-lg"
                 >
                     Pet Photo (Sitting)

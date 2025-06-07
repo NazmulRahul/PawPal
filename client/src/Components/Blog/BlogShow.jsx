@@ -2,6 +2,7 @@ import React from 'react';
 
 const BlogShow = ({ doc }) => {
   const renderNodes = (nodes) => {
+    if (!nodes || !Array.isArray(nodes)) return null;
     return nodes.map((node, index) => (
       <React.Fragment key={index}>{renderNode(node)}</React.Fragment>
     ));
@@ -12,7 +13,7 @@ const BlogShow = ({ doc }) => {
 
     switch (type) {
       case 'doc':
-        return <div className="container mx-auto px-4 py-6 ">{renderNodes(content)}</div>;
+        return <div className="container mx-auto px-4 py-6">{renderNodes(content)}</div>;
 
       case 'heading': {
         const Tag = `h${attrs?.level || 1}`;
@@ -23,8 +24,8 @@ const BlogShow = ({ doc }) => {
           4: 'text-xl',
         }[attrs.level] || 'text-base';
         return (
-          <Tag className={`${sizeClass} font-semibold mt-6 mb-4 text-gray-800`}>  
-            {content && renderNodes(content)}
+          <Tag className={`${sizeClass} font-semibold mt-6 mb-4 text-gray-800`}>
+            {renderNodes(content)}
           </Tag>
         );
       }
@@ -32,22 +33,37 @@ const BlogShow = ({ doc }) => {
       case 'paragraph':
         return (
           <p className="mb-4 text-base leading-relaxed text-gray-700">
-            {content ? renderNodes(content) : null}
+            {renderNodes(content)}
           </p>
         );
 
       case 'blockquote':
         return (
           <blockquote className="border-l-4 border-gray-300 pl-4 italic text-gray-600 my-6">
-            {content && renderNodes(content)}
+            {renderNodes(content)}
           </blockquote>
+        );
+
+      case 'image':
+        return (
+          <div className="my-6">
+            <img
+              src={attrs.src}
+              alt={attrs.alt || ''}
+              title={attrs.title || ''}
+              className="w-full h-auto object-cover rounded-lg"
+            />
+            {attrs.caption && (
+              <p className="text-sm text-center text-gray-500 mt-2">{attrs.caption}</p>
+            )}
+          </div>
         );
 
       case 'text':
         return applyMarks(text, marks);
 
       default:
-        return content ? <>{renderNodes(content)}</> : null;
+        return renderNodes(content);
     }
   };
 
