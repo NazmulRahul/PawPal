@@ -1,19 +1,32 @@
-const handleFilterChange = (setSearchParams, key, value) => {
+const handleFilterChange = (setSearchParams, updates) => {
   setSearchParams(prevParams => {
-    const current = prevParams.get(key)?.split(',') || []
+    const sp = new URLSearchParams(prevParams);
+    
+    Object.entries(updates).forEach(([key, value]) => {
+      if (key === 'age') {
+        if (value.min === null || value.max === null) {
+          sp.delete('minAge');
+          sp.delete('maxAge');
+        } else {
+          sp.set('minAge', value.min);
+          sp.set('maxAge', value.max);
+        }
+      } else {
+        const current = sp.get(key)?.split(',') || [];
+        const updated = current.includes(value)
+          ? current.filter(v => v !== value)
+          : [...current, value];
+          
+        if (updated.length === 0) {
+          sp.delete(key);
+        } else {
+          sp.set(key, updated.join(','));
+        }
+      }
+    });
+    
+    return sp;
+  });
+};
 
-    const updated = current.includes(value)
-      ? current.filter(v => v !== value) // remove if already selected
-      : [...current, value] // add if not selected
-
-    if (updated.length === 0) {
-      prevParams.delete(key)
-    } else {
-      prevParams.set(key, updated.join(','))
-    }
-
-    return prevParams
-  })
-}
-
-export default handleFilterChange
+export default handleFilterChange;
