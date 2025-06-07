@@ -47,6 +47,7 @@ const StaticDataSegment = () => {
     } else {
       updates.age = { min: tempFormData.age[0], max: tempFormData.age[1] };
     }
+    updates.page = 1
     handleFilterChange(setSearchParams, updates);
     setTempFormData(prevData => ({...prevData, breed: '', region: ''}));
   };
@@ -93,7 +94,7 @@ const StaticDataSegment = () => {
         onClick={
           isRequestLocation
             ? undefined
-            : () => handleFilterChange(setSearchParams, {animalType : pet})
+            : () => {handleFilterChange(setSearchParams, {animalType : pet, page: 1})}
         }
       >
         <CardContent>

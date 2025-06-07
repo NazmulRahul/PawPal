@@ -63,7 +63,7 @@ const SwappableImage = ({slides}) => {
   };
 
   return (
-    <main className="mt-30 flex justify-center items-center">
+    <main className="flex justify-center items-center">
       <section className="relative w-[900px] h-[600px]">
         <div className="absolute left-0 right-[55%] bottom-4 h-[550px] rounded-md">
           <div className="relative w-full h-full">

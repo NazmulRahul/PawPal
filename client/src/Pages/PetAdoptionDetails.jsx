@@ -10,10 +10,11 @@ import SwappableImage from "@/Components/AdoptionDetails/SwappableImage";
 import PetDetailsInfo from "@/Components/AdoptionDetails/PetDetailsInfo";
 import CommentSection from "@/Components/AdoptionDetails/CommentSection";
 import UserInfo from "@/Components/AdoptionDetails/UserInfo";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getPetDetailsWithId, getSinglePost } from "@/Store/AdoptionPostSlice";
 import { toast } from "sonner";
 import { user } from "@/Store/Auth";
+import { MoveLeft } from "lucide-react";
 
 const PetAdoptionDetails = () => {
   const petDetails = useSelector(getSinglePost);
@@ -47,10 +48,15 @@ const PetAdoptionDetails = () => {
     <div
       ref={scrollRef}
       onScroll={handleScroll}
-      className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#fffae6] px-14"
+      className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#fffae6] pt-36 px-14"
     >
       {petDetails ? (
         <>
+          <section className="flex w-full justify-start items-center">
+            <Link to={'../adoption'} className="text-[16px] font-normal underline flex gap-2 justify-center items-center hover:font-semibold">
+              <MoveLeft size={14} />Back to all pets
+            </Link>
+          </section>
           <SwappableImage slides={petDetails.image}/>
           <section className="grid grid-cols-2 gap-3 mt-10">
             <div className="flex flex-col gap-4">
