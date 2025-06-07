@@ -72,7 +72,7 @@ const SingleComment = ({
           <div className="flex flex-start items-center gap-2 text-xs font-semibold text-black mt-1">
             {canReply ? (
               <button
-                className="hover:font-bold active:font-extrabold"
+                className="hover:font-bold active:font-extrabold cursor-pointer"
                 onClick={() =>
                   setActiveComment({ id: rootComment._id, type: "replying" })
                 }
@@ -82,7 +82,7 @@ const SingleComment = ({
             ) : null}
             {canEdit ? (
               <button
-                className="hover:font-bold active:font-extrabold"
+                className="hover:font-bold active:font-extrabold cursor-pointer"
                 onClick={() =>
                   setActiveComment({ id: rootComment._id, type: "editing" })
                 }
@@ -93,7 +93,7 @@ const SingleComment = ({
             {canDelete ? (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <button className="hover:font-bold active:font-extrabold">
+                  <button className="hover:font-bold active:font-extrabold cursor-pointer">
                     Delete
                   </button>
                 </AlertDialogTrigger>

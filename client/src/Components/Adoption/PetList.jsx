@@ -91,24 +91,29 @@ const PetList = () => {
                 <PaginationPrevious
                   onClick={() => goToPage(page - 1)}
                   disabled={page === 1}
+                  className={'hover:bg-[#e4d1cd] active:font-bold'}
                 />
               </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, i) => (
+              {Array.from({ length: totalPages }, (_, i) => {
+                const isElementActive = page === i+1
+                return (
                 <PaginationItem key={i}>
                   <PaginationLink
-                    isActive={page === i + 1}
+                    isActive={isElementActive}
                     onClick={() => goToPage(i + 1)}
+                    className={`${isElementActive ? 'bg-[#fffae6] border-[#8C7A3F]' : null} hover:bg-[#e4d1cd] active:font-bold`}
                   >
                     {i + 1}
                   </PaginationLink>
                 </PaginationItem>
-              ))}
+              )})}
 
               <PaginationItem>
                 <PaginationNext
                   onClick={() => goToPage(page + 1)}
                   disabled={page === totalPages}
+                  className={'hover:bg-[#e4d1cd] active:font-bold'}
                 />
               </PaginationItem>
             </PaginationContent>

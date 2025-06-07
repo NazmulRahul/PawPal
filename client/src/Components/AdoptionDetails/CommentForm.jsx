@@ -73,11 +73,11 @@ const CommentForm = ({
                 : "grid grid-cols-2 gap-2 items-center"
             }
           >
-            <Button className="h-full w-full bg-[#c9c19c] text-black hover:bg-[#ded5ae] font-semibold hover:font-bold active:font-extrabold text-lg">
+            <Button className="h-full w-full bg-[#c9c19c] text-black hover:bg-[#ded5ae] font-semibold hover:font-bold active:font-extrabold text-lg cursor-pointer">
               {submitLabel}
             </Button>
             {hasCancelButton ? (
-              <Button className="h-full w-full bg-[#c9c19c] text-black hover:bg-[#ded5ae] font-semibold hover:font-bold active:font-extrabold text-lg" onClick={handleCancel}>
+              <Button className="h-full w-full bg-[#c9c19c] text-black hover:bg-[#ded5ae] font-semibold hover:font-bold active:font-extrabold text-lg cursor-pointer" onClick={handleCancel}>
                 Cancel
               </Button>
             ) : null}

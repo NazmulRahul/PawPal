@@ -61,18 +61,18 @@ const StaticDataSegment = () => {
   //console.log(filter, 'filter')
 
   const styles = {
-    selectTrigger: `w-full bg-[#F2EED9] hover:bg-[#e4d1cd] border-[#8C7A3F] ${
+    selectTrigger: `w-full bg-[#F2EED9] hover:bg-[#e4d1cd] border-[#8C7A3F] cursor-pointer ${
       !selectedTypes.length
         ? "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-60"
         : null
     }`,
-    selectContent: "bg-[#F2EED9] border-[#8C7A3F]",
-    selectItem: "focus:bg-[#e4d1cd]",
-    input: "bg-[#F2EED9] outline-[#fffae6] border-[#8C7A3F]",
-    button: "mt-4",
+    selectContent: "bg-[#F2EED9] border-[#8C7A3F] cursor-pointer",
+    selectItem: "focus:bg-[#e4d1cd] cursor-pointer",
+    input: "bg-[#F2EED9] outline-[#fffae6] border-[#8C7A3F] cursor-pointer",
+    button: "mt-4 active:font-semibold cursor-pointer",
     slider: `
   [&>span:first-child]:bg-[#c9c19c]
-  [&_[role=slider]]:bg-[#fefae6]
+  [&_[role=slider]]:bg-[#fefae6] cursor-pointer
   [&_[role=slider]]:border-[#8C7A3F]
 `
       .replace(/\s+/g, " ")
@@ -84,7 +84,7 @@ const StaticDataSegment = () => {
       // <button className="w-20 h-14 text-2xl bg-card">{pet}</button>
       <Card
         key={pet}
-        className={`w-22 flex justify-center items-center ${
+        className={`w-22 flex justify-center items-center cursor-pointer ${
           !isSelected
             ? "bg-[#F2EED9] hover:bg-[#e4d1cd]"
             : "bg-[#e4d1cd] hover:bg-[#d6b9b3] font-bold"
@@ -144,7 +144,7 @@ const StaticDataSegment = () => {
           <div className="mt-2 flex justify-between items-end">
             <section className="flex gap-4">{petType}</section>
             <button
-              className={`text-lg underline hover:font-semibold ${
+              className={`text-lg underline hover:font-semibold cursor-pointer ${
                 isRequestLocation ? "opacity-50 cursor-not-allowed" : null
               }`}
               onClick={() => {
@@ -254,7 +254,7 @@ const StaticDataSegment = () => {
                 </div>
               </section>
               <section>
-                <Button className={"mt-4 w-full"} disabled={isRequestLocation}>
+                <Button className={"mt-4 w-full active:font-semibold cursor-pointer"} disabled={isRequestLocation}>
                   {
                     <>
                       <div className="flex justify-center items-center gap-1">
