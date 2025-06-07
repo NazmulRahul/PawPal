@@ -18,20 +18,20 @@ export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
 });
 
 export const register = createAsyncThunk(
-    "auth/register",
-    async (data, thunkAPI) => {
-        try {
-            const response = await axios.post(
-                "http://15.235.163.93:5000/user/api/create",
-                data
-            );
-            return response.data;
-        } catch (error) {
-            return thunkAPI.rejectWithValue(
-                error.response?.data || { message: "SignUp failed" }
-            );
-        }
+  'auth/register',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        'https://www.pawpalbd.com/api/user/api/create',
+        data
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || { message: 'SignUp failed' }
+      );
     }
+  }
 );
 
 const initialState = {

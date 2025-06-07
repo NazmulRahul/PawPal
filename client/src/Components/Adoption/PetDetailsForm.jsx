@@ -16,7 +16,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronDown, Trash2, UploadCloudIcon, XIcon } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
-import { addPost, imageUploadHandler } from "./imageUploadHandler";
+import { addPost, imageUploadHandler } from "./utils/imageUploadHandler";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { deletePost, getPetDetailsWithId } from "@/Store/AdoptionPostSlice";
@@ -63,6 +63,7 @@ const PetDetailsForm = () => {
   const [formPetType, setFormPetType] = useState("");
   const [formPetBreed, setFormPetBreed] = useState("");
   const [formPetGender, setFormPetGender] = useState("");
+  const [formCity, setFormCity] = useState("")
   const [imageFile, setImageFile] = useState([]);
   const inputRef = useRef(null);
   const dispatch = useDispatch();
