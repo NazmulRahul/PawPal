@@ -42,6 +42,7 @@ const PetAdoptionDetails = () => {
     fetchPetDetails(postId)
   }, [dispatch, postId]);
 
+
   return (
     <div
       ref={scrollRef}

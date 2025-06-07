@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "http://15.235.163.93:5000/adoption/api/"
+const BASE_URL = "https://www.pawpalbd.com/api/adoption/api/"
 
 const initialState = {
   posts: [],
