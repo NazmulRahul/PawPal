@@ -8,7 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { adoptionFormControls } from "../config";
 import CommonForm from "../Utils/CommonForm";
 import Slideshow from "./SlideShow";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import handleFilterChange from "./utils/handleFilterChange";
 import {
   Select,
@@ -19,26 +19,36 @@ import {
 } from "../ui/select";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import { Slider } from "../ui/slider";
 
 const initialFormData = {
   breed: "",
   region: "",
+  age: [0, 0],
 };
 
 const StaticDataSegment = () => {
   console.log("full page refresh");
   const [tempFormData, setTempFormData] = useState(() => initialFormData);
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(tempFormData, 'temp form data')
+  const location = useLocation();
+  const isRequestLocation = location.pathname.includes("/request");
   const onSubmit = (e) => {
     e.preventDefault();
+    const updates = {};
     if (tempFormData.breed !== "") {
-      handleFilterChange(setSearchParams, "breed", tempFormData.breed);
+      updates.breed = tempFormData.breed;
     }
     if (tempFormData.region !== "") {
-      handleFilterChange(setSearchParams, "region", tempFormData.region);
+      updates.region = tempFormData.region;
     }
-    setTempFormData(initialFormData);
+    if (tempFormData.age[0] === tempFormData.age[1]) {
+      updates.age = { min: null, max: null };
+    } else {
+      updates.age = { min: tempFormData.age[0], max: tempFormData.age[1] };
+    }
+    handleFilterChange(setSearchParams, updates);
+    setTempFormData(prevData => ({...prevData, breed: '', region: ''}));
   };
 
   const slides = [dogChild, manCat, tabbyCat, dogMan];
@@ -59,6 +69,13 @@ const StaticDataSegment = () => {
     selectItem: "focus:bg-[#e4d1cd]",
     input: "bg-[#F2EED9] outline-[#fffae6] border-[#8C7A3F]",
     button: "mt-4",
+    slider: `
+  [&>span:first-child]:bg-[#c9c19c]
+  [&_[role=slider]]:bg-[#fefae6]
+  [&_[role=slider]]:border-[#8C7A3F]
+`
+      .replace(/\s+/g, " ")
+      .trim(),
   };
   const petType = ["cat", "dog", "rabbit", "bird"].map((pet) => {
     const isSelected = selectedTypes?.includes(pet);
@@ -70,8 +87,14 @@ const StaticDataSegment = () => {
           !isSelected
             ? "bg-[#F2EED9] hover:bg-[#e4d1cd]"
             : "bg-[#e4d1cd] hover:bg-[#d6b9b3] font-bold"
+        } ${
+          isRequestLocation ? "opacity-60 cursor-not-allowed" : null
         }  border-[#8C7A3F] `}
-        onClick={() => handleFilterChange(setSearchParams, "animalType", pet)}
+        onClick={
+          isRequestLocation
+            ? undefined
+            : () => handleFilterChange(setSearchParams, {animalType : pet})
+        }
       >
         <CardContent>
           <p className="text-xl">
@@ -120,11 +143,14 @@ const StaticDataSegment = () => {
           <div className="mt-2 flex justify-between items-end">
             <section className="flex gap-4">{petType}</section>
             <button
-              className="text-lg underline hover:font-semibold"
+              className={`text-lg underline hover:font-semibold ${
+                isRequestLocation ? "opacity-50 cursor-not-allowed" : null
+              }`}
               onClick={() => {
                 setSearchParams({});
                 setTempFormData(initialFormData);
               }}
+              disabled={isRequestLocation}
             >
               Clear All Filters
             </button>
@@ -132,10 +158,7 @@ const StaticDataSegment = () => {
           <section className="mt-3">
             <form onSubmit={onSubmit} className="flex flex-col gap-1.5">
               <section className="grid w-full gap-1">
-                <Label
-                  htmlFor={"breed"}
-                  id={"breed"}
-                >
+                <Label htmlFor={"breed"} id={"breed"}>
                   Breed
                 </Label>
                 <Select
@@ -148,7 +171,7 @@ const StaticDataSegment = () => {
                   value={tempFormData.breed}
                   id={"breed"}
                   name={"breed"}
-                  disabled={!isSelectDisabled}
+                  disabled={!isSelectDisabled || isRequestLocation}
                 >
                   <SelectTrigger className={styles.selectTrigger}>
                     <SelectValue
@@ -176,10 +199,7 @@ const StaticDataSegment = () => {
               </section>
 
               <section className={"flex flex-col gap-0.5"}>
-                <Label
-                  htmlFor={"region"}
-                  id={"region"}
-                >
+                <Label htmlFor={"region"} id={"region"}>
                   Region
                 </Label>
                 <Select
@@ -189,6 +209,7 @@ const StaticDataSegment = () => {
                   value={tempFormData.region}
                   id={"region"}
                   name={"region"}
+                  disabled={isRequestLocation}
                 >
                   <SelectTrigger className={styles.selectTrigger}>
                     <SelectValue
@@ -212,13 +233,34 @@ const StaticDataSegment = () => {
                   </SelectContent>
                 </Select>
               </section>
+              <section className={"flex flex-col gap-3"}>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Min: {tempFormData.age[0]} years</span>
+                    <span>Max: {tempFormData.age[1]} years</span>
+                  </div>
+                  <Slider
+                    min={0}
+                    max={30}
+                    step={1}
+                    value={tempFormData.age}
+                    onValueChange={(value) =>
+                      setTempFormData({ ...tempFormData, age: value })
+                    }
+                    className={styles.slider}
+                    disabled={isRequestLocation}
+                  />
+                </div>
+              </section>
               <section>
-                <Button className={'mt-4 w-full'}>
-                  {<>
-                    <div className="flex justify-center items-center gap-1">
-                      <p>Start your search</p> <ArrowRight />
-                    </div>
-                  </>}
+                <Button className={"mt-4 w-full"} disabled={isRequestLocation}>
+                  {
+                    <>
+                      <div className="flex justify-center items-center gap-1">
+                        <p>Start your search</p> <ArrowRight />
+                      </div>
+                    </>
+                  }
                 </Button>
               </section>
             </form>
