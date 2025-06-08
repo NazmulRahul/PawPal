@@ -15,6 +15,7 @@ import { getPetDetailsWithId, getSinglePost } from "@/Store/AdoptionPostSlice";
 import { toast } from "sonner";
 import { user } from "@/Store/Auth";
 import { MoveLeft } from "lucide-react";
+import Footer from "@/Components/Home/Footer";
 
 const PetAdoptionDetails = () => {
   const petDetails = useSelector(getSinglePost);
@@ -22,7 +23,7 @@ const PetAdoptionDetails = () => {
   const scrollRef = useRef(null);
   const dispatch = useDispatch();
   const currentScrollY = useSelector(scrollY);
-  const userData = useSelector(user)
+  const userData = useSelector(user);
 
   const handleScroll = () => {
     const scrollY = scrollRef.current.scrollTop;
@@ -34,30 +35,31 @@ const PetAdoptionDetails = () => {
   useEffect(() => {
     const fetchPetDetails = async (id) => {
       try {
-        const detailedData = await dispatch(getPetDetailsWithId(postId))
-        !detailedData?.payload?.post ? toast.error('Some error occured', {duration:2000}) : null;
+        const detailedData = await dispatch(getPetDetailsWithId(postId));
+        !detailedData?.payload?.post
+          ? toast.error("Some error occured", { duration: 2000 })
+          : null;
       } catch (error) {
         console.log(error);
       }
     };
-    fetchPetDetails(postId)
+    fetchPetDetails(postId);
   }, [dispatch, postId]);
 
-
   return (
-    <div
-      ref={scrollRef}
-      onScroll={handleScroll}
-      className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#fffae6] pt-36 px-14"
-    >
+    <div className="flex flex-col h-full w-full overflow-y-scroll scrollbar-hidden bg-[#fffae6] pt-36 px-14">
       {petDetails ? (
         <>
           <section className="flex w-full justify-start items-center">
-            <Link to={'../adoption'} className="text-[16px] font-normal underline flex gap-2 justify-center items-center hover:font-semibold">
-              <MoveLeft size={14} />Back to all pets
+            <Link
+              to={"../adoption"}
+              className="text-[16px] font-normal underline flex gap-2 justify-center items-center hover:font-semibold"
+            >
+              <MoveLeft size={14} />
+              Back to all pets
             </Link>
           </section>
-          <SwappableImage slides={petDetails.image}/>
+          <SwappableImage slides={petDetails.image} />
           <section className="grid grid-cols-2 gap-3 mt-10">
             <div className="flex flex-col gap-4">
               <PetDetailsInfo activeUserId={userData?.userId} {...petDetails} />
@@ -65,6 +67,8 @@ const PetAdoptionDetails = () => {
             </div>
             <CommentSection />
           </section>
+
+          <Footer/>
         </>
       ) : (
         <h1 className="font-bold text-3xl">Loading...</h1>
