@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { petTypeBreeds } from "../config";
+import { districtsList, petTypeBreeds } from "../config";
 import {
   Select,
   SelectContent,
@@ -63,14 +63,14 @@ const PetDetailsForm = () => {
   const [formPetType, setFormPetType] = useState("");
   const [formPetBreed, setFormPetBreed] = useState("");
   const [formPetGender, setFormPetGender] = useState("");
-  const [formCity, setFormCity] = useState("")
+  const [formCity, setFormCity] = useState("");
   const [imageFile, setImageFile] = useState([]);
   const inputRef = useRef(null);
   const dispatch = useDispatch();
   const [defaultValues, setDefaultValues] = useState(initialData);
   const [vaccineState, setVaccineState] = useState(initialData.vaccine);
-  const userData = useSelector(user)
-  console.log(userData)
+  const userData = useSelector(user);
+  console.log(userData);
 
   const navigate = useNavigate();
 
@@ -192,7 +192,7 @@ const PetDetailsForm = () => {
     );
     console.log(allPhotos);
     const formBody = {
-      userId: userData?.userId, 
+      userId: userData?.userId,
       animalType,
       breed,
       name,
@@ -228,7 +228,7 @@ const PetDetailsForm = () => {
         setFormPetType("");
         setFormPetBreed("");
         setFormPetGender("");
-        navigate('..', {replace: true})
+        navigate("..", { replace: true });
       } else {
         // Error case - the server returned an error or the request failed
         toast.error("Failed to create post", { duration: 2000 });
@@ -278,6 +278,7 @@ const PetDetailsForm = () => {
           if (data?.payload?.post) {
             setDefaultValues(data.payload.post);
             setVaccineState(data.payload.post.vaccine || initialData.vaccine);
+            setFormCity(defaultValues.address.city);
           } else {
             toast.error("Failed to load the values to edit.", {
               description: "Please Try Again Later",
@@ -291,7 +292,7 @@ const PetDetailsForm = () => {
     };
 
     fetchPostDetails(postId);
-  }, [dispatch, postId]);
+  }, [defaultValues.address.city, dispatch, postId]);
 
   return (
     <form action={onAction} className="grid w-full mt-7 gap-4">
@@ -561,13 +562,36 @@ const PetDetailsForm = () => {
             <Label htmlFor="city" className={styles.label}>
               City
             </Label>
-            <Input
-              id="city"
-              name="city"
-              defaultValue={defaultValues?.address?.city}
-              placeholder="Dhaka,Chittagong, Sylhet etc..."
-              className={styles.input}
-            />
+            <Select
+              onValueChange={(value) =>
+                setFormCity(value)
+              }
+              value={formCity ?? ""}
+              id={"city"}
+              name={"city"}
+            
+            >
+              <SelectTrigger className={styles.selectTrigger}>
+                <SelectValue
+                  placeholder={"Dhaka, Chattogram, Sylhet etc..."}
+                />
+              </SelectTrigger>
+              <SelectContent className={styles.selectContent}>
+                {districtsList.map((district) => (
+                  <SelectItem
+                    key={district.id}
+                    value={district.name}
+                    className={styles.selectItem}
+                  >
+                    {district.name === formCity ? (
+                      <span className="font-semibold">{district.name}</span>
+                    ) : (
+                      district.name
+                    )}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div>
             <Label htmlFor="phone" className={styles.label}>

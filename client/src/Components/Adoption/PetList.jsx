@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PetAdoptionCard from "./PetAdoptionCard";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deletePost,
   getAllPosts,
   getStatus,
   selectAllPosts,
@@ -16,12 +17,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../ui/pagination";
+import { user } from "@/Store/Auth";
+import { toast } from "sonner";
 
 const PetList = () => {
   const dispatch = useDispatch();
   const allPets = useSelector(selectAllPosts);
   const status = useSelector(getStatus);
   const [searchParams, setSearchParams] = useSearchParams();
+  const {isAdmin} = useSelector(user)
 
   const selectedTypes = searchParams.get("animalType")?.split(",") || [];
   const selectedBreed = searchParams.get("breed")?.split(",") || [];
@@ -57,6 +61,31 @@ const PetList = () => {
     return matchType && matchBreed && matchRegion && matchMinAge && matchMaxAge;
   });
 
+  const onDeletePost = async (id) => {
+    try {
+      const data = await dispatch(deletePost(id));
+      console.log(deletePost);
+      if (data?.payload?.msg) {
+        toast.success("Post has been deleted successfully.", {
+          duration: 3000,
+        });
+        await dispatch(getAllPosts());
+      } else {
+        toast.error("The post could not be deleted", {
+          description: "Please try again later",
+          duration: 3000,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong.", {
+        description: "Please try again later",
+        duration: 3000,
+      });
+    }
+  };
+
+
   const POST_PER_PAGE = 4;
   console.log(searchParams.get("page"));
   const page = parseInt(searchParams.get("page") || "1", 10);
@@ -82,7 +111,7 @@ const PetList = () => {
         <>
           <main className="grid grid-cols-4 gap-x-4 gap-y-8">
             {paginatedList.map((pet) => (
-              <PetAdoptionCard key={pet._id} {...pet} />
+              <PetAdoptionCard key={pet._id} {...pet} isAdmin={isAdmin} onDeletePost={onDeletePost}/>
             ))}
           </main>
           <Pagination className={"mt-6"}>
@@ -91,24 +120,29 @@ const PetList = () => {
                 <PaginationPrevious
                   onClick={() => goToPage(page - 1)}
                   disabled={page === 1}
+                  className={'hover:bg-[#e4d1cd] active:font-bold'}
                 />
               </PaginationItem>
 
-              {Array.from({ length: totalPages }, (_, i) => (
+              {Array.from({ length: totalPages }, (_, i) => {
+                const isElementActive = page === i+1
+                return (
                 <PaginationItem key={i}>
                   <PaginationLink
-                    isActive={page === i + 1}
+                    isActive={isElementActive}
                     onClick={() => goToPage(i + 1)}
+                    className={`${isElementActive ? 'bg-[#fffae6] border-[#8C7A3F]' : null} hover:bg-[#e4d1cd] active:font-bold`}
                   >
                     {i + 1}
                   </PaginationLink>
                 </PaginationItem>
-              ))}
+              )})}
 
               <PaginationItem>
                 <PaginationNext
                   onClick={() => goToPage(page + 1)}
                   disabled={page === totalPages}
+                  className={'hover:bg-[#e4d1cd] active:font-bold'}
                 />
               </PaginationItem>
             </PaginationContent>

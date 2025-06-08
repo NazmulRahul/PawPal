@@ -41,7 +41,7 @@ const SwappableImage = ({slides}) => {
                   (prevIndex) => (prevIndex - 1 + slides.length) % slides.length
                 );
               }}
-              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 z-20"
+              className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80 z-20 cursor-pointer"
             >
               <ChevronLeftIcon className="w-4 h-4" />
             </Button>
@@ -52,7 +52,7 @@ const SwappableImage = ({slides}) => {
               onClick={() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length);
               }}
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 z-20"
+              className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80 z-20 cursor-pointer"
             >
               <ChevronRightIcon className="w-4 h-4" />
             </Button>

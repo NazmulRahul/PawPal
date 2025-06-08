@@ -16,6 +16,7 @@ import AgencyDetailed from "./Components/Transport/AgencyDetailed";
 import BlogLayout from "./Components/Layout/BlogLayout";
 import Blog from "./Pages/Blog";
 import CreateBlog from "./Components/Blog/CreateBlog";
+import AdminAdoptionView from "./Pages/AdminAdoptionView";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route index element={<Blog/>}/>
           <Route path="create" element={<CreateBlog/>}/>
         </Route>
+        <Route path="admin/adoption" element={<AdminAdoptionView/>}/>
       </Route>
     </Routes>
   )
