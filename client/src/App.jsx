@@ -47,7 +47,7 @@ function App() {
           <Route path="create" element={<CreateBlog/>}/>
         </Route>
         <Route path="admin/adoption" element={<AdminAdoptionView/>}/>
-        <Route path="profile" element={<Profile/>}>
+        <Route path="profile/:userId?" element={<Profile/>}>
           <Route index element={<ProfileUserInfo/>}/>
           <Route path="adoption" element={<ProfileAdoptionList/>}/>
           <Route path="transport" element={<ProfileTransportList/>}/>
