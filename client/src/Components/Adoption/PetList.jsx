@@ -114,7 +114,7 @@ const PetList = () => {
               <PetAdoptionCard key={pet._id} {...pet} isAdmin={isAdmin} onDeletePost={onDeletePost}/>
             ))}
           </main>
-          <Pagination className={"mt-6"}>
+          <Pagination className={"mt-12"}>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious

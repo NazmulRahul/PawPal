@@ -20,6 +20,10 @@ import {
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Slider } from "../ui/slider";
+import catIcon from '../../assets/cat.png'
+import dogIcon from '../../assets/dog-3.png'
+import birdIcon from '../../assets/bird.png'
+import rabbitIcon from '../../assets/rabbit.png'
 
 const initialFormData = {
   breed: "",
@@ -78,13 +82,36 @@ const StaticDataSegment = () => {
       .replace(/\s+/g, " ")
       .trim(),
   };
+
+  const getPetIcon = (pet) => {
+    let icon;
+    switch (pet) {
+      case 'cat':
+        icon = <img src={catIcon} alt="cat-icon" width={36}/>
+        break;
+      case 'dog':
+        icon = <img src={dogIcon} alt="cat-icon" width={36}/>
+        break;
+      case 'rabbit':
+        icon = <img src={rabbitIcon} alt="cat-icon" width={36}/>
+        break;
+      case 'bird':
+        icon = <img src={birdIcon} alt="cat-icon" width={36}/>
+        break;
+      
+      default:
+        icon = <p>loading...</p>
+        break;
+    }
+    return icon
+  }
   const petType = ["cat", "dog", "rabbit", "bird"].map((pet) => {
     const isSelected = selectedTypes?.includes(pet);
     return (
       // <button className="w-20 h-14 text-2xl bg-card">{pet}</button>
       <Card
         key={pet}
-        className={`w-22 flex justify-center items-center cursor-pointer ${
+        className={`w-26 flex justify-center items-center cursor-pointer ${
           !isSelected
             ? "bg-[#F2EED9] hover:bg-[#e4d1cd]"
             : "bg-[#e4d1cd] hover:bg-[#d6b9b3] font-bold"
@@ -97,8 +124,9 @@ const StaticDataSegment = () => {
             : () => {handleFilterChange(setSearchParams, {animalType : pet, page: 1})}
         }
       >
-        <CardContent>
-          <p className="text-xl">
+        <CardContent className={'flex flex-col items-center justify-center'}>
+          {getPetIcon(pet)}
+          <p className="text-md gloria-hallelujah-regular">
             {pet.charAt(0).toUpperCase() + pet.slice(1) + "s"}
           </p>
         </CardContent>
@@ -122,16 +150,9 @@ const StaticDataSegment = () => {
     uniqueBreeds = Array.from(new Set(selectedBreedLists));
   }
   return (
-    <main className="mt-35">
+    <main className="mt-30">
       <section className="flex justify-center gap-6">
         <Slideshow slides={slides} />
-
-        {/* <img
-          src={dogChild}
-          alt=""
-          width={750}
-          className="shadow-2xl rounded-2xl object-cover"
-        /> */}
         <div className="w-[650px]">
           <h2 className="mt-4 text-5xl font-bold break-words">
             A Paw-some Companion is Just a Click Away!
@@ -144,7 +165,7 @@ const StaticDataSegment = () => {
           <div className="mt-2 flex justify-between items-end">
             <section className="flex gap-4">{petType}</section>
             <button
-              className={`text-lg underline hover:font-semibold cursor-pointer ${
+              className={`text-md underline hover:font-semibold cursor-pointer ${
                 isRequestLocation ? "opacity-50 cursor-not-allowed" : null
               }`}
               onClick={() => {
@@ -254,7 +275,7 @@ const StaticDataSegment = () => {
                 </div>
               </section>
               <section>
-                <Button className={"mt-4 w-full active:font-semibold cursor-pointer"} disabled={isRequestLocation}>
+                <Button className={"mt-3 w-full active:font-semibold cursor-pointer"} disabled={isRequestLocation}>
                   {
                     <>
                       <div className="flex justify-center items-center gap-1">
