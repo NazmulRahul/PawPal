@@ -1,4 +1,4 @@
-const cloudinary = require('../Config/Cloudinary');
+import cloudinary from './config';
 import Blog from '../models/blogs.model'
 
 const createBlog = async (req:any, res:any) => {
