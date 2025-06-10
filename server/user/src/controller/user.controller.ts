@@ -4,7 +4,7 @@ import log from "../utils/logger";
 import bcrypt from 'bcrypt'
 import { passwordHashing } from "../utils/passwordHashing";
 import generateToken from "../utils/tokenGenerator";
-
+import cloudinary from "./config";
 
 export const createUser = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -95,5 +95,59 @@ export const createTransporter = async (req: Request, res: Response): Promise<an
         }
     } catch (error) {
         return res.status(500).json({ message: "internal server error!", error })
+    }
+}
+
+
+export const uploadProfilePicture = async (req: any, res: any) => {
+    const { userId } = req.params
+    // if(userId!=req.user.userId){
+    //     return res.status(401).json({msg:"unauthorized"})
+    // }
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ msg: 'No files uploaded' });
+    }
+    try {
+        const url = await Promise.all(
+            req.files.map(async (file: any) => {
+                const base64 = `data:${file.mimetype};base64,${file.buffer.toString(
+                    'base64'
+                )}`;
+                const result = await cloudinary.uploader.upload(base64, {
+                    folder: 'profiles',
+                });
+                return {
+                    url: result.secure_url,
+                    public_id: result.public_id,
+                };
+            })
+        );
+        console.log(url)
+        const updatedUser = await User.findByIdAndUpdate(userId, { profilePicture: url[0].url},
+            { new: true, runValidators: true })
+        return res.status(200).json({ updatedUser });
+    }
+    catch (error) {
+        log.error(error)
+        return res.status(401).json({ msg: 'server error' })
+    }
+};
+
+export const resetPassword = async (req: any, res: any) => {
+    const { userId } = req.params
+    // if(userId!=req.user.userId){
+    //     return res.status(401).json({msg:"unauthorized"})
+    // }
+    let password = req.body.password
+
+    try {
+        password = await passwordHashing(password)
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            password: password
+        })
+        res.status(200).json({ msg: "password updated" })
+    } catch (error) {
+        log.error(error)
+        res.status(401).json({ msg: "errro updating password" })
     }
 }

@@ -1,8 +1,10 @@
 import express, { Request, Response } from 'express'
 import { validateLogin, validateUser } from '../middlewares/validators/user.validator'
-import { createTransporter, createUser, loginUser, logoutUser } from '../controller/user.controller'
+import { createTransporter, createUser, loginUser, logoutUser, resetPassword, uploadProfilePicture } from '../controller/user.controller'
 import { authenticate, authorize } from '../middlewares/authentication/user.authentication'
-
+import multer from "multer"
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 
 const router = express.Router()
@@ -107,5 +109,7 @@ router.route('/logout').post(logoutUser)
  *         description: Internal Server Error
  */
 router.route('/createTransporter').post(authenticate, authorize, createTransporter)
+router.route('/resetPassword/:userId').put(authenticate, resetPassword)
+router.route('/profilePicture/:userId').post(upload.array('image'), authenticate, uploadProfilePicture).delete()
 
 export default router
