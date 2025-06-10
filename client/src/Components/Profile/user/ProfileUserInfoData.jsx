@@ -1,7 +1,8 @@
+import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
 import React from "react";
 
-const ProfileUserInfoData = ({styles}) => {
+const ProfileUserInfoData = ({styles, setInEdit}) => {
   return (
     <div>
       <section className="flex w-full justify-center items-center">
@@ -98,6 +99,14 @@ const ProfileUserInfoData = ({styles}) => {
           spontaneously adopt all the animals.
         </p>
       </section>
+      <div className="flex justify-center items-center">
+        <Button
+          className={`bg-[#c9c19c] hover:bg-[#e4d1cd] hover:font-bold active:font-bold text-black font-semibold mt-8 w-[25%]`}
+          onClick={() =>setInEdit(prev => !prev)}
+        >
+          Edit
+        </Button>
+      </div>
     </div>
   );
 };

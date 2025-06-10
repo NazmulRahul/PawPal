@@ -19,9 +19,12 @@ import CreateBlog from "./Components/Blog/CreateBlog";
 import AdminAdoptionView from "./Pages/AdminAdoptionView";
 import Profile from "./Pages/Profile";
 import ProfileUserInfo from "./Components/Profile/user/ProfileUserInfo";
-import ProfileAdoptionList from "./Components/Profile/adoption/ProfileAdoptionList";
 import ProfileTransportList from "./Components/Profile/Transport/ProfileTransportList";
 import ProfileBlogList from "./Components/Profile/Blog/ProfileBlogList";
+import ProfileAdoptionLayout from "./Components/Layout/ProfileAdoptionLayout";
+import Pending from "./Components/Profile/adoption/Pending";
+import Adopted from "./Components/Profile/adoption/Adopted";
+import UserAdopted from "./Components/Profile/adoption/UserAdopted";
 
 function App() {
   return (
@@ -47,9 +50,13 @@ function App() {
           <Route path="create" element={<CreateBlog/>}/>
         </Route>
         <Route path="admin/adoption" element={<AdminAdoptionView/>}/>
-        <Route path="profile" element={<Profile/>}>
+        <Route path="profile/:userId?" element={<Profile/>}>
           <Route index element={<ProfileUserInfo/>}/>
-          <Route path="adoption" element={<ProfileAdoptionList/>}/>
+          <Route path="adoption" element={<ProfileAdoptionLayout/>}>
+            <Route index element={<Pending/>}/>
+            <Route path="adopted" element={<Adopted/>}/>
+            <Route path="userAdoptions" element={<UserAdopted/>}/>
+          </Route>
           <Route path="transport" element={<ProfileTransportList/>}/>
           <Route path="Blog" element={<ProfileBlogList/>}/>
         </Route>
