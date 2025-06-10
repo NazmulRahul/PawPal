@@ -8,6 +8,7 @@ import dotenv, { configDotenv } from 'dotenv'
 import cookieParser from "cookie-parser";
 import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from 'swagger-ui-express';
+import blogRoutes from './src/routes/blogs.route'
 
 dotenv.config()
 
@@ -52,6 +53,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //
+app.use('/blog',blogRoutes)
 app.use('/api', userRoutes)
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });

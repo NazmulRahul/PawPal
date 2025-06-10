@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import config from 'config'
-import User from "../../models/post.model"
+import User from "../../models/user.model"
 import log from '../../utils/logger'
 
 

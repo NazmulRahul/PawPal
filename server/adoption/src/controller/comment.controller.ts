@@ -31,9 +31,13 @@ export const saveComment = async (req: Request, res: Response): Promise<any> => 
     }
 }
 
-export const deleteComment = async (req: Request, res: Response): Promise<any> => {
+export const deleteComment = async (req: any, res: Response): Promise<any> => {
     try {
         const { commentId } = req.params
+        const comment = await Comment.findById(commentId)
+        if (comment?.userId != req.user.userId) {
+            return res.status(401).json({ msg: "untauthorized" })
+        }
         const childComments = await Comment.find({ parentId: commentId });
         for (const child of childComments) {
             await Comment.findByIdAndDelete(child._id);
