@@ -1,5 +1,6 @@
 import express from 'express'
 import multer from "multer"
+import { authenticate,authorize } from '../middlewares/authentication/user.authentication';
 const Router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -13,10 +14,10 @@ import {
 } from '../controller/blogs.controller'
 
 Router.route('/')
-    .get(getBlogs)
-    .post(createBlog)
-    .delete(deleteBlog)
-    .patch(updateBlog);
+    .get(authenticate,getBlogs)
+    .post(authenticate,createBlog)
+    .delete(authenticate,deleteBlog)
+    .patch(authenticate,updateBlog);
 
 Router.route('/image').post(upload.array('images'), uploadImages).delete();
 Router.route('/type').get(getBlogsOfTypes);
