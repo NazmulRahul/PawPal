@@ -126,7 +126,7 @@ const StaticDataSegment = () => {
       >
         <CardContent className={'flex flex-col items-center justify-center'}>
           {getPetIcon(pet)}
-          <p className="text-md gloria-hallelujah-regular">
+          <p className="text-md font-montserrat">
             {pet.charAt(0).toUpperCase() + pet.slice(1) + "s"}
           </p>
         </CardContent>
