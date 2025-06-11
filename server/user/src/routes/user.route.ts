@@ -112,5 +112,5 @@ router.route('/createTransporter').post(authenticate, authorize, createTransport
 router.route('/resetPassword/:userId').put(authenticate, resetPassword)
 router.route('/profilePicture/:userId').post(upload.array('image'), authenticate, uploadProfilePicture).delete()
 router.route('/registerWithVerification').post(registerWithVerification)
-router.route('/verify-mail/:token').post(verifyMail)
+router.route('/verify-email/:token').get(verifyMail)
 export default router
