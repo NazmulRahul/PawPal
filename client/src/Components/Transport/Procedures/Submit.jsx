@@ -1,11 +1,13 @@
 import React from 'react'
 import pic from '../../../assets/Submit.png'
-import { useSelector } from 'react-redux'
-import { transportForm } from '@/Store/Transport'
+import { useDispatch, useSelector } from 'react-redux'
+import { makeTransport, transportForm } from '@/Store/Transport'
 
 const Submit = ({translate}) => {
     const currentTransportForm = useSelector(transportForm)
     const {owner, pet,travel, document, agency}=currentTransportForm;
+
+    const dispatch = useDispatch()
 
     const handleSubmit = ()=>{
         const formData = new FormData();
@@ -22,6 +24,9 @@ const Submit = ({translate}) => {
             if(standing) formData.append('standing',standing);
             if(sitting) formData.append('sitting',sitting);
         }
+        if(owner && pet && travel && agency && document) {
+        }
+        dispatch(makeTransport(formData))
     }
   return (
     <section style={{transform:`translateX(${translate}%)`}} className=' text-white transition-transform duration-500 shrink-0 w-full h-full gap-[20px] rounded-4xl flex flex-col justify-center items-center'>

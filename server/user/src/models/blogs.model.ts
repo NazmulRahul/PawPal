@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 import User from "./user.model"
 const blogSchema = mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: User,
+        type: String,
         required: true
     },
     content: {

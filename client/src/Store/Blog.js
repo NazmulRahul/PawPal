@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const getBlogs = createAsyncThunk('blog/getBlogs', async (thunkAPI) => {
   try {
-    const response = await axios.get('http://localhost:3000/api/blog');
+    const response = await axios.get('https://www.pawpalbd.com/api/user/blog/');
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -16,9 +16,12 @@ export const getSpecificBlogs = createAsyncThunk(
   async ({ type }, thunkAPI) => {
     try {
       console.log('inside getSpecificBlogs....');
-      const response = await axios.get('http://localhost:3000/api/blog/type', {
-        params: { type },
-      });
+      const response = await axios.get(
+        'https://www.pawpalbd.com/api/user/blog/type',
+        {
+          params: { type },
+        }
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -30,9 +33,12 @@ export const deleteBlogPost = createAsyncThunk(
   'blog/deleteBlogPost',
   async ({ blogId }, thunkAPI) => {
     try {
-      const response = await axios.delete('http://localhost:3000/api/blog', {
-        params: { blogId },
-      });
+      const response = await axios.delete(
+        'https://www.pawpalbd.com/api/user/blog/',
+        {
+          params: { blogId },
+        }
+      );
       return blogId;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -67,7 +73,7 @@ export const updateBlogPost = createAsyncThunk(
         base64Images.forEach(({ blob }) => formData.append('images', blob));
 
         const uploadRes = await axios.post(
-          'http://localhost:3000/api/blog/image',
+          'https://www.pawpalbd.com/api/user/blog/image',
           formData,
           {
             headers: {
@@ -90,7 +96,7 @@ export const updateBlogPost = createAsyncThunk(
         replaceImages(newContentJson);
       }
 
-      const res = await axios.patch('http://localhost:3000/api/blog', {
+      const res = await axios.patch('https://www.pawpalbd.com/api/user/blog/', {
         blogId,
         content: newContentJson,
         removedImageIds,
@@ -105,7 +111,8 @@ export const updateBlogPost = createAsyncThunk(
 
 export const saveBlogPost = createAsyncThunk(
   'blog/saveBlogPost',
-  async ({ contentJson, type }, thunkAPI) => {
+  async ({ contentJson, type, userId }, thunkAPI) => {
+    console.log(userId);
     try {
       const base64Images = [];
 
@@ -133,7 +140,7 @@ export const saveBlogPost = createAsyncThunk(
         base64Images.forEach(({ blob }) => formData.append('images', blob));
 
         const uploadRes = await axios.post(
-          'http://localhost:3000/api/blog/image',
+          'https://www.pawpalbd.com/api/user/blog/image',
           formData,
           {
             headers: {
@@ -157,10 +164,11 @@ export const saveBlogPost = createAsyncThunk(
       }
 
       const createRes = await axios.post(
-        'http://localhost:3000/api/blog',
+        'https://www.pawpalbd.com/api/user/blog/',
         {
           content: contentJson,
           type,
+          userId,
         },
         {
           headers: {
@@ -184,7 +192,7 @@ const initialState = {
   specificBlogs: [],
   blogTabIndex: 6,
   isShowBlogTypeModal: false,
-  isLoading:false,
+  isLoading: false,
 };
 
 const blogSlice = createSlice({
@@ -206,59 +214,59 @@ const blogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(saveBlogPost.pending,(state, action)=>{
-              state.isLoading=true;
-            })
-      .addCase(saveBlogPost.rejected,(state, action)=>{
-              state.isLoading=false;
-            })
+      .addCase(saveBlogPost.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(saveBlogPost.rejected, (state, action) => {
+        state.isLoading = false;
+      })
       .addCase(saveBlogPost.fulfilled, (state, action) => {
         state.blogs.push(action.payload);
-        state.isLoading=false;
+        state.isLoading = false;
         console.log(action.payload);
       })
-      .addCase(getBlogs.pending,(state, action)=>{
-              state.isLoading=true;
-            })
-      .addCase(getBlogs.rejected,(state, action)=>{
-              state.isLoading=false;
-            })
+      .addCase(getBlogs.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getBlogs.rejected, (state, action) => {
+        state.isLoading = false;
+      })
       .addCase(getBlogs.fulfilled, (state, action) => {
         console.log(action.payload);
         state.blogs = action.payload.blogs;
-        state.isLoading=false;
+        state.isLoading = false;
       })
-      .addCase(getSpecificBlogs.pending,(state, action)=>{
-              state.isLoading=true;
-            })
-      .addCase(getSpecificBlogs.rejected,(state, action)=>{
-              state.isLoading=false;
-            })
+      .addCase(getSpecificBlogs.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getSpecificBlogs.rejected, (state, action) => {
+        state.isLoading = false;
+      })
       .addCase(getSpecificBlogs.fulfilled, (state, action) => {
         state.specificBlogs = action.payload.blogs;
-        state.isLoading=false;
+        state.isLoading = false;
       })
-      .addCase(updateBlogPost.pending,(state, action)=>{
-              state.isLoading=true;
-            })
-      .addCase(updateBlogPost.rejected,(state, action)=>{
-              state.isLoading=false;
-            })
+      .addCase(updateBlogPost.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(updateBlogPost.rejected, (state, action) => {
+        state.isLoading = false;
+      })
       .addCase(updateBlogPost.fulfilled, (state, action) => {
         const { _id } = action.payload;
         state.blogs = state.blogs.filter((item) => item._id !== _id);
         state.blogs.push(action.payload);
-        state.isLoading=false;
+        state.isLoading = false;
       })
-      .addCase(deleteBlogPost.pending,(state, action)=>{
-              state.isLoading=true;
-            })
-      .addCase(deleteBlogPost.rejected,(state, action)=>{
-              state.isLoading=false;
-            })
+      .addCase(deleteBlogPost.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteBlogPost.rejected, (state, action) => {
+        state.isLoading = false;
+      })
       .addCase(deleteBlogPost.fulfilled, (state, action) => {
         state.blogs = state.blogs.filter((item) => item._id !== action.payload);
-        state.isLoading=false;
+        state.isLoading = false;
       });
   },
 });
