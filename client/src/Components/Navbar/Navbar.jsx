@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from 'react'
+import { getSpecificBlogs, setBlogTabIndex } from '@/Store/Blog'
 import { useDispatch, useSelector } from 'react-redux'
 import { isNavBgWhite, isOnHoverNavLink, setIsNavBgWhite, setIsOnHoverNavLink } from '../../Store/Utils'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import logo from '../../assets/logo.png'
-import HoverCard from './HoverCard'
-import { Link } from 'react-router-dom'
-import { user } from '@/Store/Auth'
+import { Link, useNavigate } from 'react-router-dom'
+import { setUser, user } from '@/Store/Auth'
 import AuthSwitch from './AuthSwitch'
+import data from '../../data/hoverCard'
 
 const Navbar = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const currentIsOnHoverNavLink = useSelector(isOnHoverNavLink)
     
     const currentUser = useSelector(user);
-
+    
+    const handleLogout = ()=>{
+      localStorage.removeItem('user')
+      dispatch(setUser(null))
+      
+    }
+    const handleClick = (index)=>{
+            const types = ['adoption','breeds', 'health and wellness', 'training','others']
+            dispatch(setBlogTabIndex(index))
+            dispatch(getSpecificBlogs({type:types[index-1]}))
+            navigate('/blogs')
+          }
     const handleSubmit = (e)=>{
       e.preventDefault()
       console.log('submitting..')
@@ -29,33 +42,84 @@ const Navbar = () => {
           </Link>
           <div className="w-[60%] h-full flex justify-between items-center">
             <div className="w-[55%] h-full flex justify-between items-end pb-[20px]">
-              <Link 
-              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(1))}
-              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
-              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+              <Link className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Adopt</p>
-                {currentIsOnHoverNavLink===1?<HoverCard/>:null}
+
+                <div className={`cursor-default w-[500px] h-[300px] bg-gray-900 absolute group-hover:flex hidden`}>
+                  <div className="w-[40%] h-full  flex flex-col">
+                      <button className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Cats & Kittens</p>
+                      </button>
+                      <button className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Dogs & Puppies</p>
+                      </button>
+                      <button className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Other type of Pets</p>
+                      </button>
+                  </div>
+                  <div className="w-[60%] h-full bg-neutral-800">
+                    <img className='w-full h-full object-cover' src={data[0].url} alt="" />
+                  </div>
+                </div>
               </Link>
               <Link to={'/transport'}
-              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(2))}
-              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
-              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+              className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Transport</p>
-                {currentIsOnHoverNavLink===2?<HoverCard/>:null}
+                <div className={`cursor-default w-[500px] h-[300px] bg-gray-900 absolute group-hover:flex hidden`}>
+                  <div className="w-[40%] h-full flex flex-col">
+                          <Link to={'/transport#work'}   className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                            <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Work Procedure</p>
+                          </Link>
+                          <Link to={'/transport#services'}   className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                            <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Services</p>
+                          </Link>
+                          <Link to={'/transport#agencies'}   className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                            <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Agencies</p>
+                          </Link>
+                          <Link to={'/transport#agencies'}   className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                            <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Pricing</p>
+                          </Link>
+                          <Link to={'/transport#book'}   className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                            <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Booking</p>
+                          </Link>
+                          <Link to={'/transport#book'}   className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                            <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>FAQs</p>
+                          </Link>
+                      </div>
+                  <div className="w-[60%] h-full bg-neutral-800">
+                    <img className='w-full h-full object-cover' src={data[1].url} alt="" />
+                  </div>
+                </div>
               </Link>
               <Link to={'/blog'}
-              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(3))}
-              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
-              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+              className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Blogs</p>
-                {currentIsOnHoverNavLink===3?<HoverCard/>:null}
+                <div className={`cursor-default w-[500px] h-[300px] bg-gray-900 absolute group-hover:flex hidden`}>
+                <div className="w-[40%] h-full  flex flex-col">
+                    <button onClick={()=>handleClick(1)} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Adoption</p>
+                      </button>
+                      <button onClick={()=>handleClick(2)} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Breeds</p>
+                      </button>
+                      <button onClick={()=>handleClick(3)} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Health and Wellness</p>
+                      </button>
+                      <button onClick={()=>handleClick(4)} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Training</p>
+                      </button>
+                      <button onClick={()=>handleClick(5)} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                        <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Other information</p>
+                      </button>
+                  </div>
+                  <div className="w-[60%] h-full bg-neutral-800">
+                    <img className='w-full h-full object-cover' src={data[2].url} alt="" />
+                  </div>
+                </div>
               </Link>
               <Link 
-              onMouseEnter={()=>dispatch(setIsOnHoverNavLink(4))}
-              onMouseLeave={()=>dispatch(setIsOnHoverNavLink(false))} 
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>AboutUs</p>
-                {/* {currentIsOnHoverNavLink===4?<HoverCard/>:null} */}
               </Link>
             </div>
             <form onSubmit={handleSubmit} className="w-[40%] h-full  flex justify-end items-end pb-[20px]">
@@ -69,13 +133,21 @@ const Navbar = () => {
           </div>
           {
             currentUser?
-              <div className="w-[300px] h-full  flex justify-start items-end pb-[20px] gap-[10px]">
+              <div className=" relative group w-[300px] h-full  flex justify-start items-end pb-[20px] gap-[10px]">
               <div className="w-[55px] h-[55px] rounded-full bg-gradient-to-b  from-orange-400 to-red-700 flex justify-center  items-center">
                 <div className="w-[50px] h-[50px] rounded-full bg-black  cursor-pointer">
                   <img src="https://i.pinimg.com/736x/24/23/98/24239866c8495158664b9d2f385c1c39.jpg" className='w-full h-full rounded-full  object-cover' alt="" />
                 </div>
               </div>
-              <p className='font-semibold text-lg mb-[10px] cursor-pointer'>{currentUser?.username}</p>
+              <p className=' font-semibold text-lg mb-[10px] cursor-pointer'>{currentUser?.username}</p>
+              <section className='group-hover:flex shadow-lg shadow-gray-600 hidden absolute top-[90%] rounded-tr-3xl rounded-bl-3xl left-[10%] w-[220px] h-[100px] bg-gray-800 flex-col items-start pt-[20px] pl-[20px]'>
+                <button className="w-full h-[30px] hover:translate-x-2 transition-transform duration-300 flex items-start cursor-pointer">
+                  <p className='text-lg text-white  hover:text-green-600 font-semi-bold tracking-wider'>View Profile</p>
+                </button>
+                <button onClick={handleLogout} className="w-full h-[30px] hover:translate-x-2 transition-transform duration-300 group-nested flex items-start cursor-pointer ">
+                <p className='text-lg text-red-500 hover:text-red-700 font-semibold tracking-wider'>Log out</p>
+                </button>
+              </section>
             </div>:
             <AuthSwitch/>
           }

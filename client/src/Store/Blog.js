@@ -112,7 +112,6 @@ export const updateBlogPost = createAsyncThunk(
 export const saveBlogPost = createAsyncThunk(
   'blog/saveBlogPost',
   async ({ contentJson, type, userId }, thunkAPI) => {
-    console.log(userId);
     try {
       const base64Images = [];
 

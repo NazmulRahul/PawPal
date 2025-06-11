@@ -19,7 +19,6 @@ const CreateBlog = () => {
   const [editBlogId, setEditBlogId] =useState(null);
 
   const postBlog = ()=>{
-    console.log(currentUser)
     dispatch(saveBlogPost({contentJson:blogContent, type:blogTypes[blogIndex], userId:currentUser.userId}))
   }
   return (
