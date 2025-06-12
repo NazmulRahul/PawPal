@@ -28,6 +28,7 @@ const updateBlog = async (req:any, res:any) => {
 
 const getBlogs = async (req:any, res:any) => {
   const {userId}=req.query
+  if(!userId) return res.status(400).json({msg:'userId is not provided'})
   const blogs = await Blog.find({userId});
   res.status(200).json({ blogs });
 };
