@@ -8,6 +8,7 @@ import ProfileNavbar from '../Profile/ProfileNavbar'
 import ProfilePicture from '../Profile/ProfilePicture'
 import fallback from '../../assets/defaultAvatar.png'
 import displayPicture from '../../assets/beckham.jpg'
+import ProfileSidebar from '../Profile/ProfileSidebar'
 
 const ProfileLayout = () => {
   const userInfo = useSelector(user)
@@ -17,13 +18,17 @@ const ProfileLayout = () => {
         <ProfileHeader userInfo={userInfo} />
         <ProfileNavbar />
         <section className="flex border-2 border-t-0 border-[#8C7A3F] bg-[#F2EED9] min-h-[76vh] max-h-[76vh] overflow-y-scroll">
-          <ProfilePicture displayPicture={displayPicture} fallback={fallback} />
+          {/* <ProfilePicture displayPicture={displayPicture} fallback={fallback} /> */}
+          <ProfileSidebar/>
           <Outlet />
         </section>
-        <Footer />a
       </div>
+      <Footer/>
     </main>
   );
 }
 
 export default ProfileLayout
+
+
+// "flex border-2 border-t-0 border-[#8C7A3F] bg-[#F2EED9] min-h-[76vh] max-h-[76vh] overflow-y-scroll"

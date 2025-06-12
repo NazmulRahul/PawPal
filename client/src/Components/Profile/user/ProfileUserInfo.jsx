@@ -10,8 +10,8 @@ const ProfileUserInfo = () => {
   };
   const [inEdit, setInEdit] = useState(() => false);
   return (
-    <main className="p-10 font-inter w-full overflow-y-auto">
-      {!inEdit ? <UserInfoProfile styles={styles} setInEdit={setInEdit} /> : <ProfileUserForm setInEdit={setInEdit}/>}
+    <main className="p-10 pt-2 font-inter w-full overflow-y-auto">
+      {!inEdit ? <ProfileUserInfoData styles={styles} setInEdit={setInEdit} /> : <ProfileUserForm setInEdit={setInEdit}/>}
     </main>
   );
 };

@@ -51,14 +51,14 @@ function App() {
         </Route>
         <Route path="admin/adoption" element={<AdminAdoptionView/>}/>
         <Route path="profile/:userId?" element={<Profile/>}>
-          {/* <Route index element={<ProfileUserInfo/>}/> */}
+          <Route index element={<ProfileUserInfo/>}/>
           <Route path="adoption" element={<ProfileAdoptionLayout/>}>
             <Route index element={<Pending/>}/>
             <Route path="adopted" element={<Adopted/>}/>
             <Route path="userAdoptions" element={<UserAdopted/>}/>
           </Route>
           <Route path="transport" element={<ProfileTransportList/>}/>
-          <Route index element={<ProfileBlogList/>}/>
+          <Route path="blog" element={<ProfileBlogList/>}/>
         </Route>
       </Route>
     </Routes>

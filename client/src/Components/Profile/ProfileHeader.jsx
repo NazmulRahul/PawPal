@@ -26,8 +26,8 @@ const ProfileHeader = ({ userInfo }) => {
       <h5 className="text-[#565656]">{userInfo?.email}</h5> */}
 
       <div className="flex flex-start items-center gap-2">
-        <h2 className="text-4xl font-semibold font-montserrat">{userInfo.username}</h2>
-        <h5 className="text-[#565656]">{userInfo.email}</h5>
+        <h2 className="text-4xl font-semibold font-montserrat">{userInfo?.username}</h2>
+        <h5 className="text-[#565656]">{userInfo?.email}</h5>
       </div>
 
       <h4 className="text-lg text-[#565656] font-montserrat">{currentDate}</h4>
