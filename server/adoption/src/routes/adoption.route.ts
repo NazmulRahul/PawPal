@@ -1,11 +1,11 @@
 import express, { Request, Response } from 'express'
-import {v2 as cloudinary} from 'cloudinary'
+import { v2 as cloudinary } from 'cloudinary'
 import { authenticate, authorize } from '../middlewares/authentication/user.authentication'
 import { validatePost } from '../middlewares/validators/post.validator'
-import { createPost, deletePost, getAllPost, getPostWithId,uploadImage } from '../controller/adoption.controller'
+import { createPost, deletePost, getAllPost, getPostWithId, uploadImage } from '../controller/adoption.controller'
 import { upload } from '../middlewares/multer.middleware'
 import log from '../utils/logger'
-
+import Post from '../models/post.model'
 
 const router = express.Router()
 
@@ -120,9 +120,9 @@ const router = express.Router()
  */
 
 router.route('/createPost').post(authenticate, validatePost, createPost)
-router.route('/getAllPosts').get(authenticate,getAllPost)
-router.route('/getPostWithId/:id').get(authenticate,getPostWithId)
-router.route('/deletePost/:id').delete(authenticate,deletePost)
+router.route('/getAllPosts').get(authenticate, getAllPost)
+router.route('/getPostWithId/:id').get(authenticate, getPostWithId)
+router.route('/deletePost/:id').delete(authenticate, deletePost)
 
 
 /**
@@ -155,11 +155,11 @@ router.route('/deletePost/:id').delete(authenticate,deletePost)
  *                   example: "https://res.cloudinary.com/demo/image/upload/sample.jpg"
  */
 
-router.route('/uploadImage').post(authenticate,upload.single('image'),uploadImage)
-router.route('/deleteImage/:publicId').delete(authenticate,async (req: Request, res: Response): Promise<any> => {
+router.route('/uploadImage').post(authenticate, upload.single('image'), uploadImage)
+router.route('/deleteImage/:publicId').delete(authenticate, async (req: Request, res: Response): Promise<any> => {
     try {
-        let {publicId } = req.params;
-        publicId="pawpal/"+publicId
+        let { publicId } = req.params;
+        publicId = "pawpal/" + publicId
         log.info(publicId)
         const result = await cloudinary.uploader.destroy(publicId);
 
@@ -173,7 +173,32 @@ router.route('/deleteImage/:publicId').delete(authenticate,async (req: Request, 
         res.status(500).json({ message: 'Server error' });
     }
 })
+router.route('/edit/:postId/:field').put(authenticate, async (req: any, res: any) => {
+    const { postId, field } = req.params
+    try {
+        const post = await Post.findById(postId)
+        // if (post?.userId == req.user.userId || req.user.isAdmin == true) {
+        let data = req.body.data
 
+        try {
+            const updatedPost = await Post.findByIdAndUpdate(postId, {
+                [field]: data
+            })
+            res.status(200).json({ msg: "post updated" })
+        } catch (error) {
+            log.error(error)
+            res.status(401).json({ msg: "errro updating password" })
+        }
+
+        // } else {
+        //     return res.status(401).json({ msg: "unauthorized" })
+        // }
+    } catch (error) {
+        log.error(error)
+        res.status(401).json({ msg: 'error' })
+    }
+
+})
 
 
 export default router

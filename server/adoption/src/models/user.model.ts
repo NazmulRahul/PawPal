@@ -1,4 +1,6 @@
+import { required } from 'joi'
 import mongoose from 'mongoose'
+import { deflate } from 'zlib'
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -19,15 +21,50 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: false,
     },
-    isTransporter: {
-        type: Boolean,
-        requried: true,
-        default: false,
+    city: {
+        type: String,
+        required: false,
+        default: null,
     },
-    isVerified:{
-        type:Boolean,
-        required:true,
-        default:false
+    address: {
+        type: String,
+        required: false,
+        default: null,
+    },
+    phone: {
+        type: String,
+        required: false,
+        default: null
+    },
+    bio: {
+        type: String,
+        required: false,
+        default: null,
+    },
+    facebook: {
+        type: String,
+        required: false,
+        default: null
+    },
+    instagram: {
+        type: String,
+        required: false,
+        default: null,
+    },
+    twitter: {
+        type: String,
+        required: false,
+        default: null
+    },
+    profilePicture: {
+        type: String,
+        required: false,
+        default: null,
+    },
+    isVerified: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 
 },

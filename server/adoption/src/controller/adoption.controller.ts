@@ -33,8 +33,8 @@ export const getPostWithId = async (req: Request, res: Response): Promise<any> =
             return res.status(400).json({ error: 'invalid id' })
         }
         const post = await Post.findById(id)
-        if(!post){
-            return res.status(404).json({error:"post not found"})
+        if (!post) {
+            return res.status(404).json({ error: "post not found" })
         }
         return res.status(200).json({ post })
     } catch (error) {
@@ -43,20 +43,23 @@ export const getPostWithId = async (req: Request, res: Response): Promise<any> =
 }
 
 export const deletePost = async (req: any, res: Response): Promise<any> => {
-    try {
 
+    try {
         const { id } = req.params
         if (!id || mongoose.Types.ObjectId.isValid(JSON.stringify(id))) {
             return res.status(400).json({ error: 'invalid id' })
         }
         const post = await Post.findById(id)
-        if(post?.userId!=req.user.userId){
-            return res.status(401).json({msg:"unauthorized"})
+        if (post?.userId != req.user.userId) {
+            if (req.user.isAdmin == false) {
+                return res.status(401).json({ msg: "unauthorized" })
+
+            }
         }
         await Post.findByIdAndDelete(id)
-        return res.status(200).json({msg:`post with id: ${id} has been deleted`})
-    }catch(error){
-        return res.status(400).json({error:error})
+        return res.status(200).json({ msg: `post with id: ${id} has been deleted` })
+    } catch (error) {
+        return res.status(400).json({ error: error })
     }
 }
 
