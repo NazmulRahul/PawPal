@@ -184,7 +184,7 @@ router.route('/edit/:postId/:field').put(authenticate, async (req: any, res: any
             const updatedPost = await Post.findByIdAndUpdate(postId, {
                 [field]: data
             })
-            res.status(200).json({ msg: "password updated" })
+            res.status(200).json({ msg: "post updated" })
         } catch (error) {
             log.error(error)
             res.status(401).json({ msg: "errro updating password" })
