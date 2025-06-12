@@ -1,4 +1,6 @@
 import express, { Request, Response } from 'express'
+import User from '../models/user.model'
+import log from '../utils/logger'
 import { validateLogin, validateUser } from '../middlewares/validators/user.validator'
 import { createTransporter, createUser, loginUser, logoutUser, registerWithVerification, resetPassword, uploadProfilePicture, verifyMail } from '../controller/user.controller'
 import { authenticate, authorize } from '../middlewares/authentication/user.authentication'
@@ -113,4 +115,21 @@ router.route('/resetPassword/:userId').put(authenticate, resetPassword)
 router.route('/profilePicture/:userId').post(upload.array('image'), authenticate, uploadProfilePicture).delete()
 router.route('/registerWithVerification').post(registerWithVerification)
 router.route('/verify-email/:token').get(verifyMail)
+router.route('/edit/:userId/:field').put(authenticate,async(req:any,res:any)=>{
+     const { userId,field } = req.params
+    // if(userId!=req.user.userId){
+    //     return res.status(401).json({msg:"unauthorized"})
+    // }
+    const data = req.body.data
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            [field]:data
+        })
+        res.status(200).json({ msg: "password updated" })
+    } catch (error) {
+        log.error(error)
+        res.status(401).json({ msg: "errro updating password" })
+    }
+})
 export default router
