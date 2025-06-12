@@ -13,12 +13,13 @@ router.route('/edit/:commentId').put(authenticate, async (req: any, res: any) =>
     const {data}=req.body.data
     try {
         const comment = await Comment.findById(commentId)
-        if (comment?.userId != req.user.userId) {
-            res.status(401).json({ msg: 'unauthorized!' })
-        }
+        // if (comment?.userId != req.user.userId) {
+        //     res.status(401).json({ msg: 'unauthorized!' })
+        // }
         const updatedComment = await Comment.findByIdAndUpdate(commentId, {
             text: data
         })
+        res.send(200).json({msg:"comment updated"})
     } catch (error) {
         log.error(error)
         res.status(401).json({ msg: 'error' })
