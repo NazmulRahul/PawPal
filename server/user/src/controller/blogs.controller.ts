@@ -1,4 +1,5 @@
 import cloudinary from './config';
+import mongoose from 'mongoose'
 import Blog from '../models/blogs.model'
 
 const createBlog = async (req:any, res:any) => {
@@ -27,7 +28,9 @@ const updateBlog = async (req:any, res:any) => {
 };
 
 const getBlogs = async (req:any, res:any) => {
-  const blogs = await Blog.find({});
+  const {userId}=req.query
+  if(!userId) return res.status(400).json({msg:'userId is not provided'})
+  const blogs = await Blog.find({userId: new mongoose.Types.ObjectId(userId)});
   res.status(200).json({ blogs });
 };
 
@@ -84,6 +87,20 @@ const getBlogsOfTypes = async (req:any, res:any) => {
   res.status(200).json({ blogs });
 };
 
+const toggleFeature = async (req:any, res:any)=>{
+  const {blogId}=req.body;
+  const blog = await Blog.findOne({blogId});
+  if(!blog) return res.status(400).json({msg:'blog not found'});
+  blog.isFeature = !blog.isFeature;
+  await blog.save();
+  res.status(200).json({blog});
+}
+
+const getFeaturedBlogs = async (req:any, res:any)=>{
+  const blogs = await Blog.find({isFeature:true})
+  res.status(200).json({blogs});
+}
+
 export {
   createBlog,
   updateBlog,
@@ -91,4 +108,6 @@ export {
   deleteBlog,
   uploadImages,
   getBlogsOfTypes,
+  toggleFeature,
+  getFeaturedBlogs
 };

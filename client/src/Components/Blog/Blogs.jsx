@@ -3,12 +3,15 @@ import AnimatedSection from '../Utils/AnimatedSection'
 import { useDispatch, useSelector } from 'react-redux'
 import { blogs, deleteBlogPost, getBlogs, setBlog } from '@/Store/Blog'
 import { extractHeadings, extractFirstImageUrl } from '@/Utils/blog'
+import { user } from '@/Store/Auth'
 
 const Blogs = ({setEditorContent, setEditBlogId}) => {
   const currentBlogs = useSelector(blogs)
   const dispatch  = useDispatch()
+  const currentUser = useSelector(user)
+
   useEffect(()=>{
-    dispatch(getBlogs());
+    dispatch(getBlogs({userId:currentUser?.userId}));
   },[])
   return (
     <div className="fixed top-0 left-0 bottom-0 w-[28%] flex flex-col pt-[130px] pb-[30px] items-center gap-[20px] overflow-y-scroll scrollbar-hidden">

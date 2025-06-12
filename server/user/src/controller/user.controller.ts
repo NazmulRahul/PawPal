@@ -213,24 +213,25 @@ export const verifyMail = async (req: Request, res: Response): Promise<any> => {
         }
 
         if (user.isVerified) {
-            return res.status(200).send('<p style="color: green; font-size: 1.5em; text-align: center;">Email already verified! You can now log in.</p>');
+            return res.status(200).send('<div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: #f9fafb;" >< div style = "padding: 20px; background: #fff; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: center; max-width: 400px;" ><p style="color: #16a34a; font-size: 1.5em; font-weight: 600; margin: 0;" >✅ Email verified successfully!</p>< p style = "margin-top: 10px; color: #4b5563; font-size: 1em;" >You can now log in to your account.</p></div></div>');
         }
 
-        user.isVerified = true;
-        await user.save();
 
-        res.status(200).send('<p style="color: green; font-size: 1.5em; text-align: center;">Email verified successfully! You can now log in.</p>');
+user.isVerified = true;
+await user.save();
+
+res.status(200).send('<p style="color: green; font-size: 1.5em; text-align: center;">Email verified successfully! You can now log in.</p>');
 
     } catch (error: any) {
-        if (error.name === 'TokenExpiredError') {
-            return res.status(400).send('<p style="color: red; font-size: 1.5em; text-align: center;">Verification link expired. Please request a new one.</p>');
-        }
-        if (error.name === 'JsonWebTokenError') {
-            return res.status(400).send('<p style="color: red; font-size: 1.5em; text-align: center;">Verification failed: Invalid token.</p>');
-        }
-        console.error('Email verification error:', error);
-        res.status(500).send('<p style="color: red; font-size: 1.5em; text-align: center;">Server error during email verification.</p>');
+    if (error.name === 'TokenExpiredError') {
+        return res.status(400).send('<p style="color: red; font-size: 1.5em; text-align: center;">Verification link expired. Please request a new one.</p>');
     }
+    if (error.name === 'JsonWebTokenError') {
+        return res.status(400).send('<p style="color: red; font-size: 1.5em; text-align: center;">Verification failed: Invalid token.</p>');
+    }
+    console.error('Email verification error:', error);
+    res.status(500).send('<p style="color: red; font-size: 1.5em; text-align: center;">Server error during email verification.</p>');
+}
 };
 
 // --- (Optional) Resend Verification Email Route ---

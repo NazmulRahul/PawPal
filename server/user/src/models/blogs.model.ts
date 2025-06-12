@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 import User from "./user.model"
-const blogSchema = mongoose.Schema({
+const blogSchema =new mongoose.Schema({
     userId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref:User,
         required: true
     },
     content: {

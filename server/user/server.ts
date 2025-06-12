@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import swaggerJsdoc from "swagger-jsdoc"
 import swaggerUi from 'swagger-ui-express';
 import blogRoutes from './src/routes/blogs.route'
+import transportRoutes from './src/routes/transport.route'
 
 dotenv.config()
 
@@ -53,6 +54,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 //
+app.use('/transport', transportRoutes)
 app.use('/blog',blogRoutes)
 app.use('/api', userRoutes)
 app.use((req, res) => {
