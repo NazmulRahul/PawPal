@@ -135,7 +135,8 @@ router.route('/edit/:userId/:field').put(authenticate,async(req:any,res:any)=>{
 router.route('getUserInfo/:userId').get(authenticate,async(req:any,res:any)=>{
      const { userId} = req.params
     try {
-       const user= await User.findById(userId);
+       let user= await User.findById(userId);
+         user.password="";
         res.status(200).json({user:user})  
     } catch (error) {
         log.error(error)
