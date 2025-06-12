@@ -86,7 +86,7 @@ const getBlogsOfTypes = async (req:any, res:any) => {
 };
 
 const toggleFeature = async (req:any, res:any)=>{
-  const {blogId}=req.query;
+  const {blogId}=req.body;
   const blog = await Blog.findOne({blogId});
   if(!blog) return res.status(400).json({msg:'blog not found'});
   blog.isFeature = !blog.isFeature;
