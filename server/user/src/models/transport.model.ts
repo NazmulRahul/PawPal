@@ -1,6 +1,12 @@
 import mongoose from 'mongoose'
-
-const transportSchema = mongoose.Schema({
+import User from './user.model'
+import { required } from 'joi';
+const transportSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User,
+    required: true
+  },
   owner: {
     type: Object,
     required: true,
