@@ -132,4 +132,14 @@ router.route('/edit/:userId/:field').put(authenticate,async(req:any,res:any)=>{
         res.status(401).json({ msg: "errro updating password" })
     }
 })
+router.route('getUserInfo/:userId').get(authenticate,async(req:any,res:any)=>{
+     const { userId} = req.params
+    try {
+       const user= await User.findById(userId);
+        res.status(200).json({user:user})  
+    } catch (error) {
+        log.error(error)
+        res.status(401).json({ msg: "errro updating password" })
+    }
+})
 export default router
