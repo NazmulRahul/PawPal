@@ -14,6 +14,8 @@ import {
     deleteBlog,
     uploadImages,
     getBlogsOfTypes,
+    toggleFeature,
+    getFeaturedBlogs
 } from '../controller/blogs.controller'
 
 Router.route('/')
@@ -23,6 +25,7 @@ Router.route('/')
     .patch(authenticate,updateBlog);
 
 Router.route('/image').post(upload.array('images'), uploadImages).delete();
-Router.route('/type').get(getBlogsOfTypes);
+Router.route('/type').get(authenticate,getBlogsOfTypes);
+Router.route('/feature').patch(authenticate,toggleFeature).get(authenticate,getFeaturedBlogs)
 
 export default Router

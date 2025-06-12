@@ -2,14 +2,20 @@ import { dataURItoBlob, extractPublicIds } from '@/Utils/blog';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getBlogs = createAsyncThunk('blog/getBlogs', async (thunkAPI) => {
-  try {
-    const response = await axios.get('https://www.pawpalbd.com/api/user/blog/');
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const getBlogs = createAsyncThunk(
+  'blog/getBlogs',
+  async ({ userId }, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        'https://www.pawpalbd.com/api/user/blog/',
+        { params: { userId } }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 export const getSpecificBlogs = createAsyncThunk(
   'blog/getSpecificBlogs',
