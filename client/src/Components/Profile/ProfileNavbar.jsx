@@ -12,11 +12,46 @@ const ProfileNavbar = ({ isAdmin }) => {
       </section>
 
       <section className="flex font-inter items-center gap-8 mr-8">
-				<NavLink className={({isActive}) => `${isActive? 'underline text-[#8C7A3F] font-semibold hover:font-bold' : 'hover:font-semibold'}`} to={'.'} end>Info</NavLink>
-				<NavLink className={({isActive}) => `${isActive? 'underline text-[#8C7A3F] font-semibold hover:font-bold' : 'hover:font-semibold'}`} to={'adoption'}>Adoption</NavLink>
-				<NavLink className={({isActive}) => `${isActive? 'underline text-[#8C7A3F] font-semibold hover:font-bold' : 'hover:font-semibold'}`} to={'transport'}>Transportation</NavLink>
-				<NavLink className={({isActive}) => `${isActive? 'underline text-[#8C7A3F] font-semibold hover:font-bold' : 'hover:font-semibold'}`} to={'blog'}>Blog</NavLink>
-			</section>
+        {/* <NavLink className={({isActive}) => `${isActive? 'underline text-[#8C7A3F] font-semibold hover:font-bold' : 'hover:font-semibold'}`} to={'.'} end>Info</NavLink> */}
+        <NavLink
+          className={({ isActive }) =>
+            `${
+              isActive
+                ? "underline text-[#8C7A3F] font-semibold hover:font-bold"
+                : "hover:font-semibold"
+            }`
+          }
+          to={"."}
+          end
+        >
+          Blog
+        </NavLink>
+
+        <NavLink
+          className={({ isActive }) =>
+            `${
+              isActive
+                ? "underline text-[#8C7A3F] font-semibold hover:font-bold"
+                : "hover:font-semibold"
+            }`
+          }
+          to={"adoption"}
+        >
+          Adoption
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            `${
+              isActive
+                ? "underline text-[#8C7A3F] font-semibold hover:font-bold"
+                : "hover:font-semibold"
+            }`
+          }
+          to={"transport"}
+        >
+          Transportation
+        </NavLink>
+      </section>
     </main>
   );
 };

@@ -1,47 +1,64 @@
 // import axios from '../Utils/axios';
-import axios from 'axios';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const login = createAsyncThunk('auth/login', async (data, thunkAPI) => {
+export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
   try {
     const response = await axios.post(
-      'https://www.pawpalbd.com/api/user/api/login',
+      "https://www.pawpalbd.com/api/user/api/login",
       data
     );
     console.log(response);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(
-      error.response?.data || { message: 'Login failed' }
+      error.response?.data || { message: "Login failed" }
     );
   }
 });
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (data, thunkAPI) => {
     try {
       const response = await axios.post(
-        'https://www.pawpalbd.com/api/user/api/create',
+        "https://www.pawpalbd.com/api/user/api/create",
         data
       );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data || { message: 'SignUp failed' }
+        error.response?.data || { message: "SignUp failed" }
+      );
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  "auth/logout",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "https://www.pawpalbd.com/api/user/api/logout"
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data || { message: "Logout failed" }
       );
     }
   }
 );
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  user: JSON.parse(localStorage.getItem("user")) || null,
   authStatus: false,
   isLoading: false,
+  isError: false
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setUser(state, action) {
@@ -62,8 +79,8 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.authStatus = true;
 
-        localStorage.removeItem('user');
-        localStorage.setItem('user', JSON.stringify(action.payload));
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(action.payload));
         state.isLoading = false;
       })
       .addCase(register.rejected, (state, action) => {
@@ -85,8 +102,21 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.authStatus = true;
 
-        localStorage.removeItem('user');
-        localStorage.setItem('user', JSON.stringify(action.payload));
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(action.payload));
+        state.isLoading = false;
+      })
+      .addCase(logoutUser.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.authStatus = false;
+        state.isLoading = false
+        localStorage.removeItem("user");
+      })
+      .addCase(logoutUser.rejected, (state, action) => {
+        console.error("Logout failed:", action.payload);
         state.isLoading = false;
       });
   },

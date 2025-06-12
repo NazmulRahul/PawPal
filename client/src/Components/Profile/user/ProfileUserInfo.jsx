@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ProfileUserInfoData from "./ProfileUserInfoData";
 import ProfileUserForm from "./ProfileUserForm";
+import UserInfoProfile from "./UserInfoProfile";
 
 const ProfileUserInfo = () => {
   const styles = {
@@ -10,7 +11,7 @@ const ProfileUserInfo = () => {
   const [inEdit, setInEdit] = useState(() => false);
   return (
     <main className="p-10 font-inter w-full overflow-y-auto">
-      {!inEdit ? <ProfileUserInfoData styles={styles} setInEdit={setInEdit} /> : <ProfileUserForm setInEdit={setInEdit}/>}
+      {!inEdit ? <UserInfoProfile styles={styles} setInEdit={setInEdit} /> : <ProfileUserForm setInEdit={setInEdit}/>}
     </main>
   );
 };
