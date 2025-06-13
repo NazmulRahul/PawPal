@@ -138,7 +138,7 @@ router.route('/getUserInfo/:userId').get(authenticate, async (req: any, res: any
         let user = await User.findById(userId);
         if (user != null) {
             user.password = "";
-            res.status(200).json({ user: user })
+            res.status(200).json({ userId:user._id, user: user })
         }else{
             res.status(404).json({msg:'user not found'})
         }
