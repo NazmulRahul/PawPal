@@ -32,8 +32,14 @@ export const uploadFiles = async (req:any, res:any) => {
       if (!file) {
         return res.status(400).json({ error: `${key} is missing` });
       }
-      const uploadRes:any = await uploadToCloudinary(file.buffer, `pawpal/${key}`);
-      resultUrls[key] = uploadRes.secure_url;
+      try{
+        const uploadRes:any = await uploadToCloudinary(file.buffer, `transport/${key}`);
+        resultUrls[key] = uploadRes.secure_url;
+      }catch(error){
+        console.log(error)
+        res.status(500).json
+      }
+     
     }
     return res.status(200).json({ urls: resultUrls });
   };
