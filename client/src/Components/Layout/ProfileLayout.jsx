@@ -19,7 +19,7 @@ const ProfileLayout = () => {
         <ProfileNavbar />
         <section className="flex border-2 border-t-0 border-[#8C7A3F] bg-[#F2EED9] min-h-[76vh] max-h-[76vh] overflow-y-scroll">
           {/* <ProfilePicture displayPicture={displayPicture} fallback={fallback} /> */}
-          <ProfileSidebar/>
+          <ProfileSidebar userInfo={userInfo}/>
           <Outlet />
         </section>
       </div>

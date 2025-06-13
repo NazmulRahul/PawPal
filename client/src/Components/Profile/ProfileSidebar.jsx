@@ -1,16 +1,30 @@
 import { logoutUser } from "@/Store/Auth";
-import { LogOut, NotebookPen, PawPrint, Truck, User } from "lucide-react";
+import {
+  FilePenLine,
+  LogOut,
+  LogOutIcon,
+  NotebookPen,
+  PawPrint,
+  Truck,
+  User,
+} from "lucide-react";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import ChangePassword from "./user/ChangePassword";
 
-const ProfileSidebar = () => {
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
-	const handleLogout = async () => {
-		await dispatch(logoutUser())
-		navigate('/')
-	}
+const ProfileSidebar = ({userInfo}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const showEditPassword =
+    !pathname.includes("adopt") &&
+    !pathname.includes("transport") &&
+    !pathname.includes("blog");
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
+    navigate("/");
+  };
   return (
     <main className="border-2 border-t-0 border-l-0 border-b-0 border-[#8C7A3F] flex flex-col justify-between min-w-50 ">
       <div>
@@ -55,7 +69,7 @@ const ProfileSidebar = () => {
                   : "hover:font-semibold"
               } flex justify-center items-center gap-1 py-3`
             }
-            to={"tranport"}
+            to={"transport"}
           >
             <Truck />
             Transport
@@ -77,10 +91,22 @@ const ProfileSidebar = () => {
           </NavLink>
         </section>
       </div>
-
-			<div className="py-5 hover:bg-[#e4d1cd]">
-				<button onClick={handleLogout} className="flex justify-center items-center w-full"><LogOut/>Logout</button>
-			</div>
+      <div>
+        {showEditPassword ? (
+          <div className="py-3 hover:bg-[#e4d1cd]">
+            <ChangePassword userId={userInfo?.userId}/>
+          </div>
+        ) : null}
+        <div className="py-4 hover:bg-[#e4d1cd]">
+          <button
+            onClick={handleLogout}
+            className="flex justify-center items-center w-full"
+          >
+            <LogOut />
+            Logout
+          </button>
+        </div>
+      </div>
     </main>
   );
 };
