@@ -9,7 +9,7 @@ const ProfileUserInfo = () => {
   };
   return (
     <main className="p-10 pt-2 font-inter w-full overflow-y-auto">
-      <ProfileUserInfoData/>
+      <ProfileUserInfoData styles={styles}/>
     </main>
   );
 };
