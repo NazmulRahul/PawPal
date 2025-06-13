@@ -115,7 +115,7 @@ const getFeaturedBlogs = async (req: any, res: any) => {
 const uploadToCloudinary = async (filePath: string) => {
   try {
     const response = await cloudinary.uploader.upload(filePath, {
-      folder: 'pawpal',
+      folder: 'blog',
       resource_type: 'auto'
     })
     return response
