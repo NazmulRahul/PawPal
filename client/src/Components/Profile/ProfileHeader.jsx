@@ -39,7 +39,7 @@ const ProfileHeader = ({ userInfo }) => {
       toast("Uploading photo...");
       const formData = new FormData();
       formData.append("image", file);
-      const updatedUser = await profilePicUploader(userInfo.userId, formData);
+      const updatedUser = await profilePicUploader(userInfo?.userId, formData);
 
       console.log(updatedUser)
       if (updatedUser) {
@@ -57,7 +57,7 @@ const ProfileHeader = ({ userInfo }) => {
     <div className="flex justify-start items-center gap-x-2">
       <div className="relative">
         <img
-          src={userInfo?.profilePicture || defaultPic}
+          src={userInfo?.user?.profilePicture || defaultPic}
           alt="profile-picture"
           className="w-[120px] h-[120px] rounded-full object-cover shadow-xl"
         />
@@ -81,7 +81,7 @@ const ProfileHeader = ({ userInfo }) => {
       </div>
       <div className="flex flex-col justify-around">
         <h3 className="font-semibold font-montserrat text-3xl">
-          {userInfo?.name}
+          {userInfo?.user?.name}
         </h3>
         <span className="text-[#565656] font-montserrat">{currentDate}</span>
       </div>

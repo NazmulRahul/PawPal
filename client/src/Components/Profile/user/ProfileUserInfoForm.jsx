@@ -14,9 +14,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/Components/ui/textarea";
 import { SquarePen } from "lucide-react";
+import handleFieldUpdate from "./handleFieldUpdate";
+import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import getUserDetailsWithId from "./getUserDetailsWithId";
+import { setUser } from "@/Store/Auth";
 
 const initialData = {
-  username: "",
+  name: "",
   phone: "",
   address: "",
   facebook: "",
@@ -26,7 +31,8 @@ const initialData = {
   city: "",
 };
 
-const ProfileUserInfoForm = () => {
+const ProfileUserInfoForm = ({ userData }) => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const styles = {
     label: "font-semibold",
@@ -38,9 +44,25 @@ const ProfileUserInfoForm = () => {
 
   const [formData, setFormData] = useState(initialData);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    const nonEmptyFields = Object.fromEntries(
+      Object.entries(formData).filter(([_, value]) => value.trim() !== "")
+    );
+
+    try {
+      for (const [key, value] of Object.entries(nonEmptyFields)) {
+        await handleFieldUpdate(userData?.userId, key, value);
+      }
+      toast.success("Updated Successfully");
+      const data = await getUserDetailsWithId(userData?.userId);
+      console.log(data)
+      await dispatch(setUser(data))
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
+
     setFormData(initialData);
     setIsOpen(false);
   };
@@ -77,32 +99,28 @@ const ProfileUserInfoForm = () => {
             <div className="grid grid-cols-3 mt-2 gap-y-6">
               <section className={styles.section}>
                 <Label
-                  htmlFor={"username"}
-                  id={"username"}
+                  htmlFor={"name"}
+                  id={"name"}
                   className={styles.label}
                 >
                   Username
                 </Label>
                 <Input
-                  id={"username"}
-                  name={"username"}
+                  id={"name"}
+                  name={"name"}
                   placeholder={"John Doe"}
-                  value={formData.username}
+                  value={formData.name}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
-                      username: e.target.value,
+                      name: e.target.value,
                     }))
                   }
                   className={styles.input}
                 />
               </section>
               <section className={styles.section}>
-                <Label
-                  htmlFor={"city"}
-                  id={"city"}
-                  className={styles.label}
-                >
+                <Label htmlFor={"city"} id={"city"} className={styles.label}>
                   city
                 </Label>
                 <Input
@@ -215,7 +233,7 @@ const ProfileUserInfoForm = () => {
                   id={"twitter"}
                   name={"twitter"}
                   placeholder={"https://twitter.com/johndoe"}
-                  value={formData.instagram}
+                  value={formData.twitter}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,

@@ -1,4 +1,4 @@
-import { logoutUser } from "@/Store/Auth";
+import { logoutUser, user } from "@/Store/Auth";
 import {
   FilePenLine,
   LogOut,
@@ -9,7 +9,7 @@ import {
   User,
 } from "lucide-react";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import ChangePassword from "./user/ChangePassword";
 
@@ -17,6 +17,7 @@ const ProfileSidebar = ({userInfo}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const userData = useSelector(user)
   const showEditPassword =
     !pathname.includes("adopt") &&
     !pathname.includes("transport") &&
@@ -25,6 +26,7 @@ const ProfileSidebar = ({userInfo}) => {
     await dispatch(logoutUser());
     navigate("/");
   };
+  const showLogout = userData?.userId === userInfo?.userId
   return (
     <main className="border-2 border-t-0 border-l-0 border-b-0 border-[#8C7A3F] flex flex-col justify-between min-w-50 ">
       <div>
@@ -92,12 +94,12 @@ const ProfileSidebar = ({userInfo}) => {
         </section>
       </div>
       <div>
-        {showEditPassword ? (
+        {showEditPassword && showLogout ? (
           <div className="py-3 hover:bg-[#e4d1cd]">
             <ChangePassword userId={userInfo?.userId}/>
           </div>
         ) : null}
-        <div className="py-4 hover:bg-[#e4d1cd]">
+        {showLogout? <div className="py-4 hover:bg-[#e4d1cd]">
           <button
             onClick={handleLogout}
             className="flex justify-center items-center w-full"
@@ -105,7 +107,7 @@ const ProfileSidebar = ({userInfo}) => {
             <LogOut />
             Logout
           </button>
-        </div>
+        </div>: null}
       </div>
     </main>
   );
