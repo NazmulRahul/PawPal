@@ -115,8 +115,8 @@ router.route('/resetPassword/:userId').put(authenticate, resetPassword)
 router.route('/profilePicture/:userId').post(upload.array('image'), authenticate, uploadProfilePicture).delete()
 router.route('/registerWithVerification').post(registerWithVerification)
 router.route('/verify-email/:token').get(verifyMail)
-router.route('/edit/:userId/:field').put(authenticate,async(req:any,res:any)=>{
-     const { userId,field } = req.params
+router.route('/edit/:userId/:field').put(authenticate, async (req: any, res: any) => {
+    const { userId, field } = req.params
     // if(userId!=req.user.userId){
     //     return res.status(401).json({msg:"unauthorized"})
     // }
@@ -124,7 +124,7 @@ router.route('/edit/:userId/:field').put(authenticate,async(req:any,res:any)=>{
 
     try {
         const updatedUser = await User.findByIdAndUpdate(userId, {
-            [field]:data
+            [field]: data
         })
         res.status(200).json({ msg: "user updated" })
     } catch (error) {
@@ -132,12 +132,17 @@ router.route('/edit/:userId/:field').put(authenticate,async(req:any,res:any)=>{
         res.status(401).json({ msg: "errro updating password" })
     }
 })
-router.route('/getUserInfo/:userId').get(authenticate,async(req:any,res:any)=>{
-     const { userId} = req.params
+router.route('/getUserInfo/:userId').get(authenticate, async (req: any, res: any) => {
+    const { userId } = req.params
     try {
-       let user= await User.findById(userId);
-         user.password="";
-        res.status(200).json({user:user})  
+        let user = await User.findById(userId);
+        if (user != null) {
+            user.password = "";
+            res.status(200).json({ user: user })
+        }else{
+            res.status(404).json({msg:'user not found'})
+        }
+
     } catch (error) {
         log.error(error)
         res.status(401).json({ msg: "errro updating password" })

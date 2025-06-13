@@ -2,13 +2,14 @@ import uploadToCloudinary from "../utils/uploadToCloudinary";
 import Transport from '../models/transport.model'
 
   export const makeTransportRequest = async (req:any, res:any) => {
-    const { owner, pet, travel, agency, document } = req.body;
+    const {userId, owner, pet, travel, agency, document } = req.body;
 
     if (!owner || !pet || !travel || !agency || !document) {
         return res.status(400).json({ error: 'Missing fields' });
     }
 
     const transport = await Transport.create({
+        userId,
         owner,
         pet,
         travel,
