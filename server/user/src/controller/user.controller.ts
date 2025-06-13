@@ -49,7 +49,7 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
 
 export const loginUser = async (req: Request, res: Response): Promise<any> => {
     const { email, password } = req.body;
-    const userExist = await User.findOne({ email });
+    let userExist = await User.findOne({ email });
     if (userExist) {
         const isPasswordValid = await bcrypt.compare(
             password,
@@ -61,11 +61,10 @@ export const loginUser = async (req: Request, res: Response): Promise<any> => {
                 httpOnly: true,
                 maxAge: 24 * 60 * 60 * 1000,
             });
+            userExist.password=""
             return res.status(201).json({
-                userId: userExist._id,
-                email: userExist.email,
-                username: userExist.name,
-                isAdmin: userExist.isAdmin,
+               userId:userExist._id,
+               user:userExist
             });
         } else {
             return res.status(400).json("password mismatched");
