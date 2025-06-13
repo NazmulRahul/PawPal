@@ -2,6 +2,21 @@ import { dataURItoBlob, extractPublicIds } from '@/Utils/blog';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+export const getFeaturedBlogs = createAsyncThunk(
+  'blog/getFeaturedBlogs',
+  async ({ userId }, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        'https://www.pawpalbd.com/api/user/blog/',
+        { params: { userId } }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const getBlogs = createAsyncThunk(
   'blog/getBlogs',
   async ({ userId }, thunkAPI) => {
@@ -192,7 +207,7 @@ export const saveBlogPost = createAsyncThunk(
 
 const initialState = {
   blog: null,
-  featuredBlogs: null,
+  featuredBlogs: [],
   blogs: [],
   specificBlogs: [],
   blogTabIndex: 6,
@@ -271,6 +286,16 @@ const blogSlice = createSlice({
       })
       .addCase(deleteBlogPost.fulfilled, (state, action) => {
         state.blogs = state.blogs.filter((item) => item._id !== action.payload);
+        state.isLoading = false;
+      })
+      .addCase(getFeaturedBlogs.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getFeaturedBlogs.fulfilled, (state, action) => {
+        state.featuredBlogs = action.payload.blogs;
+        state.isLoading = false;
+      })
+      .addCase(getFeaturedBlogs.rejected, (state, action) => {
         state.isLoading = false;
       });
   },

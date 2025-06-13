@@ -1,19 +1,20 @@
 import express from 'express'
 const Router = express.Router();
 import multer from 'multer'
-import { makeTransportRequest } from '../controller/transport.controller';
+import { makeTransportRequest ,uploadFiles} from '../controller/transport.controller';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
 Router.route('/')
   .get()
-  .post(
+  .post( makeTransportRequest);
+Router.route('/doc').post(
     upload.fields([
       { name: 'vacFront', maxCount: 1 },
       { name: 'vacBack', maxCount: 1 },
       { name: 'standing', maxCount: 1 },
       { name: 'sitting', maxCount: 1 },
     ]),
-    makeTransportRequest
+    uploadFiles
   );
 export default Router;
