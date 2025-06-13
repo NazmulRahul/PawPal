@@ -63,7 +63,7 @@ export const loginUser = async (req: Request, res: Response): Promise<any> => {
             });
             userExist.password=""
             return res.status(201).json({
-               userId:user._id,
+               userId:userExist._id,
                user:userExist
             });
         } else {
