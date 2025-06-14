@@ -105,6 +105,32 @@ export const makeTransport = createAsyncThunk(
   }
 );
 
+export const deleteTransport = createAsyncThunk(
+  "transport/deleteTransport",
+  async (id, thunkAPI) => {
+    try {
+      console.log(id, "inside makeTransport");
+      const response = await axios.delete(
+        `https://www.pawpalbd.com/api/user/transport/delete/${id}`
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getSingleTransportById = createAsyncThunk("transport/getSingleTransportById", async(id, thunkAPI) => {
+  try {
+    console.log(id, 'inside single by id')
+    const response = await axios.get(`https://www.pawpalbd.com/api/user/transport/getPost/${id}`);
+    console.log(response.data);
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+})
 const initialState = {
   allTransPortDetails: [],
   userTransPortDetails: [],
@@ -183,6 +209,27 @@ const transportSlice = createSlice({
         state.userTransPortDetails = action.payload.transports
       })
       .addCase(getUserTransport.rejected, (state,action) => {
+        state.isLoading = false
+      })
+      .addCase(deleteTransport.pending, (state,action) => {
+        state.isLoading = true
+      })
+      .addCase(deleteTransport.fulfilled, (state,action) => {
+        state.isLoading = false;
+        console.log(action.payload, 'from reducer')
+      })
+      .addCase(deleteTransport.rejected, (state,action) => {
+        state.isLoading = false
+      })
+      .addCase(getSingleTransportById.pending, (state,action) => {
+        state.isLoading = true
+      })
+      .addCase(getSingleTransportById.fulfilled, (state,action) => {
+        state.isLoading = false;
+        console.log(action.payload, 'from reducer')
+      
+      })
+      .addCase(getSingleTransportById.rejected, (state,action) => {
         state.isLoading = false
       })
   },

@@ -31,6 +31,7 @@ import ProfileTransportPending from "./Components/Profile/Transport/ProfileTrans
 import ProfileTransportAccepted from "./Components/Profile/Transport/ProfileTransportAccepted";
 import ProfileTransportCompleted from "./Components/Profile/Transport/ProfileTransportCompleted";
 import ShowTransportDetails from "./Components/Transport/ShowTransportDetails";
+import TransportDetailsReveal from "./Components/Transport/TransportDetailsReveal";
 
 function App() {
   return (
@@ -51,7 +52,7 @@ function App() {
         <Route path="transport/service/:serviceId" element={<SingleService/>}/>
         <Route path="transport/agency/:agencyId" element={<AgencyDetailed/>}/>
         <Route path="transport/booking" element={<TransportProcedure/>}/>
-        <Route path="transport/:postId" element={<ShowTransportDetails/>}/>
+        <Route path="transport/:postId" element={<TransportDetailsReveal/>}/>
         <Route path="blog" element={<BlogLayout/>}>
           <Route index element={<Blog/>}/>
           <Route path="create" element={<CreateBlog/>}/>

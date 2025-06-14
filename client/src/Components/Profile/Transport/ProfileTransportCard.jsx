@@ -2,7 +2,7 @@ import { setSingleTransportDetails } from '@/Store/Transport';
 import { Trash2 } from 'lucide-react';
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ProfileTransportCard = ({
   _id,
@@ -10,11 +10,12 @@ const ProfileTransportCard = ({
   pet,
   travel,
   agency,
-  document, showDelete, dispatch, completeObject
+  document, showDelete, dispatch, completeObject, handleDelete
 }) => {
+  const navigate = useNavigate()
 
   return (
-    <div onClick={() => dispatch(setSingleTransportDetails(completeObject))} className="w-full bg-[#F2EED9] hover:shadow-lg border-2 border-[#8C7A3F] shadow-md rounded-md p-4 flex justify-between items-center">
+    <div onClick={() => navigate(`/transport/${_id}`)} className="w-full bg-[#F2EED9] hover:shadow-lg border-2 border-[#8C7A3F] shadow-md rounded-md p-4 flex justify-between items-center">
       <section className="flex justify-start items-center gap-3">
         <img
           src={document?.standing}
@@ -43,7 +44,10 @@ const ProfileTransportCard = ({
 
       <section className="flex flex-col justify-center items-center gap-2 mr-6">
         {showDelete ? (
-          <button className="p-2 rounded-md hover:shadow-md hover:bg-red-200 active:font-bold font-semibold">
+          <button onClick={(e) => {
+            e.stopPropagation()
+            handleDelete(_id)
+          }} className="p-2 rounded-md hover:shadow-md hover:bg-red-200 active:font-bold font-semibold">
             <Trash2 color="red" size={32} />
           </button>
         ) : null}
