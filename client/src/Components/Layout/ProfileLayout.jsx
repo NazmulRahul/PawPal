@@ -9,6 +9,7 @@ import fallback from "../../assets/defaultAvatar.png";
 import displayPicture from "../../assets/beckham.jpg";
 import ProfileSidebar from "../Profile/ProfileSidebar";
 import getUserDetailsWithId from "../Profile/user/getUserDetailsWithId";
+import { toast } from "sonner";
 
 const ProfileLayout = () => {
   const userData = useSelector(user);
@@ -18,18 +19,26 @@ const ProfileLayout = () => {
   const {userId} = useParams();
   console.log(userId)
 
+
   useEffect(() => {
     const getUserData = async () => {
       console.log('inside getUserData')
-      if (userId) {
+      if (userId && userId !== userData?.userId) {
         console.log('inside userId')
-        const data = await getUserDetailsWithId(userId);
-        setUserInfo(data)
+        try {
+          const data = await getUserDetailsWithId(userId);
+          setUserInfo(data)  
+        } catch (error) {
+          toast.error('User could not be found', {duration:3000})
+        }
+        
+      } else {
+        setUserInfo(userData)
       }
     };
     console.log('inside useEffect')
     getUserData()
-  }, [userId]);
+  }, [userData, userId]);
 
   return (
     <main>

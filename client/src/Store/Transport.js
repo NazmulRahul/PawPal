@@ -1,12 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { toast } from 'sonner';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "sonner";
+import axios from "axios";
 
 export const uploadMessagesByChat = createAsyncThunk(
-  'transport/uploadMessagesByChat',
+  "transport/uploadMessagesByChat",
   async ({ data, id }, thunkAPI) => {
     try {
-      const response = await axios.post('', data, {
+      const response = await axios.post("", data, {
         params: { id },
       });
       return response.data;
@@ -16,11 +16,36 @@ export const uploadMessagesByChat = createAsyncThunk(
   }
 );
 
+export const getAllTransportRequest = createAsyncThunk(
+  "transport/getAllTransportRequest",
+  async (_arg, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "https://www.pawpalbd.com/api/user/transport"
+      );
+      return response?.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const getUserTransport = createAsyncThunk('transport/getUserTransport', async (userId, thunkAPI) => {
+  try {
+    const response = await axios.get(
+      `https://www.pawpalbd.com/api/user/transport/specific/${userId}`
+    )
+    return response?.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data || error.message)
+  }
+})
+
 export const getMessagesByChat = createAsyncThunk(
-  'transport/getMessagesByChat',
+  "transport/getMessagesByChat",
   async ({ id }, thunkAPI) => {
     try {
-      const response = axios.get('', {
+      const response = axios.get("", {
         params: { id },
       });
       return response.data;
@@ -31,10 +56,10 @@ export const getMessagesByChat = createAsyncThunk(
 );
 
 export const getChatId = createAsyncThunk(
-  'transport/getChatId',
+  "transport/getChatId",
   async ({ userId, agencyId }, thunkAPI) => {
     try {
-      const response = axios.get('', {
+      const response = axios.get("", {
         params: { userId, agencyId },
       });
     } catch (err) {
@@ -44,16 +69,16 @@ export const getChatId = createAsyncThunk(
 );
 
 export const uploadDocs = createAsyncThunk(
-  'transport/uploadDocs',
+  "transport/uploadDocs",
   async (files, thunkAPI) => {
     try {
       const fd = new FormData();
       Object.entries(files).forEach(([k, file]) => fd.append(k, file));
       const resp = await axios.post(
-        'https://www.pawpalbd.com/api/user/transport/doc',
+        "https://www.pawpalbd.com/api/user/transport/doc",
         fd,
         {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
       return resp.data.urls; // { vacFront, vacBack, standing, sitting }
@@ -64,12 +89,12 @@ export const uploadDocs = createAsyncThunk(
 );
 
 export const makeTransport = createAsyncThunk(
-  'transport/makeTransport',
+  "transport/makeTransport",
   async (data, thunkAPI) => {
     try {
-      console.log('inside makeTransport');
+      console.log("inside makeTransport");
       const response = await axios.post(
-        'https://www.pawpalbd.com/api/user/transport/',
+        "https://www.pawpalbd.com/api/user/transport/",
         data
       );
       console.log(response.data);
@@ -80,6 +105,32 @@ export const makeTransport = createAsyncThunk(
   }
 );
 
+export const deleteTransport = createAsyncThunk(
+  "transport/deleteTransport",
+  async (id, thunkAPI) => {
+    try {
+      console.log(id, "inside makeTransport");
+      const response = await axios.delete(
+        `https://www.pawpalbd.com/api/user/transport/delete/${id}`
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getSingleTransportById = createAsyncThunk("transport/getSingleTransportById", async(id, thunkAPI) => {
+  try {
+    console.log(id, 'inside single by id')
+    const response = await axios.get(`https://www.pawpalbd.com/api/user/transport/getPost/${id}`);
+    console.log(response.data);
+    return response.data
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+})
 const initialState = {
   allTransPortDetails: [],
   userTransPortDetails: [],
@@ -97,7 +148,7 @@ const initialState = {
 };
 
 const transportSlice = createSlice({
-  name: 'transport',
+  name: "transport",
   initialState,
   reducers: {
     setTransportFrom(state, action) {
@@ -118,11 +169,11 @@ const transportSlice = createSlice({
       })
       .addCase(makeTransport.fulfilled, (state, action) => {
         state.isLoading = false;
-        toast.success('Request is placed successfully!');
+        toast.success("Request is placed successfully!");
       })
       .addCase(makeTransport.rejected, (state, action) => {
         state.isLoading = false;
-        toast.error('Oops! something went wrong...');
+        toast.error("Oops! something went wrong...");
       })
       .addCase(uploadDocs.pending, (state, action) => {
         state.isLoading = true;
@@ -148,7 +199,39 @@ const transportSlice = createSlice({
       })
       .addCase(uploadMessagesByChat.fulfilled, (state, action) => {
         state.messages.push(action.payload);
-      });
+      })
+      .addCase(getUserTransport.pending, (state,action) => {
+        state.isLoading = true
+      })
+      .addCase(getUserTransport.fulfilled, (state,action) => {
+        state.isLoading = false;
+        console.log(action.payload, 'from reducer')
+        state.userTransPortDetails = action.payload.transports
+      })
+      .addCase(getUserTransport.rejected, (state,action) => {
+        state.isLoading = false
+      })
+      .addCase(deleteTransport.pending, (state,action) => {
+        state.isLoading = true
+      })
+      .addCase(deleteTransport.fulfilled, (state,action) => {
+        state.isLoading = false;
+        console.log(action.payload, 'from reducer')
+      })
+      .addCase(deleteTransport.rejected, (state,action) => {
+        state.isLoading = false
+      })
+      .addCase(getSingleTransportById.pending, (state,action) => {
+        state.isLoading = true
+      })
+      .addCase(getSingleTransportById.fulfilled, (state,action) => {
+        state.isLoading = false;
+        console.log(action.payload, 'from reducer')
+      
+      })
+      .addCase(getSingleTransportById.rejected, (state,action) => {
+        state.isLoading = false
+      })
   },
 });
 
@@ -162,3 +245,4 @@ export const chatId = (state) => state.transport.chatId;
 export const messages = (state) => state.transport.messages;
 export const singleTransportDetails = (state) =>
   state.transport.singleTransportDetails;
+export const getUserTransportDeatils = state => state.transport.userTransPortDetails

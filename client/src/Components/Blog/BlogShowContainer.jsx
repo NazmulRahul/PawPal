@@ -18,6 +18,7 @@ const BlogShowContainer = () => {
         navigate('/')
         dispatch(setBlog(null));
     }
+    console.log(currentBlog, 'current Blog')
   return (
     <div className={` ${currentBlog?'flex':'hidden'} fixed  top-0 bottom-0 left-0 right-0 backdrop-blur-xl z-50 `}>
         <div className={`${currentBlog?'flex':'hidden'} justify-center px-[12%] h-full w-full items-start overflow-y-scroll `}>

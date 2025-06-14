@@ -50,14 +50,15 @@ export const getPetDetailsWithId = createAsyncThunk(
 
 export const deletePost = createAsyncThunk(
   "adoptionPostSlice/deletePost", 
-  async (id) => {
+  async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        BASE_URL+`/deletePost/${id}`
+        BASE_URL+`deletePost/${id}`
       )
       return response.data
     } catch (error) {
-      return error
+      const errMessage = error.response?.data?.message || "Failed to delete post.";
+      return thunkAPI.rejectWithValue({ message: errMessage });
     }
   }
 )

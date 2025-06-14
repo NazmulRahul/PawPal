@@ -70,6 +70,7 @@ export const getSpecificBlogs = createAsyncThunk(
 export const deleteBlogPost = createAsyncThunk(
   'blog/deleteBlogPost',
   async ({ blogId }, thunkAPI) => {
+    console.log(blogId, 'delete')
     try {
       const response = await axios.delete(
         'https://www.pawpalbd.com/api/user/blog/',

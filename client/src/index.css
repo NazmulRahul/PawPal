@@ -116,6 +116,11 @@
     font-style: normal;
 }
 
+.custom-select option:hover {
+  background-color: #301010;
+  color: black;
+}
+
 @theme {  
     --font-montserrat: "Montserrat", sans-serif; 
     --font-roboto: "Roboto", sans-serif;

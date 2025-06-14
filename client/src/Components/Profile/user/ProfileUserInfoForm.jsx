@@ -53,7 +53,8 @@ const ProfileUserInfoForm = ({ userData }) => {
 
     try {
       for (const [key, value] of Object.entries(nonEmptyFields)) {
-        await handleFieldUpdate(userData?.userId, key, value);
+        const response = await handleFieldUpdate(userData?.userId, key, value);
+        console.log(response, 'response')
       }
       toast.success("Updated Successfully");
       const data = await getUserDetailsWithId(userData?.userId);
