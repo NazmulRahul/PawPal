@@ -1,4 +1,5 @@
 # 🐾 PawPalBD
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 **PawPalBD** is a full-featured web platform built with the **MERN stack** (MongoDB, Express.js, React, Node.js) that makes it easy for pet lovers to:
 
@@ -25,15 +26,22 @@
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Tech Stack
+- 🎨 **Frontend:** React ⚛️, Tailwind CSS 🎨, Framer Motion 🎞️, Axios 📡, Shadcn 🖥️
+- 🖥️ **Backend:** Node.js 🟢, Express.js 🚂, Socket.IO 🔌
+- 🗄️ **Database:** MongoDB 🍃 (via Mongoose)
+- ☁️ **Cloud Services:** Cloudinary ☁️ (for image hosting)
+- 📦 **Deployment:** Nginx 🌐, VPS Server 🖥️
 
-- **Frontend:** React, Tailwind CSS, Framer Motion, Axios  
-- **Backend:** Node.js, Express.js, Socket.IO  
-- **Database:** MongoDB (Mongoose)  
-- **Cloud Services:** Cloudinary (for image hosting)  
-- **Deployment:** Nginx, VPS Server  
 
 ---
+## 🗺️ Database Schema Diagram
+
+Here’s the visual representation of the project’s database structure:
+
+### 📊 Diagram Title: **PawPalBD MERN Stack Database Schema**
+
+![PawPalBD Database Diagram](https://res.cloudinary.com/do3avtsuj/image/upload/v1749940295/schema_ripyed.png)
 
 ## 📦 Installation
 
@@ -54,9 +62,12 @@ npm install
 
 | Name           | GitHub Profile                                  |
 | -------------- | -----------------------------------------------|
-| Nazmul Hossen  | [NazmulHossenDev](https://github.com/NazmulRahul) |
-| Muntasir Mamun  | [contributor2](https://github.com/CharlieBrown110) |
-| Ajoad Islam  | [contributor3](https://github.com/ajoad-0139) |
+| Nazmul Hossen  | [NazmulRahul](https://github.com/NazmulRahul) |
+| Muntasir Mamun  | [MuntasirMamun](https://github.com/CharlieBrown110) |
+| Ajoad Islam  | [AjoadIslam](https://github.com/ajoad-0139) |
 
 Want to contribute? Feel free to open issues or submit pull requests!
+## 📄 License
 
+This project is licensed under the **MIT License**.  
+See the [LICENSE](LICENSE) file for more details.

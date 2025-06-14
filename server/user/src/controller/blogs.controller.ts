@@ -37,7 +37,9 @@ const getBlogs = async (req: any, res: any) => {
 };
 
 const deleteBlog = async (req: any, res: any) => {
+
   const { blogId } = req.query;
+  console.log(`blog id ${blogId}`)
   const blog = await Blog.findOne({ _id: blogId });
   if (!blog) return res.status(404).json({ msg: 'Blog not found' });
 
