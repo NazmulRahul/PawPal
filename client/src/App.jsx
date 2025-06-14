@@ -58,7 +58,7 @@ function App() {
             <Route path="userAdoptions" element={<UserAdopted/>}/>
           </Route>
           <Route path="transport" element={<ProfileTransportList/>}/>
-          <Route path="Blog" element={<ProfileBlogList/>}/>
+          <Route path="blog" element={<ProfileBlogList/>}/>
         </Route>
       </Route>
     </Routes>

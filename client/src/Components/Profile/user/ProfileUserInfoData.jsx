@@ -1,88 +1,66 @@
 import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
-import React from "react";
+import { user } from "@/Store/Auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Building2, Mail, MapPin, Phone } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import getUserDetailsWithId from "./getUserDetailsWithId";
 
-const ProfileUserInfoData = ({styles, setInEdit}) => {
+const ProfileUserInfoData = ({styles}) => {
+  const userData = useSelector(user);
+
+  const [userInfo, setUserInfo] = useState(userData);
+
+  const {userId} = useParams();
+  console.log(userId)
+
+  useEffect(() => {
+    const getUserData = async () => {
+      console.log('inside getUserData')
+      if (userId) {
+        console.log('inside userId')
+        const data = await getUserDetailsWithId(userId);
+        setUserInfo(data)
+      }
+    };
+    console.log('inside useEffect')
+    getUserData()
+  }, [userId]);
   return (
     <div>
       <section className="flex w-full justify-center items-center">
-        <Label className={"font-semibold underline"}>
-          Personal Information
-        </Label>
-      </section>
-      <div className="grid grid-cols-4 mt-8">
-        <section>
-          <Label htmlFor={"username"} id={"username"} className={styles.label}>
-            Username
-          </Label>
-          <p className={styles.text}>Test user</p>
-        </section>
-        <section>
-          <Label
-            htmlFor={"firstName"}
-            id={"firstName"}
-            className={styles.label}
-          >
-            First Name
-          </Label>
-          <p className={styles.text}>Test</p>
-        </section>
-        <section>
-          <Label htmlFor={"lastName"} id={"lastName"} className={styles.label}>
-            Last Name
-          </Label>
-          <p className={styles.text}>User</p>
-        </section>
-        <section>
-          <Label htmlFor={"dob"} id={"dob"} className={styles.label}>
-            Date of birth
-          </Label>
-          <p className={styles.text}>01/01/2001</p>
-        </section>
-      </div>
-      <section className="flex w-full justify-center items-center mt-8">
         <Label className={"font-semibold underline"}>Contact Info</Label>
       </section>
       <div className="grid grid-cols-3 mt-8 gap-y-6">
-        <section>
-          <Label htmlFor={"email"} id={"email"} className={styles.label}>
-            Email address
-          </Label>
-          <p className={styles.text}>test@gmail.com</p>
+        <section className="flex justify-start items-center gap-x-1">
+          <Mail size={20}/>
+          <p className={styles.text}>{userInfo?.user?.email || "Update your mail"}</p>
         </section>
-        <section>
-          <Label htmlFor={"phone"} id={"phone"} className={styles.label}>
-            Phone no.
-          </Label>
-          <p className={styles.text}>+8801711234567</p>
+        <section className="flex justify-start items-center gap-x-1">
+          <Building2 size={20} />
+          <p className={styles.text}>{userInfo?.user?.city || "Update your city"}</p>
         </section>
-        <section>
-          <Label htmlFor={"address"} id={"address"} className={styles.label}>
-            Address
-          </Label>
-          <p className={styles.text}>Topobon R/A, Akhaliya, Sylhet</p>
+        <section className="flex justify-start items-center gap-x-1">
+          <MapPin size={20}/>
+          <p className={styles.text}>{userInfo?.user?.location || "Update your location"}</p>
         </section>
-        <section>
-          <Label htmlFor={"facebook"} id={"facebook"} className={styles.label}>
-            Facebook
-          </Label>
-          <p className={styles.text}>https://www.facebook.com/1010</p>
+        <section className="flex justify-start items-center gap-x-1">
+          <Phone size={20} />
+          <p className={styles.text}>{userInfo?.user?.phone || "Update your phone"}</p>
         </section>
-        <section>
-          <Label
-            htmlFor={"instagram"}
-            id={"instagram"}
-            className={styles.label}
-          >
-            Instagram
-          </Label>
-          <p className={styles.text}>https://www.instagram.com/1010</p>
+        <section className="flex justify-start items-center gap-x-1">
+          <FontAwesomeIcon icon="fa-brands fa-facebook" />
+          <p className={styles.text}>{userInfo?.user?.facebook || "Provide your Facebook Link"}</p>
         </section>
-        <section>
-          <Label htmlFor={"whatsapp"} id={"whatspp"} className={styles.label}>
-            Whatsapp no.
-          </Label>
-          <p className={styles.text}>+8801711234567</p>
+        <section className="flex justify-start items-center gap-x-1">
+          <FontAwesomeIcon icon="fa-brands fa-instagram" />
+          <p className={styles.text}>{userInfo?.user?.instagram || "Provide your instagram Link"}</p>
+        </section>
+        <section className="flex justify-start items-center gap-x-1">
+          <FontAwesomeIcon icon="fa-brands fa-x-twitter" />
+          <p className={styles.text}>{userInfo?.user?.twitter || "Provide your X Link"}</p>
         </section>
       </div>
       <section className="flex w-full justify-center items-center">
@@ -93,20 +71,9 @@ const ProfileUserInfoData = ({styles, setInEdit}) => {
           Bio
         </Label>
         <p className={styles.text}>
-          Paws-itively obsessed with furballs 🐾 | Professional treat dispenser
-          🍖 | Seeking a four-legged soulmate to share belly rubs & Netflix
-          marathons 🎬🐶 | Fluent in Meow, Woof, and Baby Talk 😹 | Warning: May
-          spontaneously adopt all the animals.
+          {userInfo?.user?.bio || "Tell us about yourserlf"}
         </p>
       </section>
-      <div className="flex justify-center items-center">
-        <Button
-          className={`bg-[#c9c19c] hover:bg-[#e4d1cd] hover:font-bold active:font-bold text-black font-semibold mt-8 w-[25%]`}
-          onClick={() =>setInEdit(prev => !prev)}
-        >
-          Edit
-        </Button>
-      </div>
     </div>
   );
 };
