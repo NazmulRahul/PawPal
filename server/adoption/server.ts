@@ -20,15 +20,15 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
-  },
+    origin: "*",
+  }
 });
 const PORT = config.get<number>('PORT')
 const dbUri = config.get<string>('dbUri')
 const ip = config.get<string>('ip')
 const corsOption = {
   origin: "*",
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST","PUT"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }
 

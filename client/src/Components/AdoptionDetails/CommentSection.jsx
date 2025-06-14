@@ -13,7 +13,7 @@ import { io } from 'socket.io-client';
 
 
 const CommentSection = () => {
-  const URL = "http://15.235.163.93:3002";
+  const URL = "https://pawpalbd.com";
   const socketRef = useRef();
   // const user = localStorage.getItem('user')
 
@@ -69,7 +69,9 @@ const CommentSection = () => {
   const [test, setTest] = useState("");
   const activityTimer = useRef(null);
   useEffect(() => {
-    socketRef.current = io(URL);
+    socketRef.current = io(URL, {
+      transports: ["websocket", "polling"],
+    });
     socketRef.current.emit("joinPost", postId);
     socketRef.current.on("commentAdded", (newComment) => {
       console.log("Received new comment via socket:", newComment);
