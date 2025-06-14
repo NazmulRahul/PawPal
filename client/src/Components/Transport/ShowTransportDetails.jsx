@@ -9,7 +9,7 @@ import { setSingleTransportDetails, singleTransportDetails } from '@/Store/Trans
 
 const ShowTransportDetails = () => {
     const currentTransportDetails = useSelector(singleTransportDetails);
-    const {owner, pet, travel, agency, document}=currentTransportDetails
+    const {owner, pet, travel, agency, document}=currentTransportDetails || {}
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(user)

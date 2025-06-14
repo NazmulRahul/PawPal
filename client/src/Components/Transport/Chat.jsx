@@ -21,7 +21,7 @@ const Chat = ({agency}) => {
     const scrollRef = useRef(null)
     
     useEffect(()=>{
-        dispatch(getChatId({userId:currentUser?.userId,agencyId:agency.id})) // thunk to get the chat id 
+        dispatch(getChatId({userId:currentUser?.userId,agencyId:agency?.id})) // thunk to get the chat id 
     },[])
     useEffect(()=>{
         setSocket(io(ENDPOINT));
