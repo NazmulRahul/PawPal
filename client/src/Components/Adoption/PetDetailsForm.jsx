@@ -245,29 +245,28 @@ const PetDetailsForm = () => {
     }
   };
 
-  const onDeletePost = async (id) => {
-    try {
-      const data = await dispatch(deletePost(id));
-      console.log(deletePost);
-      if (data?.payload?.msg) {
-        toast.success("Post has been deleted successfully.", {
-          duration: 3000,
-        });
-        navigate("..", { replace: true });
-      } else {
-        toast.error("The post could not be deleted", {
-          description: "Please try again later",
-          duration: 3000,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong.", {
-        description: "Please try again later",
+const onDeletePost = async (id) => {
+  try {
+    const actionResult = await dispatch(deletePost(id));
+
+    if (deletePost.fulfilled.match(actionResult)) {
+      toast.success("Post has been deleted successfully.", { duration: 3000 });
+      navigate("..", { replace: true });
+    } else {
+      toast.error("The post could not be deleted", {
+        description: actionResult.payload?.message || "Please try again later",
         duration: 3000,
       });
     }
-  };
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong.", {
+      description: "Please try again later",
+      duration: 3000,
+    });
+  }
+};
+
 
   useEffect(() => {
     const fetchPostDetails = async (postId) => {

@@ -1,6 +1,7 @@
 import React from 'react';
 
 const BlogShow = ({ doc }) => {
+  console.log(doc, 'blog show')
   const renderNodes = (nodes) => {
     if (!nodes || !Array.isArray(nodes)) return null;
     return nodes.map((node, index) => (

@@ -1,7 +1,9 @@
 import { Button } from "@/Components/ui/button";
+import { deletePost, getAllPosts } from "@/Store/AdoptionPostSlice";
 import { Trash2 } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const ProfileAdoptionCard = ({
   _id,
@@ -14,6 +16,7 @@ const ProfileAdoptionCard = ({
   age,
   sex,
   showDelete,
+  handleDeleteSubmission
 }) => {
   const petTypeByAge =
     age < 1
@@ -25,9 +28,13 @@ const ProfileAdoptionCard = ({
         ? "Puppy"
         : "Chick"
       : "Adult";
+  
   return (
-    <Link to={`/adoption/${_id}`} className="w-full bg-[#F2EED9] hover:shadow-lg border-2 border-[#8C7A3F] shadow-md rounded-md p-4 flex justify-between items-center">
-      <section className="flex justify-start items-center gap-3">
+    <div className="w-full bg-[#F2EED9] hover:shadow-lg border-2 border-[#8C7A3F] shadow-md rounded-md p-4 flex justify-between items-center">
+      <Link
+        to={`/adoption/${_id}`}
+        className="flex justify-start items-center gap-3 w-full"
+      >
         <img
           src={image[0]}
           alt=""
@@ -50,26 +57,32 @@ const ProfileAdoptionCard = ({
             </h6>
           </div>
         </div>
-      </section>
+      </Link>
 
-      <section className="flex flex-col justify-center items-center gap-2 mr-6">
-        {showDelete ? (
-          <button className="p-2 rounded-md hover:shadow-md hover:bg-red-200 active:font-bold font-semibold">
+      {showDelete && (
+        <section className="flex flex-col justify-center items-center gap-2 ml-4">
+          <button
+            onClick={() => {
+              handleDeleteSubmission(_id);
+            }}
+            className="p-2 rounded-md hover:shadow-md hover:bg-red-200 active:font-bold font-semibold"
+          >
             <Trash2 color="red" size={32} />
           </button>
-        ) : null}
-      </section>
-    </Link>
+        </section>
+      )}
+    </div>
   );
 };
 
 export default ProfileAdoptionCard;
 
-
-{/* <Button
+{
+  /* <Button
             className={
               "w-[20vh] hover:shadow-md bg-red-500 hover:hover:bg-red-700 hover:font-semibold active:font-bold font-semibold"
             }
           >
             Delete
-          </Button> */}
+          </Button> */
+}

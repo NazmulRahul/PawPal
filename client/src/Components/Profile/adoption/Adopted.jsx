@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { userPostedAnimals } from "./userPostedAnimals";
 import ProfileAdoptionCard from "./ProfileAdoptionCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { user } from "@/Store/Auth";
-import { getAllPosts } from "@/Store/AdoptionPostSlice";
+import { deletePost, getAllPosts } from "@/Store/AdoptionPostSlice";
 import { toast } from "sonner";
 
 const Adopted = () => {
@@ -31,6 +30,31 @@ const Adopted = () => {
   console.log(adoptedList, 'list')
   const showDelete =  profileId === userData?.userId;
   console.log(showDelete)
+  const handleDeleteSubmission = async (id) => {
+      try {
+        const actionResult = await dispatch(deletePost(id));
+  
+        if (deletePost.fulfilled.match(actionResult)) {
+          toast.success("Post has been deleted successfully.", {
+            duration: 3000,
+          });
+        } else {
+          toast.error("The post could not be deleted", {
+            description:
+              actionResult.payload?.message || "Please try again later",
+            duration: 3000,
+          });
+        }
+        const response = await dispatch(getAllPosts());
+        setAdoptionInfo(response?.payload?.posts);
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong.", {
+          description: "Please try again later",
+          duration: 3000,
+        });
+      }
+    };
   return (
     <div className="flex flex-col justify-start gap-6 mt-4">
       <div className="flex w-full justify-start items-center">
@@ -43,6 +67,7 @@ const Adopted = () => {
           key={adoptedPost.id}
           {...adoptedPost}
           showDelete={showDelete}
+          handleDeleteSubmission={handleDeleteSubmission}
         />
       )): null}
     </div>
