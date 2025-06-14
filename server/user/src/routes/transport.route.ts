@@ -17,5 +17,5 @@ Router.route('/doc').post(
     ]),
     uploadFiles
   );
-Router.route('/specific').get(getUserRequest)
+Router.route('/specific/:userId').get(getUserRequest)
 export default Router;
