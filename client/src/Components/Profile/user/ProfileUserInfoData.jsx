@@ -7,27 +7,37 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import getUserDetailsWithId from "./getUserDetailsWithId";
+import { toast } from "sonner";
 
 const ProfileUserInfoData = ({styles}) => {
   const userData = useSelector(user);
-
+  console.log(userData, 'userData')
   const [userInfo, setUserInfo] = useState(userData);
 
   const {userId} = useParams();
   console.log(userId)
+  console.log(userInfo, 'userInfo')
 
   useEffect(() => {
     const getUserData = async () => {
       console.log('inside getUserData')
-      if (userId) {
+      if (userId && userId !== userData?.userId) {
         console.log('inside userId')
-        const data = await getUserDetailsWithId(userId);
-        setUserInfo(data)
+        try {
+         const data = await getUserDetailsWithId(userId);
+        console.log(data, 'inside profile')
+        setUserInfo(data) 
+        } catch (error) {
+          toast.error('User could not be found', {duration: 3000})
+        }
+      } else {
+        setUserInfo(userData)
       }
     };
     console.log('inside useEffect')
     getUserData()
-  }, [userId]);
+  }, [userData, userId]);
+  // console.log(userInfo?.user?.email, userInfo?.user?.city, )
   return (
     <div>
       <section className="flex w-full justify-center items-center">
@@ -44,7 +54,7 @@ const ProfileUserInfoData = ({styles}) => {
         </section>
         <section className="flex justify-start items-center gap-x-1">
           <MapPin size={20}/>
-          <p className={styles.text}>{userInfo?.user?.location || "Update your location"}</p>
+          <p className={styles.text}>{userInfo?.user?.address || "Update your location"}</p>
         </section>
         <section className="flex justify-start items-center gap-x-1">
           <Phone size={20} />

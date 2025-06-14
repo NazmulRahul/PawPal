@@ -1,5 +1,7 @@
 import { Button } from "@/Components/ui/button";
+import { Trash2 } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProfileAdoptionCard = ({
   _id,
@@ -24,7 +26,7 @@ const ProfileAdoptionCard = ({
         : "Chick"
       : "Adult";
   return (
-    <main className="w-full bg-[#F2EED9] hover:shadow-lg border-2 border-[#8C7A3F] shadow-md rounded-md p-4 flex justify-between items-center">
+    <Link to={`/adoption/${_id}`} className="w-full bg-[#F2EED9] hover:shadow-lg border-2 border-[#8C7A3F] shadow-md rounded-md p-4 flex justify-between items-center">
       <section className="flex justify-start items-center gap-3">
         <img
           src={image[0]}
@@ -50,26 +52,24 @@ const ProfileAdoptionCard = ({
         </div>
       </section>
 
-      <section className="flex flex-col justify-center items-center gap-2">
-        <Button
-          className={
-            "w-[20vh] hover:shadow-md bg-[#c9c19c] text-black hover:hover:bg-[#e4d1cd] hover:font-semibold active:font-bold font-semibold"
-          }
-        >
-          View Details
-        </Button>
+      <section className="flex flex-col justify-center items-center gap-2 mr-6">
         {showDelete ? (
-          <Button
+          <button className="p-2 rounded-md hover:shadow-md hover:bg-red-200 active:font-bold font-semibold">
+            <Trash2 color="red" size={32} />
+          </button>
+        ) : null}
+      </section>
+    </Link>
+  );
+};
+
+export default ProfileAdoptionCard;
+
+
+{/* <Button
             className={
               "w-[20vh] hover:shadow-md bg-red-500 hover:hover:bg-red-700 hover:font-semibold active:font-bold font-semibold"
             }
           >
             Delete
-          </Button>
-        ) : null}
-      </section>
-    </main>
-  );
-};
-
-export default ProfileAdoptionCard;
+          </Button> */}

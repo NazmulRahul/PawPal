@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/Components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { SquarePen } from "lucide-react";
 import handleFieldUpdate from "./handleFieldUpdate";
 import { toast } from "sonner";
@@ -38,7 +38,7 @@ const ProfileUserInfoForm = ({ userData }) => {
     label: "font-semibold",
     text: "font-montserrat text-gray-600 text-sm",
     input:
-      "bg-[#ebe8db] outline-[#fffae6] border-[#8C7A3F] cursor-pointer w-[34vh]",
+      "bg-[#ebe8db] outline-[#fffae6] border-[#8C7A3F] cursor-pointer max-w-[236px]",
     section: "flex flex-col gap-0.5",
   };
 
@@ -53,7 +53,8 @@ const ProfileUserInfoForm = ({ userData }) => {
 
     try {
       for (const [key, value] of Object.entries(nonEmptyFields)) {
-        await handleFieldUpdate(userData?.userId, key, value);
+        const response = await handleFieldUpdate(userData?.userId, key, value);
+        console.log(response, 'response')
       }
       toast.success("Updated Successfully");
       const data = await getUserDetailsWithId(userData?.userId);
