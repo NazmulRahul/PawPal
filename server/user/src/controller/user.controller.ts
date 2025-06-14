@@ -176,7 +176,7 @@ export const registerWithVerification = async (req: Request, res: Response): Pro
         const newUser = await user.save()
         // const token = generateToken(user.email)
         const verificationToken = generateToken(user.email)
-        const verificationLink = `${BASE_URL}/adoption/api/verify-email/${verificationToken}`
+        const verificationLink = `${BASE_URL}/user/api/verify-email/${verificationToken}`
         // res.cookie("jwt", token, {
         //     httpOnly: true,
         //     maxAge: 24 * 60 * 60 * 1000,
@@ -233,7 +233,6 @@ res.status(200).send('<p style="color: green; font-size: 1.5em; text-align: cent
 }
 };
 
-// --- (Optional) Resend Verification Email Route ---
 export const resendVerificationLink = async (req: Request, res: Response) => {
     const { email } = req.body;
 
