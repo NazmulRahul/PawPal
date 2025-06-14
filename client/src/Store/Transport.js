@@ -2,6 +2,47 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { toast } from 'sonner';
 import axios from 'axios';
 
+export const uploadMessagesByChat = createAsyncThunk(
+  'transport/uploadMessagesByChat',
+  async ({ data, id }, thunkAPI) => {
+    try {
+      const response = await axios.post('', data, {
+        params: { id },
+      });
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const getMessagesByChat = createAsyncThunk(
+  'transport/getMessagesByChat',
+  async ({ id }, thunkAPI) => {
+    try {
+      const response = axios.get('', {
+        params: { id },
+      });
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
+export const getChatId = createAsyncThunk(
+  'transport/getChatId',
+  async ({ userId, agencyId }, thunkAPI) => {
+    try {
+      const response = axios.get('', {
+        params: { userId, agencyId },
+      });
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response?.data || err.message);
+    }
+  }
+);
+
 export const uploadDocs = createAsyncThunk(
   'transport/uploadDocs',
   async (files, thunkAPI) => {
@@ -40,6 +81,11 @@ export const makeTransport = createAsyncThunk(
 );
 
 const initialState = {
+  allTransPortDetails: [],
+  userTransPortDetails: [],
+  singleTransportDetails: null,
+  messages: [],
+  chatId: null,
   isLoading: false,
   transportForm: {
     owner: null,
@@ -57,6 +103,12 @@ const transportSlice = createSlice({
     setTransportFrom(state, action) {
       const { data, section } = action.payload;
       state.transportForm[section] = { ...data };
+    },
+    appendMessage(state, action) {
+      state.messages.push(action.payload);
+    },
+    setSingleTransportDetails(state, action) {
+      state.singleTransportDetails = action.payload;
     },
   },
   extraReducers(builder) {
@@ -80,12 +132,33 @@ const transportSlice = createSlice({
       })
       .addCase(uploadDocs.rejected, (state, action) => {
         state.isLoading = false;
+      })
+      .addCase(getChatId.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getChatId.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.chatId = action.payload;
+      })
+      .addCase(getChatId.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(getMessagesByChat.fulfilled, (state, action) => {
+        state.messages = action.payload;
+      })
+      .addCase(uploadMessagesByChat.fulfilled, (state, action) => {
+        state.messages.push(action.payload);
       });
   },
 });
 
 export default transportSlice.reducer;
-export const { setTransportFrom } = transportSlice.actions;
+export const { setTransportFrom, appendMessage, setSingleTransportDetails } =
+  transportSlice.actions;
 
 export const transportForm = (state) => state.transport.transportForm;
 export const transportIsLoading = (state) => state.transport.isLoading;
+export const chatId = (state) => state.transport.chatId;
+export const messages = (state) => state.transport.messages;
+export const singleTransportDetails = (state) =>
+  state.transport.singleTransportDetails;

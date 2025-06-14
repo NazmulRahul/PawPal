@@ -1,12 +1,12 @@
 import express from 'express'
 const Router = express.Router();
 import multer from 'multer'
-import { makeTransportRequest ,uploadFiles} from '../controller/transport.controller';
+import { makeTransportRequest ,uploadFiles, getAllRequest, getUserRequest} from '../controller/transport.controller';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
 Router.route('/')
-  .get()
+  .get(getAllRequest)
   .post( makeTransportRequest);
 Router.route('/doc').post(
     upload.fields([
@@ -17,4 +17,5 @@ Router.route('/doc').post(
     ]),
     uploadFiles
   );
+Router.route('/specific').get(getUserRequest)
 export default Router;

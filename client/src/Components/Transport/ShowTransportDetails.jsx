@@ -1,22 +1,27 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/logo.png'
 import Chat from './Chat';
+import { user } from '@/Store/Auth';
+import { setSingleTransportDetails, singleTransportDetails } from '@/Store/Transport';
 
 const ShowTransportDetails = () => {
-    const currentTransportDetails =true;
-    const {owner, pet, travel, agency, document}={}
+    const currentTransportDetails = useSelector(singleTransportDetails);
+    const {owner, pet, travel, agency, document}=currentTransportDetails
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const currentUser = useSelector(user)
     const handleExit = ()=>{
-        // dispatch(setBlog(null));
+        dispatch(setSingleTransportDetails(null));
     }
     const handleGoHome = ()=>{
         navigate('/')
-        // dispatch(setBlog(null));
+        dispatch(setSingleTransportDetails(null));
     }
+    const handleAcceptRequest =()=>{}
+    const handleCompleteRequest = ()=>{}
   return (
     <div className={` ${currentTransportDetails?'flex':'hidden'} fixed  top-0 bottom-0 left-0 right-0 backdrop-blur-xl z-50 `}>
             <div className={`${currentTransportDetails?'flex':'hidden'} justify-center px-[12%] h-full w-full items-start overflow-y-scroll `}>
@@ -32,6 +37,7 @@ const ShowTransportDetails = () => {
                     <section className='w-full h-[140px]  flex justify-center items-start'>
                         <p className='text-4xl font-semibold tracking-widest' >Transport Request NO : {'transport id'} <span>{`(${'status here'})`}</span> </p>
                     </section>
+                    
                     <section className="w-full flex flex-wrap gap-4">
                         <div className="h-auto w-[350px] flex flex-col  shrink-0">
                             <p className='text-xl font-bold tracking-wider mb-[5px]'>Owner Details</p>
@@ -106,7 +112,23 @@ const ShowTransportDetails = () => {
                             </div>
                         </div>
                     </section>
-                    <Chat/>
+                    <Chat agency={agency}/>
+                    {
+                        // currentUser?.user?.isTransporter?
+                            <section className='w-full h-[100px] flex justify-center items-center gap-4'>
+                                <button onClick={handleAcceptRequest} className='gradient-shiny-button'>
+                                    <span>
+                                        accept request
+                                    </span>
+                                </button>
+                                <button onClick={handleCompleteRequest} className='gradient-shiny-button'>
+                                    <span>
+                                        mark as complete
+                                    </span>
+                                </button>
+                            </section>
+                        // :null
+                    }
                 </div>
         </div>
     </div>

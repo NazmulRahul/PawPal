@@ -8,9 +8,25 @@ export const getFeaturedBlogs = createAsyncThunk(
   async ({ userId }, thunkAPI) => {
     try {
       const response = await axios.get(
-        'https://www.pawpalbd.com/api/user/blog/',
+        'https://www.pawpalbd.com/api/user/blog/feature',
         { params: { userId } }
       );
+      console.log(response.data, 'response.data');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const toggleFeaturedBlog = createAsyncThunk(
+  'blog/toggleFeaturedBlog',
+  async ({ blogId }, thunkAPI) => {
+    try {
+      const response = await axios.patch(
+        'https://www.pawpalbd.com/api/user/blog/feature',
+        { blogId }
+      );
+      console.log(response.data, 'response.data');
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

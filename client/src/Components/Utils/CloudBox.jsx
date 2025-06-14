@@ -13,6 +13,7 @@ const CloudBox = ({id}) => {
     const handleNavigate = ()=>{
         dispatch(setIsShowGetStarted(false))
         if(id==='Make Transport') navigate('/transport/booking')
+        if(id==='Adopt')navigate('adoption/request')
         else if(id==='Create Blog') navigate('/blog/create')
     }
     useEffect(()=>{
