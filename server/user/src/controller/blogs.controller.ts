@@ -74,6 +74,7 @@ const uploadImages = async (req: any, res: any) => {
       //   folder: 'blogs',
       // });]
       if (file) {
+        console.log('uploadTocloudinary')
         const result = await uploadToCloudinary(file.path)
         // log.info(result)
         fs.unlinkSync(file.path);
