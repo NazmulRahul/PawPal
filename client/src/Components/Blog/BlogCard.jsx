@@ -20,6 +20,7 @@ const BlogCard = ({item}) => {
                             <button onClick={()=>dispatch(setBlog(item?.content))} className='self-center w-[150px] h-[30px] bg-[#BFA181] hover:bg-white border-[1px] border-[#BFA181] cursor-pointer mt-[7px] ml-[-10%] group'>
                                 <p className='text-white tracking-widest text-sm font-semibold group-hover:text-[#BFA181]'>VIEW POST</p>
                             </button>
+                            <p></p>
                         </div>
                     </div>
             </div>

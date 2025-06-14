@@ -38,7 +38,7 @@ const ProfileUserInfoForm = ({ userData }) => {
     label: "font-semibold",
     text: "font-montserrat text-gray-600 text-sm",
     input:
-      "bg-[#ebe8db] outline-[#fffae6] border-[#8C7A3F] cursor-pointer w-[34vh]",
+      "bg-[#ebe8db] outline-[#fffae6] border-[#8C7A3F] cursor-pointer max-w-[236px]",
     section: "flex flex-col gap-0.5",
   };
 
