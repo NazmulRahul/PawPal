@@ -16,9 +16,10 @@ let ipLog = [];
 if (fs.existsSync(logFilePath)) {
   ipLog = JSON.parse(fs.readFileSync(logFilePath, 'utf-8'));
 }
-
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Middleware to log unique IPs with timestamp
-app.use('/user',expressProxy(`http://${IP}:${USER}`));
+app.use('/user',expressProxy(`http://${IP}:${USER}`,{limit:'50mb'}),);
 
 
 // app.use('/user',(req,res,next)=>{console.log(req.ip);next()},expressProxy(`http://${IP}:${USER}`))

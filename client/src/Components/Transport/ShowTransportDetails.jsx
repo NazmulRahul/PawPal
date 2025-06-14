@@ -112,7 +112,7 @@ const ShowTransportDetails = () => {
                             </div>
                         </div>
                     </section>
-                    <Chat agency={agency}/>
+                    {/* <Chat agency={agency}/> */}
                     {
                         // currentUser?.user?.isTransporter?
                             <section className='w-full h-[100px] flex justify-center items-center gap-4'>

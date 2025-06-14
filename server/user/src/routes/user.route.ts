@@ -43,7 +43,7 @@ const router = express.Router()
  *         description: Invalid input
  */
 
-router.route('/create').post(validateUser, createUser)
+router.route('/create').post(validateUser, registerWithVerification)
 /**
  * @swagger
  * /login:
@@ -120,16 +120,17 @@ router.route('/edit/:userId/:field').put(authenticate, async (req: any, res: any
     // if(userId!=req.user.userId){
     //     return res.status(401).json({msg:"unauthorized"})
     // }
-    const data = req.body.data
-
+    const {data} = req.body
+    console.log(field)
+    console.log(data)
     try {
         const updatedUser = await User.findByIdAndUpdate(userId, {
             [field]: data
         })
-        res.status(200).json({ msg: "user updated" })
+        res.status(200).json({user:updatedUser, msg: "user updated"})
     } catch (error) {
         log.error(error)
-        res.status(401).json({ msg: "errro updating password" })
+        res.status(401).json({ msg: `error updating ${field}` })
     }
 })
 router.route('/getUserInfo/:userId').get(authenticate, async (req: any, res: any) => {
