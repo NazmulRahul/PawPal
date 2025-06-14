@@ -3,10 +3,18 @@ import { useEffect } from 'react'
 import BlogCard from './BlogCard'
 import BlogSide from '../../assets/blogSide.png'
 import AnimatedSection from '../Utils/AnimatedSection'
+import { useDispatch, useSelector } from 'react-redux'
+import { featuredBlogs, getFeaturedBlogs } from '@/Store/Blog'
+import { user } from '@/Store/Auth'
 
 const BlogCardSegment = () => {
-    useEffect(()=>console.log(window.screen.width))
-      useEffect(()=>console.log('blog'))
+    const currentFeaturedBlogs = useSelector(featuredBlogs)
+    const dispatch = useDispatch()
+    const currentUser = useSelector(user)
+
+    useEffect(()=>{
+        dispatch(getFeaturedBlogs({userId:currentUser?.userId}))
+    },[])
   return (
     <div className='w-full h-auto flex justify-between '>
         <div className="w-[40%] h-full flex flex-col p-10 overflow-hidden">
@@ -39,10 +47,9 @@ const BlogCardSegment = () => {
         <div className="w-[50%]  h-full  flex justify-center items-center">
             <div className="flex w-[90%] h-[40%] mid-laptop:h-[30%] monitor-h-[50%]">
                 <div className="w-[70%] h-full flex flex-wrap gap-[10px]">
-                    <BlogCard/>
-                    <BlogCard/>
-                    <BlogCard/>
-                    <BlogCard/>
+                    {
+                        currentFeaturedBlogs.map((item)=><BlogCard item={item}/>)
+                    }
                 </div>
                 <div className="w-[30%] h-full relative">
                     <div className="inset-0 absolute">

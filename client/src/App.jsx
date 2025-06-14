@@ -25,6 +25,7 @@ import ProfileAdoptionLayout from "./Components/Layout/ProfileAdoptionLayout";
 import Pending from "./Components/Profile/adoption/Pending";
 import Adopted from "./Components/Profile/adoption/Adopted";
 import UserAdopted from "./Components/Profile/adoption/UserAdopted";
+import About from "./Pages/About";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="transport" element={<ProfileTransportList/>}/>
           <Route path="Blog" element={<ProfileBlogList/>}/>
         </Route>
+        <Route path="about" element={<About/>}/>
       </Route>
     </Routes>
   )

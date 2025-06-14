@@ -45,3 +45,13 @@ export const uploadFiles = async (req:any, res:any) => {
   };
 
   
+export const getAllRequest = async(req:any, res:any)=>{
+    const transports = await Transport.find({})
+    res.status(200).json({transports});
+}
+
+export const getUserRequest = async(req:any, res:any)=>{
+    const {userId}=req.query;
+    const transports = await Transport.find({userId})
+    res.status(200).json({transports});
+}

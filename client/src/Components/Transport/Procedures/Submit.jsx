@@ -2,9 +2,11 @@ import React from 'react'
 import pic from '../../../assets/Submit.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { makeTransport, transportForm, uploadDocs } from '@/Store/Transport'
+import { user } from '@/Store/Auth'
 
 const Submit = ({translate}) => {
     const currentTransportForm = useSelector(transportForm)
+    const currentUser = useSelector(user)
     const {owner, pet,travel, document, agency}=currentTransportForm;
 
     const dispatch = useDispatch()
@@ -14,28 +16,10 @@ const Submit = ({translate}) => {
         const {vacFront, vacBack, standing, sitting}=document
         const uploadDoc = await dispatch(uploadDocs({vacFront, vacBack, standing, sitting}))
         const data ={
-          owner, pet, travel, agency , document:uploadDoc?.payload
+          owner, pet, travel, agency , document:uploadDoc?.payload , userId:currentUser?.userId
         }
         dispatch(makeTransport(data))
       }
-
-        // const formData = new FormData();
-        // if(owner) formData.append('owner',JSON.stringify(owner));
-        // if(pet) formData.append('pet',JSON.stringify(pet));
-        // if(travel) formData.append('travel',JSON.stringify(travel));
-        // if(agency) formData.append('agency',JSON.stringify(agency));
-
-        // if(document){
-        //     const {vacFront, vacBack, standing, sitting}=document
-
-        //     if(vacFront) formData.append('vacFront',vacFront);
-        //     if(vacBack) formData.append('vacBack',vacBack);
-        //     if(standing) formData.append('standing',standing);
-        //     if(sitting) formData.append('sitting',sitting);
-        // }
-        // if(owner && pet && travel && agency && document) {
-        // }
-        // dispatch(makeTransport(formData))
     }
   return (
     <section style={{transform:`translateX(${translate}%)`}} className=' text-white transition-transform duration-500 shrink-0 w-full h-full gap-[20px] rounded-4xl flex flex-col justify-center items-center'>

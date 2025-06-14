@@ -1,5 +1,6 @@
 import { dataURItoBlob, extractPublicIds } from '@/Utils/blog';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { toast } from 'sonner';
 import axios from 'axios';
 
 export const getFeaturedBlogs = createAsyncThunk(
@@ -239,10 +240,12 @@ const blogSlice = createSlice({
       })
       .addCase(saveBlogPost.rejected, (state, action) => {
         state.isLoading = false;
+        toast.error('Oops! something wrong happened...');
       })
       .addCase(saveBlogPost.fulfilled, (state, action) => {
         state.blogs.push(action.payload);
         state.isLoading = false;
+        toast.success('Blog is posted successfully!');
         console.log(action.payload);
       })
       .addCase(getBlogs.pending, (state, action) => {
@@ -271,22 +274,26 @@ const blogSlice = createSlice({
       })
       .addCase(updateBlogPost.rejected, (state, action) => {
         state.isLoading = false;
+        toast.error('Oops! something wrong happened...');
       })
       .addCase(updateBlogPost.fulfilled, (state, action) => {
         const { _id } = action.payload;
         state.blogs = state.blogs.filter((item) => item._id !== _id);
         state.blogs.push(action.payload);
         state.isLoading = false;
+        toast.success('Blog is updated successfully!');
       })
       .addCase(deleteBlogPost.pending, (state, action) => {
         state.isLoading = true;
       })
       .addCase(deleteBlogPost.rejected, (state, action) => {
         state.isLoading = false;
+        toast.error('Oops! something wrong happened...');
       })
       .addCase(deleteBlogPost.fulfilled, (state, action) => {
         state.blogs = state.blogs.filter((item) => item._id !== action.payload);
         state.isLoading = false;
+        toast.success('Blog is deleted successfully!');
       })
       .addCase(getFeaturedBlogs.pending, (state, action) => {
         state.isLoading = true;

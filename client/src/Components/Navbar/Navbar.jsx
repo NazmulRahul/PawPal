@@ -117,7 +117,7 @@ const Navbar = () => {
                   </div>
                 </div>
               </Link>
-              <Link 
+              <Link to={'/about'}
               className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>AboutUs</p>
               </Link>
@@ -139,7 +139,7 @@ const Navbar = () => {
                   <img src="https://i.pinimg.com/736x/24/23/98/24239866c8495158664b9d2f385c1c39.jpg" className='w-full h-full rounded-full  object-cover' alt="" />
                 </div>
               </div>
-              <p className=' font-semibold text-lg mb-[10px] cursor-pointer'>{currentUser?.username}</p>
+              <p className=' font-semibold text-lg mb-[10px] cursor-pointer'>{currentUser?.user?.name}</p>
               <section className='group-hover:flex shadow-lg shadow-gray-600 hidden absolute top-[90%] rounded-tr-3xl rounded-bl-3xl left-[10%] w-[220px] h-[100px] bg-gray-800 flex-col items-start pt-[20px] pl-[20px]'>
                 <button className="w-full h-[30px] hover:translate-x-2 transition-transform duration-300 flex items-start cursor-pointer">
                   <p className='text-lg text-white  hover:text-green-600 font-semi-bold tracking-wider'>View Profile</p>

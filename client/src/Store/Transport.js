@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { toast } from 'sonner';
 import axios from 'axios';
 
 export const uploadDocs = createAsyncThunk(
@@ -8,7 +9,7 @@ export const uploadDocs = createAsyncThunk(
       const fd = new FormData();
       Object.entries(files).forEach(([k, file]) => fd.append(k, file));
       const resp = await axios.post(
-        'http://localhost:3000/api/transport/doc',
+        'https://www.pawpalbd.com/api/user/transport/doc',
         fd,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -27,13 +28,8 @@ export const makeTransport = createAsyncThunk(
     try {
       console.log('inside makeTransport');
       const response = await axios.post(
-        'http://localhost:3000/api/transport/',
+        'https://www.pawpalbd.com/api/user/transport/',
         data
-        // {
-        //   headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //   },
-        // }
       );
       console.log(response.data);
       return response.data;
@@ -70,9 +66,11 @@ const transportSlice = createSlice({
       })
       .addCase(makeTransport.fulfilled, (state, action) => {
         state.isLoading = false;
+        toast.success('Request is placed successfully!');
       })
       .addCase(makeTransport.rejected, (state, action) => {
         state.isLoading = false;
+        toast.error('Oops! something went wrong...');
       })
       .addCase(uploadDocs.pending, (state, action) => {
         state.isLoading = true;
