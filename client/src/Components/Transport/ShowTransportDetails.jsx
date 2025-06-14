@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/logo.png'
 import Chat from './Chat';
 import { user } from '@/Store/Auth';
-import { setSingleTransportDetails, singleTransportDetails } from '@/Store/Transport';
+import { getUserTransportDeatils, setSingleTransportDetails, singleTransportDetails } from '@/Store/Transport';
 
 const ShowTransportDetails = () => {
     const currentTransportDetails = useSelector(singleTransportDetails);

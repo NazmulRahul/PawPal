@@ -26,6 +26,11 @@ import Pending from "./Components/Profile/adoption/Pending";
 import Adopted from "./Components/Profile/adoption/Adopted";
 import UserAdopted from "./Components/Profile/adoption/UserAdopted";
 import About from "./Pages/About";
+import ProfileTransportLayout from "./Components/Layout/ProfileTransportLayout";
+import ProfileTransportPending from "./Components/Profile/Transport/ProfileTransportPending";
+import ProfileTransportAccepted from "./Components/Profile/Transport/ProfileTransportAccepted";
+import ProfileTransportCompleted from "./Components/Profile/Transport/ProfileTransportCompleted";
+import ShowTransportDetails from "./Components/Transport/ShowTransportDetails";
 
 function App() {
   return (
@@ -46,6 +51,7 @@ function App() {
         <Route path="transport/service/:serviceId" element={<SingleService/>}/>
         <Route path="transport/agency/:agencyId" element={<AgencyDetailed/>}/>
         <Route path="transport/booking" element={<TransportProcedure/>}/>
+        <Route path="transport/:postId" element={<ShowTransportDetails/>}/>
         <Route path="blog" element={<BlogLayout/>}>
           <Route index element={<Blog/>}/>
           <Route path="create" element={<CreateBlog/>}/>
@@ -58,7 +64,11 @@ function App() {
             <Route path="adopted" element={<Adopted/>}/>
             <Route path="userAdoptions" element={<UserAdopted/>}/>
           </Route>
-          <Route path="transport" element={<ProfileTransportList/>}/>
+          <Route path="transport" element={<ProfileTransportLayout/>}>
+            <Route index element={<ProfileTransportPending/>}/>
+            <Route path="approved" element={<ProfileTransportAccepted/>}/>
+            <Route path="completed" element={<ProfileTransportCompleted/>}/>
+          </Route>
           <Route path="blog" element={<ProfileBlogList/>}/>
         </Route>
         <Route path="about" element={<About/>}/>
