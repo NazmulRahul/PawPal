@@ -1,7 +1,8 @@
 import express from 'express'
 const Router = express.Router();
 import multer from 'multer'
-import { makeTransportRequest ,uploadFiles, getAllRequest, getUserRequest} from '../controller/transport.controller';
+import { makeTransportRequest ,uploadFiles, getAllRequest, getUserRequest, deletePost, getPost} from '../controller/transport.controller';
+import router from './user.route';
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -18,4 +19,6 @@ Router.route('/doc').post(
     uploadFiles
   );
 Router.route('/specific/:userId').get(getUserRequest)
+Router.route('/delete/:id').delete(deletePost)
+Router.route('/getPost/:id').get(getPost)
 export default Router;

@@ -56,7 +56,33 @@ export const getAllRequest = async(req:any, res:any)=>{
 }
 
 export const getUserRequest = async(req:any, res:any)=>{
+   try{
     const {userId}=req.params;
     const transports = await Transport.find({userId})
     res.status(200).json({transports});
+  }catch(error){
+    res.status(401).json({error:error})
+  }
 }
+
+export const deletePost=async(req:any, res:any)=>{
+  const {id}=req.params;
+  try{
+    await Transport.findByIdAndDelete(id)
+    res.status(200).json({msg:"post deleted"})
+  }catch(error){
+    res.status(401).json({error:error})
+  }
+}
+
+export const getPost = async(req:any, res:any)=>{
+  try{
+    const {id}=req.params
+    const post=await Transport.findById(id)
+    res.status(200).json(post)
+  }catch(error){
+    res.status(401).json({error:error})
+  }
+}
+
+

@@ -49,13 +49,13 @@ export const deletePost = async (req: any, res: Response): Promise<any> => {
         if (!id || mongoose.Types.ObjectId.isValid(JSON.stringify(id))) {
             return res.status(400).json({ error: 'invalid id' })
         }
-        const post = await Post.findById(id)
-        if (post?.userId != req.user.userId) {
-            if (req.user.isAdmin == false) {
-                return res.status(401).json({ msg: "unauthorized" })
+        // const post = await Post.findById(id)
+        // if (post?.userId != req.user.userId) {
+        //     if (req.user.isAdmin == false) {
+        //         return res.status(401).json({ msg: "unauthorized" })
 
-            }
-        }
+        //     }
+        // }
         await Post.findByIdAndDelete(id)
         return res.status(200).json({ msg: `post with id: ${id} has been deleted` })
     } catch (error) {
