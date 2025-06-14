@@ -4,9 +4,11 @@ import { Outlet } from "react-router-dom";
 
 const ProfileAdoptionLayout = () => {
   return (
-    <main className="p-10 font-inter w-full max-h-[70vh] overflow-y-auto custom-scrollbar">
+    <main className="p-10 pt-2 font-inter w-full">
       <ProfileAdoptionNavbar />
-      <Outlet />
+      <section className="w-full max-h-[68vh] overflow-y-auto scrollbar-hidden">
+        <Outlet />
+      </section>
     </main>
   );
 };

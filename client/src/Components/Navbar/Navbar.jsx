@@ -5,9 +5,10 @@ import { isNavBgWhite, isOnHoverNavLink, setIsNavBgWhite, setIsOnHoverNavLink } 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import logo from '../../assets/logo.png'
 import { Link, useNavigate } from 'react-router-dom'
-import { setUser, user } from '@/Store/Auth'
+import { logoutUser, setUser, user } from '@/Store/Auth'
 import AuthSwitch from './AuthSwitch'
 import data from '../../data/hoverCard'
+import { LogOut } from 'lucide-react'
 
 const Navbar = () => {
     const dispatch = useDispatch()
@@ -16,10 +17,11 @@ const Navbar = () => {
     
     const currentUser = useSelector(user);
     
-    const handleLogout = ()=>{
-      localStorage.removeItem('user')
-      dispatch(setUser(null))
-      
+    const handleLogout = async ()=>{
+      // localStorage.removeItem('user')
+      // dispatch(setUser(null))
+      const data = await dispatch(logoutUser())
+      console.log(data)
     }
     const handleClick = (index)=>{
             const types = ['adoption','breeds', 'health and wellness', 'training','others']
@@ -42,20 +44,20 @@ const Navbar = () => {
           </Link>
           <div className="w-[60%] h-full flex justify-between items-center">
             <div className="w-[55%] h-full flex justify-between items-end pb-[20px]">
-              <Link className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+              <Link to={'/adoption'} className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Adopt</p>
 
                 <div className={`cursor-default w-[500px] h-[300px] bg-gray-900 absolute group-hover:flex hidden`}>
                   <div className="w-[40%] h-full  flex flex-col">
-                      <button className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                      <Link to={'/adoption?animalType=cat'} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
                         <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Cats & Kittens</p>
-                      </button>
-                      <button className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                      </Link>
+                      <Link to={'/adoption?animalType=dog'} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
                         <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Dogs & Puppies</p>
-                      </button>
-                      <button className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
+                      </Link>
+                      <Link to={'/adoption?animalType=bird,rabbit'} className='cursor-pointer group/nested w-full h-[40px] hover:bg-neutral-700 text-white text-sm flex items-center px-2 font-semibold'>
                         <p className='group-hover/nested:translate-x-2 transition-transform duration-300'>Other type of Pets</p>
-                      </button>
+                      </Link>
                   </div>
                   <div className="w-[60%] h-full bg-neutral-800">
                     <img className='w-full h-full object-cover' src={data[0].url} alt="" />
@@ -141,11 +143,13 @@ const Navbar = () => {
               </div>
               <p className=' font-semibold text-lg mb-[10px] cursor-pointer'>{currentUser?.user?.name}</p>
               <section className='group-hover:flex shadow-lg shadow-gray-600 hidden absolute top-[90%] rounded-tr-3xl rounded-bl-3xl left-[10%] w-[220px] h-[100px] bg-gray-800 flex-col items-start pt-[20px] pl-[20px]'>
-                <button className="w-full h-[30px] hover:translate-x-2 transition-transform duration-300 flex items-start cursor-pointer">
+                <Link to={'/profile'} className="w-full h-[30px] hover:translate-x-2 transition-transform duration-300 flex items-start cursor-pointer">
                   <p className='text-lg text-white  hover:text-green-600 font-semi-bold tracking-wider'>View Profile</p>
-                </button>
+                </Link>
                 <button onClick={handleLogout} className="w-full h-[30px] hover:translate-x-2 transition-transform duration-300 group-nested flex items-start cursor-pointer ">
-                <p className='text-lg text-red-500 hover:text-red-700 font-semibold tracking-wider'>Log out</p>
+                <p className='text-lg text-red-500 hover:text-red-700 font-semibold tracking-wider'>
+                  <span className='flex gap-1 justify-center items-center'><LogOut />Logout</span>
+                </p>
                 </button>
               </section>
             </div>:
