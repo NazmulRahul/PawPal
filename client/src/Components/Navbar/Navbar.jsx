@@ -119,19 +119,9 @@ const Navbar = () => {
                   </div>
                 </div>
               </Link>
-              <Link to={'/about'}
-              className='relative text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
-                <p>AboutUs</p>
-              </Link>
+              
             </div>
-            <form onSubmit={handleSubmit} className="w-[40%] h-full  flex justify-end items-end pb-[20px]">
-              <div className='w-[80%] h-[30px] flex items-center border-[1px] border-black rounded-lg px-[10px]'>
-                <input type="text" className='flex-1 h-full outline-none' placeholder='Search something...' />
-                <button type='submit' className='cursor-pointer'>
-                    <FontAwesomeIcon className='text-xl' icon="fa-solid fa-magnifying-glass" />
-                </button>
-              </div>
-            </form>
+    
           </div>
           {
             currentUser?

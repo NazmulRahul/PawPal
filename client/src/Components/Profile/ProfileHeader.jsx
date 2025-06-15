@@ -39,6 +39,7 @@ const ProfileHeader = ({ userInfo }) => {
       toast("Uploading photo...");
       const formData = new FormData();
       formData.append("image", file);
+      console.log(userInfo?.userId, 'pp')
       const updatedUser = await profilePicUploader(userInfo?.userId, formData);
 
       console.log(updatedUser)

@@ -47,7 +47,7 @@ export const logoutUser = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const response = await axios.post(
-                "https://www.pawpalbd.com/api/user/api/logout"
+                "https://www.pawpalbd.com/api/user/api/logout", {withCredentials: true}
             );
             return response.data;
         } catch (error) {

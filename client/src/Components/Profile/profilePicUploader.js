@@ -5,7 +5,7 @@ const profilePicUploader = async (userId, formData) => {
     const response = await axios.post(
       `https://www.pawpalbd.com/api/user/api/profilePicture/${userId}`,
       formData,
-      { headers:{"Content-Type": "multipart/form-data"} }
+      { headers:{"Content-Type": "multipart/form-data"}, withCredentials: true }
     );
     return response?.data?.updatedUser
   } catch (error) {

@@ -43,7 +43,7 @@ const Footer = ({isTransport=false}) => {
             <div className="w-[80%] flex-1 flex justify-end gap-[20px] self-end">
                 <div className="flex-1 h-full flex justify-center gap-[20px]">
                     <p>{'Email : '}</p>
-                    <p>pawpal69@gmail.com</p>
+                    <p>pawpalbd@gmail.com</p>
                 </div>
                 <div className="flex-1 h-full flex justify-center gap-[20px]">
                     <p>{'Contact no. : '}</p>
