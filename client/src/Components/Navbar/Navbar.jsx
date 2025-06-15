@@ -44,7 +44,7 @@ const Navbar = () => {
           </Link>
           <div className="w-[60%] h-full flex justify-between items-center">
             <div className="w-[55%] h-full flex justify-between items-end pb-[20px]">
-              <Link to={'/adoption'} className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
+              <Link to={currentUser?.user?.isAdmin? '/admin/adoption':'/adoption'} className='relative group text-black hover:text-red-700 hover:underline text-lg font-semibold cursor-pointer'>
                 <p>Adopt</p>
 
                 <div className={`cursor-default w-[500px] h-[300px] bg-gray-900 absolute group-hover:flex hidden`}>
