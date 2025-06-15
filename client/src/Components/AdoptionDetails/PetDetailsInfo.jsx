@@ -4,7 +4,7 @@ import { ClipboardCheck, MapPin, Pencil, ShieldCheck, ShieldX } from "lucide-rea
 import { Separator } from "../ui/separator";
 
 
-const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId: postUserId, vaccine, address, activeUserId }) => {
+const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, createdAt, updatedAt, userId: postUserId, vaccine, address, activeUserId, isAdopted, adoptedBy }) => {
   console.log('rerendered')
   const petTypeByAge =
     age < 1
@@ -16,10 +16,12 @@ const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, cr
         ? "Puppy"
         : "Chick"
       : "Adult";   
+      console.log(adoptedBy, 'adopt')
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex justify-between items-center">
-        <h2 className="gloria-hallelujah-regular text-5xl">{name}</h2>
+        <div className="flex justify-center items-center gap-2">
+          <h2 className="gloria-hallelujah-regular text-5xl">{name}</h2>
         {
           postUserId === activeUserId ? (
             <Link to={`../adoption/request?postId=${_id}`}>
@@ -27,6 +29,8 @@ const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, cr
             </Link>
           ) : null
         }
+        </div>
+        <span className={`${isAdopted? 'bg-green-300': 'bg-[#d1d1d1]'} rounded-md px-5 py-2`}>{!isAdopted? "Pending" : "Adopted"}</span>
         
       </div>
       <div className="flex justify-start gap-7 items-center text-2xl font-semibold mt-8">
@@ -65,9 +69,9 @@ const PetDetailsInfo = ({name, description, _id, sex, animalType, age, breed, cr
         </div>      
       </div>
       <Separator className={'bg-[#8C7A3F] my-2'}/>
-      <h3 className="text-xl font-semibold">More Medical history:</h3>
+      <h3 className="text-xl font-semibold">Adopted by:</h3>
       <ul className="mt-2 list-disc ml-5">
-        <li>{'No problemo'}</li>
+        <li>{adoptedBy}</li>
       </ul>
     </section>
   );

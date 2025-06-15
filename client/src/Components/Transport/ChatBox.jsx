@@ -2,12 +2,21 @@ import React from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { Send } from "lucide-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAllChats, sendChat } from "@/Store/Chat";
 
-const ChatBox = () => {
-  const onAction = (formData) => {
+const ChatBox = ({dispatch, userData, postId}) => {
+  const onAction = async (formData) => {
     const { body } = Object.fromEntries(formData);
     console.log(body, "chat");
+    try {
+      const newFormData = {body, isAdmin: userData?.user?.isAdmin, userName: userData?.user?.name}
+      console.log(newFormData)
+      const response = await dispatch(sendChat({id:postId, formBody: newFormData}))
+      console.log(response, 'chat response')
+      await dispatch(getAllChats(postId))
+    } catch (error) {
+      toast.error('Could not send message')
+    }
   };
   return (
     <div className="mt-7">
