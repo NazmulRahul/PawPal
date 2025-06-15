@@ -1,7 +1,9 @@
 import React from "react";
 import { Separator } from "../ui/separator";
 
-const TransportDeatilsInfo = ({ agency, owner, pet, travel }) => {
+const TransportDeatilsInfo = ({ agency, owner, pet, travel, isApproved, isCompleted }) => {
+  const approved = isApproved && !isCompleted
+  const completed = isApproved && isCompleted
   return (
     <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] max-h-[440px] overflow-y-auto custom-scrollbar">
       <div className="flex flex-col">
@@ -9,7 +11,7 @@ const TransportDeatilsInfo = ({ agency, owner, pet, travel }) => {
           <h2 className="text-2xl font-semibold font-montserrat">
             Transportation Details
           </h2>
-          <span className="bg-[#d1d1d1] rounded-md px-5 py-2">Pending</span>
+          <span className={`${completed? 'bg-red-400' : approved ? 'bg-green-400' :  'bg-[#d1d1d1]'} rounded-md px-5 py-2`}>{completed? 'Completed' : approved ? 'Approved' :  'Pending'}</span>
         </div>
         <Separator className={"bg-[#8C7A3F] my-2"} />
         <div>

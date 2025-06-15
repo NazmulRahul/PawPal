@@ -28,7 +28,7 @@ const ProfileTransportCard = ({
           </h3>
 
           <ul className="flex justify-start gap-10 text-md text-[#565656] mt-1 ml-5 list-disc">
-            <li>{pet.type.charAt(0).toUpperCase() + pet.type.slice(1)}</li>
+            <li>{pet?.type.charAt(0).toUpperCase() + pet.type.slice(1)}</li>
             <li>{pet.breed}</li>
             <li>{pet.gender}</li>
             <li>{travel.sourceAddress}</li>

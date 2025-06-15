@@ -13,7 +13,7 @@ const ParentLayout = () => {
     <div className='w-screen bg-[#EBE8DB] h-screen flex justify-center items-center'>
       <Toaster richColors expand={false} visibleToasts={3} position='bottom-center'/>
       <Loader/>
-      <ShowTransportDetails/>
+      {/* <ShowTransportDetails/> */}
       <BlogShowContainer/>
       <GetStarted/>
       <Navbar/>
