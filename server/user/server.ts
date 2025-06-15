@@ -22,7 +22,10 @@ const corsOption = {
   methods: ["GET", "POST"],
   allowedHeaders: ['*']
 }
-
+const allowedOrigins = [
+  "https://pawpalbd.com",
+  "https://www.pawpalbd.com"
+];
 //swagger
 const swaggerOptions = {
   swaggerDefinition: {
@@ -47,7 +50,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Middleware
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
-app.use(cors())
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(cookieParser())
 // Routes
 app.get("/", (req: Request, res: Response) => {
