@@ -33,13 +33,14 @@ export const saveComment = async (req: Request, res: Response): Promise<any> => 
 
 export const deleteComment = async (req: any, res: Response): Promise<any> => {
     try {
+        console.log('deletecomment')
         const { commentId } = req.params
         const comment = await Comment.findById(commentId)
-        if (comment?.userId != req.user.userId) {
-            if (req.user.isAdmin == false) {
-                return res.status(401).json({ msg: "untauthorized" })
-            }
-        }
+        // if (comment?.userId != req.user.userId) {
+        //     if (req.user.isAdmin == false) {
+        //         return res.status(401).json({ msg: "untauthorized" })
+        //     }
+        // }
         const childComments = await Comment.find({ parentId: commentId });
         for (const child of childComments) {
             await Comment.findByIdAndDelete(child._id);
