@@ -11,17 +11,6 @@ const UserInfo = ({user}) => {
       <div className="flex justify-between items-center mt-8">
         <div className="flex justify-start items-center gap-4">
           <h2 className="text-3xl font-semibold">{name}</h2>
-          <div
-            className={`${
-              isActive
-                ? "bg-green-200 text-green-500"
-                : ""
-            } px-6 py-2 rounded-full flex justify-center items-center text-xs font-semibold`}
-          >
-            <ul className={`${isActive? 'list-disc': null}`}>
-              <li>{isActive ? "Active" : null}</li>
-            </ul>
-          </div>
         </div>
 
         <button className="flex items-center bg-[#c9c19c] rounded-md px-6 py-2 font-semibold">
