@@ -31,7 +31,10 @@ const corsOption = {
   methods: ["GET", "POST","PUT"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }
-
+const allowedOrigins = [
+  "https://pawpalbd.com",
+  "https://www.pawpalbd.com"
+];
 //swagger
 const swaggerOptions = {
   swaggerDefinition: {
@@ -55,7 +58,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Middleware
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+  origin: allowedOrigins,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(cookieParser())
 // Routes
 app.get("/adoption", (req: Request, res: Response) => {

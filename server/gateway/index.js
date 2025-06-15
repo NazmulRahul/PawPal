@@ -23,7 +23,7 @@ app.use('/user',expressProxy(`http://${IP}:${USER}`,{limit:'50mb'}),);
 
 
 // app.use('/user',(req,res,next)=>{console.log(req.ip);next()},expressProxy(`http://${IP}:${USER}`))
-app.use('/adoption',expressProxy(`http://${IP}:${ADOPTION}`))
+app.use('/adoption',expressProxy(`http://${IP}:${ADOPTION}`,{limit:'50mb'}),)
 
 app.listen(PORT,IP,()=>{
     console.log(`Gateway server is runnin on http://${IP}:${PORT}`)
