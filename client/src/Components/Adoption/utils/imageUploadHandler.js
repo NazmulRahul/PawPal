@@ -9,7 +9,7 @@ export const imageUploadHandler = async (file) => {
     formData.append("image", file);
 
     const { data } = await axios.post(IMAGE_URL, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: { "Content-Type": "multipart/form-data" }, withCredentials: true
     });
     return data.url;
   } catch (error) {
@@ -20,7 +20,7 @@ export const imageUploadHandler = async (file) => {
 export const addPost = async (formBody) => {
   try {
     console.log(formBody)
-    const response = await axios.post(POST_URL, formBody);
+    const response = await axios.post(POST_URL, formBody, {withCredentials: true});
     return response.data;
   } catch (error) {
     return error;

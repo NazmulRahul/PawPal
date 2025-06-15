@@ -14,7 +14,7 @@ export const getAllPosts = createAsyncThunk(
   "adoptionPostSlice/getAllPosts",
   async () => {
     try {
-      const response = await axios.get(BASE_URL+'getAllPosts', {});
+      const response = await axios.get(BASE_URL+'getAllPosts', {withCredentials:true});
       return response.data;
     } catch (error) {
       return error;
@@ -26,7 +26,7 @@ export const createPost = createAsyncThunk(
   "adoptionPostSlice/createPost",
   async (formBody) => {
     try {
-      const response = await axios.post(BASE_URL+'createPost', formBody);
+      const response = await axios.post(BASE_URL+'createPost', formBody, {withCredentials: true});
       return response.data;
     } catch (error) {
       return error;
@@ -39,7 +39,7 @@ export const getPetDetailsWithId = createAsyncThunk(
   async (id) => {
     try {
       const response = await axios.get(
-        BASE_URL+`getPostWithId/${id}`
+        BASE_URL+`getPostWithId/${id}`, {withCredentials:true}
       );
       return response.data;
     } catch (error) {
@@ -53,7 +53,7 @@ export const deletePost = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        BASE_URL+`deletePost/${id}`
+        BASE_URL+`deletePost/${id}`, {withCredentials: true}
       )
       return response.data
     } catch (error) {

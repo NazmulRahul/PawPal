@@ -7,7 +7,7 @@ export const uploadMessagesByChat = createAsyncThunk(
   async ({ data, id }, thunkAPI) => {
     try {
       const response = await axios.post("", data, {
-        params: { id },
+        params: { id }, withCredentials:true
       });
       return response.data;
     } catch (err) {
@@ -21,7 +21,7 @@ export const getAllTransportRequest = createAsyncThunk(
   async (_arg, thunkAPI) => {
     try {
       const response = await axios.get(
-        "https://www.pawpalbd.com/api/user/transport"
+        "https://www.pawpalbd.com/api/user/transport", {withCredentials:true}
       );
       return response?.data;
     } catch (err) {
@@ -33,7 +33,7 @@ export const getAllTransportRequest = createAsyncThunk(
 export const getUserTransport = createAsyncThunk('transport/getUserTransport', async (userId, thunkAPI) => {
   try {
     const response = await axios.get(
-      `https://www.pawpalbd.com/api/user/transport/specific/${userId}`
+      `https://www.pawpalbd.com/api/user/transport/specific/${userId}`, {withCredentials:true}
     )
     return response?.data
   } catch (error) {
@@ -46,7 +46,7 @@ export const getMessagesByChat = createAsyncThunk(
   async ({ id }, thunkAPI) => {
     try {
       const response = axios.get("", {
-        params: { id },
+        params: { id }, withCredentials:true
       });
       return response.data;
     } catch (err) {
@@ -60,7 +60,7 @@ export const getChatId = createAsyncThunk(
   async ({ userId, agencyId }, thunkAPI) => {
     try {
       const response = axios.get("", {
-        params: { userId, agencyId },
+        params: { userId, agencyId }, withCredentials:true
       });
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response?.data || err.message);
@@ -78,7 +78,7 @@ export const uploadDocs = createAsyncThunk(
         "https://www.pawpalbd.com/api/user/transport/doc",
         fd,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data" }, withCredentials:true
         }
       );
       return resp.data.urls; // { vacFront, vacBack, standing, sitting }
@@ -95,7 +95,7 @@ export const makeTransport = createAsyncThunk(
       console.log("inside makeTransport");
       const response = await axios.post(
         "https://www.pawpalbd.com/api/user/transport/",
-        data
+        data,{withCredentials:true}
       );
       console.log(response.data);
       return response.data;
@@ -111,7 +111,7 @@ export const deleteTransport = createAsyncThunk(
     try {
       console.log(id, "inside makeTransport");
       const response = await axios.delete(
-        `https://www.pawpalbd.com/api/user/transport/delete/${id}`
+        `https://www.pawpalbd.com/api/user/transport/delete/${id}`, {withCredentials:true}
       );
       console.log(response.data);
       return response.data;
@@ -124,7 +124,7 @@ export const deleteTransport = createAsyncThunk(
 export const getSingleTransportById = createAsyncThunk("transport/getSingleTransportById", async(id, thunkAPI) => {
   try {
     console.log(id, 'inside single by id')
-    const response = await axios.get(`https://www.pawpalbd.com/api/user/transport/getPost/${id}`);
+    const response = await axios.get(`https://www.pawpalbd.com/api/user/transport/getPost/${id}`, {withCredentials:true});
     console.log(response.data);
     return response.data
   } catch (error) {

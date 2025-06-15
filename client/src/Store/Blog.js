@@ -9,7 +9,7 @@ export const getFeaturedBlogs = createAsyncThunk(
     try {
       const response = await axios.get(
         'https://www.pawpalbd.com/api/user/blog/feature',
-        { params: { userId } }
+        { params: { userId }, withCredentials: true }, 
       );
       console.log(response.data, 'response.data');
       return response.data;
@@ -24,7 +24,7 @@ export const toggleFeaturedBlog = createAsyncThunk(
     try {
       const response = await axios.patch(
         'https://www.pawpalbd.com/api/user/blog/feature',
-        { blogId }
+        { blogId , withCredentials: true}
       );
       console.log(response.data, 'response.data');
       return response.data;
@@ -40,7 +40,7 @@ export const getBlogs = createAsyncThunk(
     try {
       const response = await axios.get(
         'https://www.pawpalbd.com/api/user/blog/',
-        { params: { userId } }
+        { params: { userId }, withCredentials: true }
       );
       return response.data;
     } catch (error) {
@@ -57,7 +57,7 @@ export const getSpecificBlogs = createAsyncThunk(
       const response = await axios.get(
         'https://www.pawpalbd.com/api/user/blog/type',
         {
-          params: { type },
+          params: { type }, withCredentials: true
         }
       );
       return response.data;
@@ -75,7 +75,7 @@ export const deleteBlogPost = createAsyncThunk(
       const response = await axios.delete(
         'https://www.pawpalbd.com/api/user/blog/',
         {
-          params: { blogId },
+          params: { blogId }, withCredentials: true
         }
       );
       return blogId;
@@ -117,7 +117,7 @@ export const updateBlogPost = createAsyncThunk(
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-            },
+            }, withCredentials: true
           }
         );
 
@@ -138,7 +138,7 @@ export const updateBlogPost = createAsyncThunk(
       const res = await axios.patch('https://www.pawpalbd.com/api/user/blog/', {
         blogId,
         content: newContentJson,
-        removedImageIds,
+        removedImageIds, withCredentials:true
       });
 
       return res.data.blog;
@@ -183,7 +183,7 @@ export const saveBlogPost = createAsyncThunk(
           {
             headers: {
               'Content-Type': 'multipart/form-data',
-            },
+            }, withCredentials: true
           }
         );
 
@@ -211,7 +211,7 @@ export const saveBlogPost = createAsyncThunk(
         {
           headers: {
             'Content-Type': 'application/json',
-          },
+          }, withCredentials: true
         }
       );
 

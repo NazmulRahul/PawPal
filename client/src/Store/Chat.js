@@ -13,7 +13,7 @@ export const getAllChats = createAsyncThunk(
   "adoptionPostSlice/getAllChats",
   async (id, thunkAPI) => {
     try {
-      const response = await axios.get(BASE_URL+`chat/${id}`, {});
+      const response = await axios.get(BASE_URL+`chat/${id}`, {withCredentials: true});
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Some error occured during call" });
@@ -26,7 +26,7 @@ export const sendChat = createAsyncThunk(
   async ({id, formBody}, thunkAPI) => {
     try {
       console.log(id, formBody, 'chat thunk')
-      const response = await axios.post(BASE_URL+`chat/${id}`, formBody);
+      const response = await axios.post(BASE_URL+`chat/${id}`, formBody, {withCredentials: true});
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue({ message: "Some error occured during call" });
@@ -39,7 +39,7 @@ export const deleteChat = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const response = await axios.delete(
-        BASE_URL+`chat/${id}`
+        BASE_URL+`chat/${id}`, {withCredentials: true}
       );
       return response.data;
     } catch (error) {

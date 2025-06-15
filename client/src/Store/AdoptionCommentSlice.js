@@ -16,7 +16,7 @@ const initialState = {
 export const createNewComment = createAsyncThunk("comments/createNewComment", async (comment) => {
   try{
     console.log(comment, "comment")
-    const response = await axios.post(BASE_URL+'saveComment', comment);
+    const response = await axios.post(BASE_URL+'saveComment', comment, {withCredentials: true});
     return response.data;
   } catch(err) {
     return err
@@ -25,7 +25,7 @@ export const createNewComment = createAsyncThunk("comments/createNewComment", as
 
 export const getAllComments = createAsyncThunk("comments/getAllComments", async(id) => {
   try {
-    const response = await axios.get(BASE_URL+`loadComments/${id}`);
+    const response = await axios.get(BASE_URL+`loadComments/${id}`, {withCredentials:true});
     return response.data
   } catch (error) {
     return error;
@@ -34,7 +34,7 @@ export const getAllComments = createAsyncThunk("comments/getAllComments", async(
 
 export const eraseComment = createAsyncThunk("comments/eraseComment", async(id) => {
   try {
-    const response = await axios.delete(BASE_URL+`deleteComment/${id}`);
+    const response = await axios.delete(BASE_URL+`deleteComment/${id}`, {withCredentials:true});
     return response.data
   } catch (error) {
     return error;

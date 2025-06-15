@@ -12,10 +12,6 @@ const UserInfo = ({user}) => {
         <div className="flex justify-start items-center gap-4">
           <h2 className="text-3xl font-semibold">{name}</h2>
         </div>
-
-        <button className="flex items-center bg-[#c9c19c] rounded-md px-6 py-2 font-semibold">
-          <MessageCircle /> Send Message
-        </button>
       </div>
       <div className="flex justify-start gap-12 items-center mt-8 text-lg text-[#565656] font-bold">
         <div className="flex justify-start gap-1 items-center">
