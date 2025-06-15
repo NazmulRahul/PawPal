@@ -1,6 +1,6 @@
 import uploadToCloudinary from "../utils/uploadToCloudinary";
 import Transport from '../models/transport.model'
-import Chat from '../models/chat.model.js'
+import Chat from '../models/chat.model.ts'
 import log from '../utils/logger'
 export const makeTransportRequest = async (req: any, res: any) => {
   const { userId, owner, pet, travel, agency, document } = req.body;
