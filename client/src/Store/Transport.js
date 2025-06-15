@@ -20,7 +20,7 @@ export const getAllTransportRequest = createAsyncThunk(
   "transport/getAllTransportRequest",
   async (_arg, thunkAPI) => {
     try {
-      const response = await axios.post(
+      const response = await axios.get(
         "https://www.pawpalbd.com/api/user/transport"
       );
       return response?.data;
@@ -227,9 +227,21 @@ const transportSlice = createSlice({
       .addCase(getSingleTransportById.fulfilled, (state,action) => {
         state.isLoading = false;
         console.log(action.payload, 'from reducer')
+        state.singleTransportDetails = action.payload
       
       })
       .addCase(getSingleTransportById.rejected, (state,action) => {
+        state.isLoading = false
+      })
+      .addCase(getAllTransportRequest.pending, (state,action) => {
+        state.isLoading = true
+      })
+      .addCase(getAllTransportRequest.fulfilled, (state,action) => {
+        state.isLoading = false;
+        console.log(action.payload, 'from reducer')
+        state.allTransPortDetails = action.payload.transports
+      })
+      .addCase(getAllTransportRequest.rejected, (state,action) => {
         state.isLoading = false
       })
   },
@@ -246,3 +258,4 @@ export const messages = (state) => state.transport.messages;
 export const singleTransportDetails = (state) =>
   state.transport.singleTransportDetails;
 export const getUserTransportDeatils = state => state.transport.userTransPortDetails
+export const getAllList = state => state.transport.allTransPortDetails

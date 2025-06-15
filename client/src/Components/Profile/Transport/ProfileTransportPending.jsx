@@ -1,5 +1,5 @@
 import { user } from '@/Store/Auth'
-import { deleteTransport, getUserTransport, getUserTransportDeatils } from '@/Store/Transport'
+import { deleteTransport, getAllList, getAllTransportRequest, getUserTransport, getUserTransportDeatils } from '@/Store/Transport'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import ProfileTransportCard from './ProfileTransportCard'
@@ -11,6 +11,8 @@ const ProfileTransportPending = () => {
   const {userId} = useParams()
   const dispatch = useDispatch()
   const singleUserTransportList = useSelector(getUserTransportDeatils)
+  const getAllTrasport = useSelector(getAllList)
+  console.log(getAllTrasport)
 
   const reqId = userId? userId : userData?.userId
 
@@ -18,11 +20,12 @@ const ProfileTransportPending = () => {
     const getList = async () => {
       const data = await dispatch(getUserTransport(reqId))
       console.log(data, 'inside get List')
+      await dispatch(getAllTransportRequest())
     }
     getList()
   },[dispatch, reqId])
 
-  const pendingList = singleUserTransportList?.filter(transport => !transport?.isApproved && !transport?.isComplete)
+  const pendingList = !userData?.user?.isAdmin ? singleUserTransportList?.filter(transport => !transport?.isApproved && !transport?.isComplete) : getAllTrasport?.filter(transport => !transport?.isApproved && !transport?.isComplete)
   console.log(pendingList, 'pending list')
   const handleDelete = async(id) => {
     try {
