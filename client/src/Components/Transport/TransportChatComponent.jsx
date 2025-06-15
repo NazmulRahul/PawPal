@@ -2,28 +2,32 @@ import React, { useEffect, useState } from "react";
 import { getChats } from "./api";
 import ChatList from "./ChatList";
 import ChatBox from "./ChatBox";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllChats, selectAllChats } from "@/Store/Chat";
 
-const TransportChatComponent = () => {
-  const [allChats, setAllChats] = useState({});
+const TransportChatComponent = ({ postId, userData }) => {
+  //const [allChats, setAllChats] = useState({});
+  const allChats = useSelector(selectAllChats);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const getAllChats = async () => {
-      const response = await getChats();
-      setAllChats(response);
+    const getChats = async () => {
+      const response = await dispatch(getAllChats(postId));
+      console.log(response);
     };
-    getAllChats();
-  }, []);
+    getChats();
+  }, [dispatch, postId]);
   console.log(allChats, "chats");
   return (
-    <>
-      {allChats.length ? (
-        <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] flex flex-col">
-          <div>
-            <ChatList allChats={allChats} />
-          </div>
-          <ChatBox/>
-        </section>
-      ) : <h3>No chat with admin found</h3>}
-    </>
+    <section className="w-ful p-6 rounded-lg shadow-xl bg-[#F2EED9] border-2 border-[#8C7A3F] flex flex-col justify-between">
+      {allChats?.length ? (
+        <div>
+          <ChatList allChats={allChats} postId={postId} userData={userData} />
+        </div>
+      ) : (
+        <h3>No chat with admin found</h3>
+      )}
+      <ChatBox dispatch={dispatch} postId={postId} userData={userData} />
+    </section>
   );
 };
 

@@ -46,7 +46,7 @@ const TransportDetailsReveal = () => {
           <TransportDeatilsInfo {...allTransportData}/>
           <TransportUserDetailsInfo {...allTransportData}/>
         </div>
-        <TransportChatComponent/>
+        <TransportChatComponent postId={postId} userData={userData}/>
       </section>
 
       {isAdmin ? <section className="flex justify-center items-center gap-x-10 mb-40">
