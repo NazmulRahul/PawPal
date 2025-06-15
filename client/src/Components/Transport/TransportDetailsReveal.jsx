@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
 import TransportCarousel from "./TransportCarousel";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSingleTransportById } from "@/Store/Transport";
 import { toast } from "sonner";
 import { Heading1 } from "lucide-react";
 import TransportDeatilsInfo from "./TransportDeatilsInfo";
 import TransportUserDetailsInfo from "./TransportUserDetailsInfo";
 import TransportChatComponent from "./TransportChatComponent";
+import { Button } from "../ui/button";
+import { user } from "@/Store/Auth";
 
 const TransportDetailsReveal = () => {
   const [allTransportData, setAllTransportData] = useState({});
   const { postId } = useParams();
   console.log(postId, "postId");
   const dispatch = useDispatch();
+  const userData = useSelector(user)
+  const isAdmin = userData?.user?.isAdmin
 
   useEffect(() => {
     const getTransportData = async () => {
@@ -37,13 +41,19 @@ const TransportDetailsReveal = () => {
         />
       </div>
 
-      <section className="grid grid-cols-2 gap-3 mt-10 mb-40">
+      <section className="grid grid-cols-2 gap-3 mt-10 mb-10">
         <div className="flex flex-col gap-4">
           <TransportDeatilsInfo {...allTransportData}/>
           <TransportUserDetailsInfo {...allTransportData}/>
         </div>
-        <TransportChatComponent/>
+        <TransportChatComponent postId={postId} userData={userData}/>
       </section>
+
+      {isAdmin ? <section className="flex justify-center items-center gap-x-10 mb-40">
+        <Button className={'w-50 bg-green-400'}>Approve</Button>
+        <Button className={'w-50 bg-red-400'}>Ongoing</Button>
+        <Button className={'w-50'}>Complete</Button>
+      </section>: null}
     </div>
   ) : (
     <h1>Loading Data....</h1>

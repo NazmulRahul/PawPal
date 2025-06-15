@@ -53,6 +53,13 @@ cd pawpalbd
 # Install server dependencies
 cd server
 npm install
+cd server/gateway
+npm install
+cd server/user
+npm install
+cd server/adoption
+npm install
+
 
 # Install client dependencies
 cd ../client

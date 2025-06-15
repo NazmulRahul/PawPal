@@ -602,7 +602,7 @@ const onDeletePost = async (id) => {
               type={"tel"}
               defaultValue={defaultValues?.address?.phone}
               inputMode="numeric"
-              pattern="^\+?[0-9]{11}$"
+              pattern="^\+?[0-9]{13}$"
               placeholder="+880172***10"
               className={styles.input}
             />

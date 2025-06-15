@@ -5,6 +5,7 @@ import adoptionPostReducer from './AdoptionPostSlice';
 import adoptionCommentReducer from './AdoptionCommentSlice';
 import blog from './Blog';
 import transport from './Transport';
+import chatReducer from './Chat'
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     adoptionComment: adoptionCommentReducer,
     blog,
     transport,
+    transportChats: chatReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
