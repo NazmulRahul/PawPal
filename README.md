@@ -29,7 +29,7 @@
 ## 🚀 Tech Stack
 - 🎨 **Frontend:** React ⚛️, Tailwind CSS 🎨, Framer Motion 🎞️, Axios 📡, Shadcn 🖥️
 - 🖥️ **Backend:** Node.js 🟢, Express.js 🚂, Socket.IO 🔌
-- 🗄️ **Database:** MongoDB 🍃 (via Mongoose)
+- 🗄️ **Database:** MongoDB 🍃 (via Mongoose), PostGreSQL
 - ☁️ **Cloud Services:** Cloudinary ☁️ (for image hosting)
 - 📦 **Deployment:** Nginx 🌐, VPS Server 🖥️
 
